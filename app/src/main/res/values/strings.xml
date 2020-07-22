@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name" translatable="false">Minesweeper</string>
+    <string name="company">Company</string>
+    <string name="singleplayer">Custom game</string>
+    <string name="multiplayer">Multiplayer</string>
+    <string name="rules">Rules</string>
+    <string name="rulesOfTheGame">blablablablablablabblablablablablablablablablablablablablablablabl
+        ablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablab
+        blablablablablablablablablablablablablablablablablablablablablablablablablablablablablablabl
+        ablablablabla</string>
+    <string name="understand">Got it</string>
+    <string name="settingGameParameters">Setting game parameters</string>
+    <string name="setFieldSize">Select the size of the field:</string>
+    <string name="setMinesCountSize">Select the number of mines:</string>
+    <string name="anotherVariant">Another variant</string>
+    <string name="startGame">Start game</string>
+    <string name="width">Width:</string>
+    <string name="height">Height:</string>
+    <string name="mines">Mines:</string>
+
+    <!--    dialog      -->
+    <string name="dialogGameSettingsSizeTitle">Choose the field size</string>
+    <string name="dialogGameSettingsSizeMessage">Specify your values for the width (x) and height (y) of the field:</string>
+    <string name="inputWidthValue">Input the width of the field:</string>
+    <string name="inputHeightValue">Input the height of the field:</string>
+    <string name="confirm">Confirm</string>
+
+    <!--    dialog mines count     -->
+    <string name="dialogGameSettingsMinesCountTitle">Choose the mines count</string>
+    <string name="dialogGameSettingsMinesCountMessage">Specify how many mines could be placed on the field:</string>
+    <string name="inputMinesCountValue">Input the number of mines:</string>
+</resources>

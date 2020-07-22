@@ -1,0 +1,33 @@
+<resources>
+    <string name="company">Кампания</string>
+    <string name="singleplayer">Своя игра</string>
+    <string name="multiplayer">Сетевая игра</string>
+    <string name="rules">Правила</string>
+    <string name="rulesOfTheGame">blablablablablablabblablablablablablablablablablablablablablablabl
+        ablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablab
+        blablablablablablablablablablablablablablablablablablablablablablablablablablablablablablabl
+        ablablablabla</string>
+    <string name="understand">Понял</string>
+    <string name="settingGameParameters">Настройка параметров своей игры</string>
+    <string name="setFieldSize">Выберите размер поля:</string>
+    <string name="setMinesCountSize">Выберите количество мин:</string>
+    <string name="anotherVariant">Другой вариант</string>
+    <string name="startGame">Начать игру</string>
+    <string name="width">Ширина:</string>
+    <string name="height">Высота:</string>
+    <string name="mines">Мины:</string>
+
+    <!--    dialog size     -->
+    <string name="dialogGameSettingsSizeTitle">Выбор размера поля</string>
+    <string name="dialogGameSettingsSizeMessage">Укажите свои значения для ширины (х) и высоты (у) поля:</string>
+    <string name="inputWidthValue">Введите ширину поля:</string>
+    <string name="inputHeightValue">Введите высоту поля:</string>
+    <string name="confirm">Подтвердить</string>
+
+    <!--    dialog mines count     -->
+    <string name="dialogGameSettingsMinesCountTitle">Выбор количества мин</string>
+    <string name="dialogGameSettingsMinesCountMessage">Укажите сколько мин должно быть размещено на поле:</string>
+    <string name="inputMinesCountValue">Введите количество мин:</string>
+
+
+</resources>

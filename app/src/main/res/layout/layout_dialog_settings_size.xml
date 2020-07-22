@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorMainBackground">
+
+    <TextView
+        style="@style/StyleGameSettingsToggleButtonFormat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/dialogGameSettingsSizeTitle"
+        android:textSize="24sp" />
+
+    <TextView
+        style="@style/StyleGameSettingsToggleButtonFormat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="20dp"
+        android:gravity="center"
+
+        android:text="@string/dialogGameSettingsSizeMessage" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/q" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="20dp"
+        android:paddingHorizontal="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/inputWidthValue"
+            style="@style/StyleGameSettingsToggleButtonFormat"
+            />
+
+        <EditText
+            android:id="@+id/edittext_settings_dialog_width"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            style="@style/StyleGameSettingsToggleButtonFormat"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingHorizontal="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/inputHeightValue"
+            style="@style/StyleGameSettingsToggleButtonFormat"
+            />
+
+        <EditText
+            android:id="@+id/edittext_settings_dialog_height"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            style="@style/StyleGameSettingsToggleButtonFormat"
+            />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button_setting_size_fragment_accept"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/confirm"
+        android:padding="18dp"
+        style="@style/StyleMenuButtonFormat"/>
+
+
+</LinearLayout>

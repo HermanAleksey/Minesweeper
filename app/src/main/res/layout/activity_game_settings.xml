@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorMainBackground"
+    android:orientation="vertical"
+    tools:context=".activity.CustomGameSettingsActivity">
+
+    <TextView
+        style="@style/StyleMenuButtonFormat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/settingGameParameters"
+        android:textSize="32sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingHorizontal="12dp">
+
+        <TextView
+            style="@style/StyleMenuButtonFormat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="12dp"
+            android:paddingBottom="6dp"
+            android:text="@string/setFieldSize" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ToggleButton
+                android:id="@+id/button_game_settings_size_first"
+                style="@style/StyleGameSettingsToggleButtonFormat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textOff="8*8"
+                android:textOn="8*8" />
+
+            <ToggleButton
+                android:id="@+id/button_game_settings_size_second"
+                style="@style/StyleGameSettingsToggleButtonFormat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textOff="10*10"
+                android:textOn="10*10" />
+
+            <ToggleButton
+                android:id="@+id/button_game_settings_size_third"
+                style="@style/StyleGameSettingsToggleButtonFormat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textOff="16*16"
+                android:textOn="16*16" />
+
+            <ToggleButton
+                android:id="@+id/button_game_settings_size_fourth"
+                style="@style/StyleGameSettingsToggleButtonFormat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textOff="24*24"
+                android:textOn="24*24" />
+
+        </LinearLayout>
+
+        <ToggleButton
+            android:id="@+id/button_game_settings_size_fifth"
+            style="@style/StyleGameSettingsToggleButtonFormat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textOff="@string/anotherVariant"
+            android:textOn="@string/anotherVariant" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingHorizontal="12dp">
+
+        <TextView
+            style="@style/StyleMenuButtonFormat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="12dp"
+            android:paddingBottom="6dp"
+            android:text="@string/setMinesCountSize" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ToggleButton
+                android:id="@+id/button_game_settings_mines_first"
+                style="@style/StyleGameSettingsToggleButtonFormat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textOff="8"
+                android:textOn="8" />
+
+            <ToggleButton
+                android:id="@+id/button_game_settings_mines_second"
+                style="@style/StyleGameSettingsToggleButtonFormat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textOff="16"
+                android:textOn="16" />
+
+            <ToggleButton
+                android:id="@+id/button_game_settings_mines_third"
+                style="@style/StyleGameSettingsToggleButtonFormat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textOff="32"
+                android:textOn="32" />
+
+            <ToggleButton
+                android:id="@+id/button_game_settings_mines_fourth"
+                style="@style/StyleGameSettingsToggleButtonFormat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textOff="64"
+                android:textOn="64" />
+
+        </LinearLayout>
+
+        <ToggleButton
+            android:id="@+id/button_game_settings_mines_fifth"
+            style="@style/StyleGameSettingsToggleButtonFormat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textOff="@string/anotherVariant"
+            android:textOn="@string/anotherVariant" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/width" />
+
+            <TextView
+                android:id="@+id/textview_game_settings_selected_width"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/height" />
+
+            <TextView
+                android:id="@+id/textview_game_settings_selected_height"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mines" />
+            <TextView
+                android:id="@+id/textview_game_settings_selected_mines_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/button_game_settings_start_game"
+            style="@style/StyleMenuButtonFormat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="24dp"
+            android:text="@string/startGame"
+            android:layout_weight="1"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+</LinearLayout>
