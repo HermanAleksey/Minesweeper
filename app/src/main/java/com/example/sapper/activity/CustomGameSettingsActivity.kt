@@ -1,10 +1,12 @@
 package com.example.sapper.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import com.example.sapper.R
 import com.example.sapper.dialog.DialogSettingMinesCount
 import com.example.sapper.dialog.DialogSettingsSize
@@ -37,6 +39,36 @@ class CustomGameSettingsActivity : AppCompatActivity(),
         button_game_settings_mines_third.setOnClickListener(onToggleButtonClickListener)
         button_game_settings_mines_fourth.setOnClickListener(onToggleButtonClickListener)
         button_game_settings_mines_fifth.setOnClickListener(onToggleButtonClickListener)
+
+        button_game_settings_start_game.setOnClickListener {
+
+            if (textview_game_settings_selected_height.text.toString().isEmpty() ||
+                textview_game_settings_selected_width.text.toString().isEmpty() ||
+                textview_game_settings_selected_mines_count.text.toString().isEmpty()
+            ) {
+                Toast.makeText(
+                    this,
+                    resources.getString(R.string.enterAllParamsBeforeStart),
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+
+                val myIntent = Intent(this, MinefieldActivity::class.java)
+                myIntent.putExtra(
+                    HEIGHT_TAG,
+                    textview_game_settings_selected_height.text.toString().toInt()
+                )
+                myIntent.putExtra(
+                    WIDTH_TAG,
+                    textview_game_settings_selected_width.text.toString().toInt()
+                )
+                myIntent.putExtra(
+                    MINES_COUNT_TAG,
+                    textview_game_settings_selected_mines_count.text.toString().toInt()
+                )
+                startActivity(myIntent)
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

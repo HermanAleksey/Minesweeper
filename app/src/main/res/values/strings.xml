@@ -17,6 +17,7 @@
     <string name="width">Width:</string>
     <string name="height">Height:</string>
     <string name="mines">Mines:</string>
+    <string name="cancel">Cancel</string>
 
     <!--    dialog      -->
     <string name="dialogGameSettingsSizeTitle">Choose the field size</string>
@@ -24,9 +25,12 @@
     <string name="inputWidthValue">Input the width of the field:</string>
     <string name="inputHeightValue">Input the height of the field:</string>
     <string name="confirm">Confirm</string>
+    <string name="parametersDoNotMeetRequirements">Parameters do not meet requirements</string>
 
     <!--    dialog mines count     -->
     <string name="dialogGameSettingsMinesCountTitle">Choose the mines count</string>
     <string name="dialogGameSettingsMinesCountMessage">Specify how many mines could be placed on the field:</string>
     <string name="inputMinesCountValue">Input the number of mines:</string>
+
+    <string name="enterAllParamsBeforeStart">You have tp enter all parameters before starting the game</string>
 </resources>

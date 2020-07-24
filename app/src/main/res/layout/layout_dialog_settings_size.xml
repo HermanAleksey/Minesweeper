@@ -44,9 +44,11 @@
 
         <EditText
             android:id="@+id/edittext_settings_dialog_width"
+            android:inputType="numberSigned"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             style="@style/StyleGameSettingsToggleButtonFormat"
+            android:layout_marginStart="10dp"
             />
 
     </LinearLayout>
@@ -66,20 +68,39 @@
 
         <EditText
             android:id="@+id/edittext_settings_dialog_height"
+            android:inputType="numberSigned"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             style="@style/StyleGameSettingsToggleButtonFormat"
+            android:layout_marginStart="10dp"
             />
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button_setting_size_fragment_accept"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/confirm"
-        android:padding="18dp"
-        style="@style/StyleMenuButtonFormat"/>
+        android:padding="10dp">
+
+        <Button
+            android:id="@+id/button_setting_size_fragment_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cancel"
+            android:paddingVertical="20dp"
+            style="@style/StyleMenuButtonFormat"/>
+
+        <Button
+            android:id="@+id/button_setting_size_fragment_accept"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/confirm"
+            android:paddingVertical="20dp"
+            style="@style/StyleMenuButtonFormat"/>
+
+    </LinearLayout>
 
 
 </LinearLayout>

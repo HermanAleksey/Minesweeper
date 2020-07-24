@@ -16,6 +16,7 @@
     <string name="width">Ширина:</string>
     <string name="height">Высота:</string>
     <string name="mines">Мины:</string>
+    <string name="cancel">Отмена</string>
 
     <!--    dialog size     -->
     <string name="dialogGameSettingsSizeTitle">Выбор размера поля</string>
@@ -23,11 +24,12 @@
     <string name="inputWidthValue">Введите ширину поля:</string>
     <string name="inputHeightValue">Введите высоту поля:</string>
     <string name="confirm">Подтвердить</string>
+    <string name="parametersDoNotMeetRequirements">Введенные параметры не соответствуют требованиям</string>
 
     <!--    dialog mines count     -->
     <string name="dialogGameSettingsMinesCountTitle">Выбор количества мин</string>
     <string name="dialogGameSettingsMinesCountMessage">Укажите сколько мин должно быть размещено на поле:</string>
     <string name="inputMinesCountValue">Введите количество мин:</string>
 
-
+    <string name="enterAllParamsBeforeStart">Вы должны выбрать все параметры перед началом игры</string>
 </resources>

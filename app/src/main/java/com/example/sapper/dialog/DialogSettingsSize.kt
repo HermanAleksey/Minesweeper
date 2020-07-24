@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.example.sapper.R
 import java.lang.Exception
@@ -22,14 +23,24 @@ class DialogSettingsSize : DialogFragment() {
         val editTextFieldHeight = view.findViewById<EditText>(R.id.edittext_settings_dialog_height)
         val editTextFieldWidth = view.findViewById<EditText>(R.id.edittext_settings_dialog_width)
         val buttonConfirm = view.findViewById<Button>(R.id.button_setting_size_fragment_accept)
+        val buttonCancel = view.findViewById<Button>(R.id.button_setting_size_fragment_cancel)
 
         val builder = AlertDialog.Builder(activity)
 
         builder.setView(view)
 
         buttonConfirm.setOnClickListener {
-            listener.sendSizeParams(editTextFieldWidth.text.toString().toInt(),
-                editTextFieldHeight.text.toString().toInt())
+            if (isMeetsTheRequirements(editTextFieldWidth, editTextFieldHeight)) {
+                listener.sendSizeParams(editTextFieldWidth.text.trim(' ').toString().toInt(),
+                    editTextFieldHeight.text.trim(' ').toString().toInt())
+                dismiss()
+            } else {
+                Toast.makeText(activity, activity!!.resources.getString(
+                    R.string.parametersDoNotMeetRequirements), Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        buttonCancel.setOnClickListener {
             dismiss()
         }
 
@@ -41,14 +52,30 @@ class DialogSettingsSize : DialogFragment() {
 
         try {
             listener = context as DialogSettingsSizeListener
-        } catch (ex: Exception){
-            throw ClassCastException(context.toString() +
-                    "must implement DialogSettingsSizeListener");
+        } catch (ex: Exception) {
+            throw ClassCastException(
+                context.toString() +
+                        "must implement DialogSettingsSizeListener"
+            );
         }
     }
 
     interface DialogSettingsSizeListener {
         fun sendSizeParams(width: Int, height: Int)
+    }
+
+    private fun isMeetsTheRequirements(
+        editTextFieldWidth: EditText,
+        editTextFieldHeight: EditText
+    ): Boolean {
+        if (editTextFieldWidth.text.isEmpty() ||
+            editTextFieldHeight.text.isEmpty() ||
+            editTextFieldWidth.text.toString().trim(' ').toInt() <= 1 ||
+            editTextFieldHeight.text.toString().trim(' ').toInt() <= 1
+        ) {
+            return false
+        }
+        return true
     }
 
 }
