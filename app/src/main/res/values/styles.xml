@@ -23,4 +23,14 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="StyleAllMachineText16sp">
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="StyleCheckboxColorBlack" parent="Theme.AppCompat.Light">
+<!--        <item name="colorControlNormal">@android:color/holo_green_light</item>-->
+        <item name="colorControlActivated">@android:color/black</item>
+    </style>
+
 </resources>

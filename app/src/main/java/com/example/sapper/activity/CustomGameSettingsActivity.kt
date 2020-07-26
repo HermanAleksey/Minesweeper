@@ -1,16 +1,20 @@
 package com.example.sapper.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.sapper.R
 import com.example.sapper.dialog.DialogSettingMinesCount
 import com.example.sapper.dialog.DialogSettingsSize
 import kotlinx.android.synthetic.main.activity_game_settings.*
+
 
 class CustomGameSettingsActivity : AppCompatActivity(),
     DialogSettingsSize.DialogSettingsSizeListener,
@@ -21,6 +25,7 @@ class CustomGameSettingsActivity : AppCompatActivity(),
     val HEIGHT_TAG: String = "com.example.sapper.height"
     val WIDTH_TAG: String = "com.example.sapper.width"
     val MINES_COUNT_TAG: String = "com.example.sapper.minesCount"
+    val CHECKBOX_TAG: String = "com.example.sapper.GameSettings.Checkbox"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,17 +33,56 @@ class CustomGameSettingsActivity : AppCompatActivity(),
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        button_game_settings_size_first.setOnClickListener(onToggleButtonClickListener)
-        button_game_settings_size_second.setOnClickListener(onToggleButtonClickListener)
-        button_game_settings_size_third.setOnClickListener(onToggleButtonClickListener)
-        button_game_settings_size_fourth.setOnClickListener(onToggleButtonClickListener)
-        button_game_settings_size_fifth.setOnClickListener(onToggleButtonClickListener)
+        //selecting size
+        val adapterGameSettingsSizeSelection: ArrayAdapter<String> = ArrayAdapter(
+            this, R.layout.spinner_layout_game_settings,
+            R.id.textview_spinner_layout_text, resources.getStringArray(R.array.fieldSizes)
+        )
+        spinner_game_settings_select_size.adapter = adapterGameSettingsSizeSelection
+        spinner_game_settings_select_size.onItemSelectedListener =
+            object : OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?, itemSelected: View,
+                    selectedItemPosition: Int, selectedId: Long
+                ) {
+                    when (selectedItemPosition) {
+                        0 -> setWidthHeightViewText(8, 8)
+                        1 -> setWidthHeightViewText(10, 10)
+                        2 -> setWidthHeightViewText(14, 14)
+                        3 -> setWidthHeightViewText(20, 20)
+                        4 -> setWidthHeightViewText(25, 25)
+                        5 -> showSettingSizeDialog()
+                    }
+                }
 
-        button_game_settings_mines_first.setOnClickListener(onToggleButtonClickListener)
-        button_game_settings_mines_second.setOnClickListener(onToggleButtonClickListener)
-        button_game_settings_mines_third.setOnClickListener(onToggleButtonClickListener)
-        button_game_settings_mines_fourth.setOnClickListener(onToggleButtonClickListener)
-        button_game_settings_mines_fifth.setOnClickListener(onToggleButtonClickListener)
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+
+
+        //selecting mines count
+        val adapterGameSettingsMinesCountSelection: ArrayAdapter<String> = ArrayAdapter(
+            this, R.layout.spinner_layout_game_settings,
+            R.id.textview_spinner_layout_text, resources.getStringArray(R.array.fieldMinesCount)
+        )
+        spinner_game_settings_select_mines_count.adapter = adapterGameSettingsMinesCountSelection
+        spinner_game_settings_select_mines_count.onItemSelectedListener =
+            object : OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?, itemSelected: View,
+                    selectedItemPosition: Int, selectedId: Long
+                ) {
+                    when (selectedItemPosition) {
+                        0 -> setMinesCountViewText(8)
+                        1 -> setMinesCountViewText(16)
+                        2 -> setMinesCountViewText(24)
+                        3 -> setMinesCountViewText(32)
+                        4 -> setMinesCountViewText(48)
+                        5 -> showSettingSizeDialog()
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
 
         button_game_settings_start_game.setOnClickListener {
 
@@ -66,9 +110,22 @@ class CustomGameSettingsActivity : AppCompatActivity(),
                     MINES_COUNT_TAG,
                     textview_game_settings_selected_mines_count.text.toString().toInt()
                 )
+                myIntent.putExtra(
+                    CHECKBOX_TAG,
+                    checkbox_game_settings_first_click_mine.isChecked
+                    )
                 startActivity(myIntent)
             }
         }
+    }
+
+    private fun setMinesCountViewText(minesCount: Int) {
+        textview_game_settings_selected_mines_count.text = minesCount.toString()
+    }
+
+    private fun setWidthHeightViewText(width: Int, height: Int) {
+        textview_game_settings_selected_width.text = width.toString()
+        textview_game_settings_selected_height.text = height.toString()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -93,90 +150,6 @@ class CustomGameSettingsActivity : AppCompatActivity(),
         settingMinesCountDialog.show(supportFragmentManager, SETTING_MINES_COUNT_DIALOG)
     }
 
-    private val onToggleButtonClickListener: View.OnClickListener = View.OnClickListener {
-        when (it) {
-            //the field size configuration buttons
-            button_game_settings_size_first -> {
-                textview_game_settings_selected_width.text = 8.toString()
-                textview_game_settings_selected_height.text = 8.toString()
-                button_game_settings_size_second.isChecked = false
-                button_game_settings_size_third.isChecked = false
-                button_game_settings_size_fourth.isChecked = false
-                button_game_settings_size_fifth.isChecked = false
-            }
-            button_game_settings_size_second -> {
-                textview_game_settings_selected_width.text = 10.toString()
-                textview_game_settings_selected_height.text = 10.toString()
-                button_game_settings_size_first.isChecked = false
-                button_game_settings_size_third.isChecked = false
-                button_game_settings_size_fourth.isChecked = false
-                button_game_settings_size_fifth.isChecked = false
-            }
-            button_game_settings_size_third -> {
-                textview_game_settings_selected_width.text = 16.toString()
-                textview_game_settings_selected_height.text = 16.toString()
-                button_game_settings_size_first.isChecked = false
-                button_game_settings_size_second.isChecked = false
-                button_game_settings_size_fourth.isChecked = false
-                button_game_settings_size_fifth.isChecked = false
-            }
-            button_game_settings_size_fourth -> {
-                textview_game_settings_selected_width.text = 24.toString()
-                textview_game_settings_selected_height.text = 24.toString()
-                button_game_settings_size_first.isChecked = false
-                button_game_settings_size_second.isChecked = false
-                button_game_settings_size_third.isChecked = false
-                button_game_settings_size_fifth.isChecked = false
-            }
-            button_game_settings_size_fifth -> {
-                button_game_settings_size_first.isChecked = false
-                button_game_settings_size_second.isChecked = false
-                button_game_settings_size_third.isChecked = false
-                button_game_settings_size_fourth.isChecked = false
-
-                showSettingSizeDialog()
-            }
-            //the mines count configuration buttons
-            button_game_settings_mines_first -> {
-                textview_game_settings_selected_mines_count.text = 8.toString()
-                button_game_settings_mines_second.isChecked = false
-                button_game_settings_mines_third.isChecked = false
-                button_game_settings_mines_fourth.isChecked = false
-                button_game_settings_mines_fifth.isChecked = false
-            }
-            button_game_settings_mines_second -> {
-                textview_game_settings_selected_mines_count.text = 16.toString()
-                button_game_settings_mines_first.isChecked = false
-                button_game_settings_mines_third.isChecked = false
-                button_game_settings_mines_fourth.isChecked = false
-                button_game_settings_mines_fifth.isChecked = false
-            }
-            button_game_settings_mines_third -> {
-                textview_game_settings_selected_mines_count.text = 32.toString()
-                button_game_settings_mines_first.isChecked = false
-                button_game_settings_mines_second.isChecked = false
-                button_game_settings_mines_fourth.isChecked = false
-                button_game_settings_mines_fifth.isChecked = false
-            }
-            button_game_settings_mines_fourth -> {
-                textview_game_settings_selected_mines_count.text = 64.toString()
-                button_game_settings_mines_first.isChecked = false
-                button_game_settings_mines_second.isChecked = false
-                button_game_settings_mines_third.isChecked = false
-                button_game_settings_mines_fifth.isChecked = false
-            }
-            button_game_settings_mines_fifth -> {
-                button_game_settings_mines_first.isChecked = false
-                button_game_settings_mines_second.isChecked = false
-                button_game_settings_mines_third.isChecked = false
-                button_game_settings_mines_fourth.isChecked = false
-
-                showSettingMinesCountDialog()
-            }
-
-        }
-    }
-
     override fun sendSizeParams(width: Int, height: Int) {
         textview_game_settings_selected_width.text = width.toString()
         textview_game_settings_selected_height.text = height.toString()
@@ -188,19 +161,33 @@ class CustomGameSettingsActivity : AppCompatActivity(),
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(WIDTH_TAG, textview_game_settings_selected_width.text.toString())
-        outState.putString(HEIGHT_TAG, textview_game_settings_selected_height.text.toString())
+        outState.putString(
+            WIDTH_TAG,
+            textview_game_settings_selected_width.text.toString()
+        )
+        outState.putString(
+            HEIGHT_TAG,
+            textview_game_settings_selected_height.text.toString()
+        )
         outState.putString(
             MINES_COUNT_TAG,
             textview_game_settings_selected_mines_count.text.toString()
+        )
+        outState.putBoolean(
+            CHECKBOX_TAG,
+            checkbox_game_settings_first_click_mine.isChecked
         )
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        textview_game_settings_selected_width.text = savedInstanceState.getString(WIDTH_TAG)
-        textview_game_settings_selected_height.text = savedInstanceState.getString(HEIGHT_TAG)
+        textview_game_settings_selected_width.text =
+            savedInstanceState.getString(WIDTH_TAG)
+        textview_game_settings_selected_height.text =
+            savedInstanceState.getString(HEIGHT_TAG)
         textview_game_settings_selected_mines_count.text =
             savedInstanceState.getString(MINES_COUNT_TAG)
+        checkbox_game_settings_first_click_mine.isChecked =
+            savedInstanceState.getBoolean(CHECKBOX_TAG)
     }
 }

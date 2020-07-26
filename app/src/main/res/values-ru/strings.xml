@@ -18,6 +18,15 @@
     <string name="mines">Мины:</string>
     <string name="cancel">Отмена</string>
 
+    <string-array name="fieldSizes">
+        <item>8*8</item>
+        <item>10*10</item>
+        <item>14*14</item>
+        <item>20*20</item>
+        <item>25*25</item>
+        <item>Другой вариант…</item>
+    </string-array>
+
     <!--    dialog size     -->
     <string name="dialogGameSettingsSizeTitle">Выбор размера поля</string>
     <string name="dialogGameSettingsSizeMessage">Укажите свои значения для ширины (х) и высоты (у) поля:</string>
@@ -32,4 +41,5 @@
     <string name="inputMinesCountValue">Введите количество мин:</string>
 
     <string name="enterAllParamsBeforeStart">Вы должны выбрать все параметры перед началом игры</string>
+    <string name="firstClickCanBeOnAMine">Первое нажатие может быть на мине</string>
 </resources>

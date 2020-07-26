@@ -87,8 +87,6 @@ class MinefieldAdapter {
 
             for (x in 0 until width) {
                 val button = Button(context)
-//                button.id = "$width$height".toInt()
-//                button.text = "$x$y"
                 arrayButtonsField[x][y] = button
 
                 val param: ViewGroup.LayoutParams = LinearLayout.LayoutParams(
@@ -97,6 +95,7 @@ class MinefieldAdapter {
                     1.0f
                 )
                 button.layoutParams = param
+                button.minWidth
                 linearLayoutString.addView(button, param)
             }
 
