@@ -16,8 +16,10 @@ import com.example.sapper.MinefieldAdapter
 import com.example.sapper.R
 import kotlinx.android.synthetic.main.activity_game_settings.*
 import kotlinx.android.synthetic.main.activity_minefield.*
+import kotlin.properties.Delegates
 
 class MinefieldActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_minefield)
@@ -30,6 +32,9 @@ class MinefieldActivity : AppCompatActivity() {
         )
         val minesCount = intent.getIntExtra(
             CustomGameSettingsActivity().MINES_COUNT_TAG, 0
+        )
+        val firstClickCanBeOnAMine = intent.getBooleanExtra(
+            CustomGameSettingsActivity().CHECKBOX_TAG, false
         )
 
         textview_minefield_field_width.text = "$width"
@@ -44,90 +49,127 @@ class MinefieldActivity : AppCompatActivity() {
                 width, height, linearLayoutMinefield, this
             )
 
-        val hostField =
-            Saper().generateHostMinefield(width, height, minesCount)
+        var hostField: Array<Array<Char>>? = null
+//        hostField = Saper().generateHostMinefield(width, height, minesCount)
+//        Log.d("s", Saper().getFieldAsString(hostField!!))
+
         val userField =
-            Saper().generateUserMinefield(hostField)
+            Saper().generateUserMinefield(width, height)
 
         MinefieldAdapter().setupMinefield(userField, arrayButtonsField)
-
 
         togglebutton_minefield_open
             .setOnClickListener(onToggleButtonClickListener)
         togglebutton_minefield_flag
             .setOnClickListener(onToggleButtonClickListener)
 
-        setOnClickListenerForField(arrayButtonsField, hostField, userField)
+        /*hostField =*/ setOnClickListenerForField(
+            arrayButtonsField, userField, hostField, minesCount, firstClickCanBeOnAMine
+        )
+
     }
 
     private fun setOnClickListenerForField(
         arrayButtonsField: Array<Array<Button>>,
-        hostField: Array<Array<Char>>,
-        userField: Array<Array<Char>>
-    ) {
+        userField: Array<Array<Char>>,
+        hostField: Array<Array<Char>>?,
+        minesCount: Int,
+        firstClickCanBeOnAMine: Boolean
+    )/*: Array<Array<Char>>*/ {
         for (y in arrayButtonsField.indices) {
             for (x in arrayButtonsField[y].indices) {
                 arrayButtonsField[x][y].setOnClickListener {
                     if (togglebutton_minefield_open.isChecked) {
-                        val loose = Saper().openCoordinate(x, y, hostField, userField)
+
+                        if (hostField == null) {
+
+                            val newField: Array<Array<Char>>
+                            if (!firstClickCanBeOnAMine) {
+
+                                newField = Saper().generateHostMinefield(
+                                    userField[0].size,
+                                    userField.size,
+                                    minesCount, x, y
+                                )
+                                Log.d("s", Saper().getFieldAsString(newField))
+                            } else {
+                                newField = Saper().generateHostMinefield(
+                                    userField[0].size,
+                                    userField.size,
+                                    minesCount
+                                )
+                            }
+
+                            setOnClickListenerForField(
+                                arrayButtonsField, userField, newField, minesCount, firstClickCanBeOnAMine
+                            )
+                            arrayButtonsField[x][y].callOnClick()
+
+                            return@setOnClickListener
+
+                        }
+
+                        val loose = Saper().openCoordinate(x, y, hostField!!, userField)
                         if (!loose) {
                             Toast.makeText(this, "You проиграл", Toast.LENGTH_LONG).show()
                         }
                         MinefieldAdapter().setupMinefield(userField, arrayButtonsField)
                     }
-                    if (togglebutton_minefield_flag.isChecked) {
-                        val win = Saper().useFlagOnSpot(x, y, hostField, userField)
-                        MinefieldAdapter().setupMinefield(userField, arrayButtonsField)
-                        if (win){
-                            startActivity(Intent(this,MainActivity::class.java))
-                        }
+
+                if (togglebutton_minefield_flag.isChecked) {
+                    val win = Saper().useFlagOnSpot(x, y, hostField!!, userField)
+                    MinefieldAdapter().setupMinefield(userField, arrayButtonsField)
+                    if (win) {
+                        startActivity(Intent(this, MainActivity::class.java))
                     }
                 }
             }
         }
     }
+}
 
-    //чтобы одновременно включена была только 1 кнопка
-    val onToggleButtonClickListener = View.OnClickListener {
-        when (it.id) {
-            togglebutton_minefield_open.id -> {
-                if (togglebutton_minefield_open.isChecked) {
-                    togglebutton_minefield_flag.isChecked = false
-                }
+
+//чтобы одновременно включена была только 1 кнопка
+val onToggleButtonClickListener = View.OnClickListener {
+    when (it.id) {
+        togglebutton_minefield_open.id -> {
+            if (togglebutton_minefield_open.isChecked) {
+                togglebutton_minefield_flag.isChecked = false
             }
-            togglebutton_minefield_flag.id -> {
-                if (togglebutton_minefield_flag.isChecked) {
-                    togglebutton_minefield_open.isChecked = false
-                }
+        }
+        togglebutton_minefield_flag.id -> {
+            if (togglebutton_minefield_flag.isChecked) {
+                togglebutton_minefield_open.isChecked = false
             }
         }
     }
+}
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
+override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+    super.onRestoreInstanceState(savedInstanceState)
 
-        textview_minefield_field_width.text =
-            savedInstanceState.getInt(CustomGameSettingsActivity().WIDTH_TAG).toString()
-        textview_minefield_field_height.text =
-            savedInstanceState.getInt(CustomGameSettingsActivity().HEIGHT_TAG).toString()
-        textview_minefield_mines_counter.text =
-            savedInstanceState.getInt(CustomGameSettingsActivity().MINES_COUNT_TAG).toString()
-    }
+    textview_minefield_field_width.text =
+        savedInstanceState.getInt(CustomGameSettingsActivity().WIDTH_TAG).toString()
+    textview_minefield_field_height.text =
+        savedInstanceState.getInt(CustomGameSettingsActivity().HEIGHT_TAG).toString()
+    textview_minefield_mines_counter.text =
+        savedInstanceState.getInt(CustomGameSettingsActivity().MINES_COUNT_TAG).toString()
+}
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
+override fun onSaveInstanceState(outState: Bundle) {
+    super.onSaveInstanceState(outState)
 
-        outState.putInt(
-            CustomGameSettingsActivity().WIDTH_TAG,
-            textview_minefield_field_width.text.toString().toInt()
-        )
-        outState.putInt(
-            CustomGameSettingsActivity().HEIGHT_TAG,
-            textview_minefield_field_height.text.toString().toInt()
-        )
-        outState.putInt(
-            CustomGameSettingsActivity().MINES_COUNT_TAG,
-            textview_minefield_mines_counter.text.toString().toInt()
-        )
-    }
+    outState.putInt(
+        CustomGameSettingsActivity().WIDTH_TAG,
+        textview_minefield_field_width.text.toString().toInt()
+    )
+    outState.putInt(
+        CustomGameSettingsActivity().HEIGHT_TAG,
+        textview_minefield_field_height.text.toString().toInt()
+    )
+    outState.putInt(
+        CustomGameSettingsActivity().MINES_COUNT_TAG,
+        textview_minefield_mines_counter.text.toString().toInt()
+    )
+}
 }

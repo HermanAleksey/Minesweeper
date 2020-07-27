@@ -77,7 +77,6 @@
             android:id="@+id/checkbox_game_settings_first_click_mine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
             android:theme="@style/StyleCheckboxColorBlack"
             android:layout_gravity="center"
             android:paddingHorizontal="5dp"/>

@@ -94,15 +94,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_margin="10dp"
-            android:isScrollContainer="true">
-
-             <Button
-                 android:layout_width="100dp"
-                 android:layout_height="100dp"
-                 android:text="1"
-                 android:textSize="50sp"></Button>
-
-        </LinearLayout>
+            android:isScrollContainer="true"/>
     </LinearLayout>
 
     <LinearLayout
