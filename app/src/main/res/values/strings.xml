@@ -3,6 +3,7 @@
     <string name="company">Company</string>
     <string name="singleplayer">Custom game</string>
     <string name="multiplayer">Multiplayer</string>
+    <string name="bluetooth">Bluetooth</string>
     <string name="rules">Rules</string>
     <string name="rulesOfTheGame">blablablablablablabblablablablablablablablablablablablablablablabl
         ablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablab
@@ -25,7 +26,7 @@
         <item>14*14</item>
         <item>20*20</item>
         <item>25*25</item>
-        <item>another variant…</item>
+        <item>Another variant…</item>
     </string-array>
     <string-array name="fieldMinesCount">
         <item>8</item>
@@ -33,7 +34,11 @@
         <item>24</item>
         <item>32</item>
         <item>48</item>
-        <item>another variant…</item>
+        <item>Another variant…</item>
+    </string-array>
+    <string-array name="minerRole">
+        <item>Me</item>
+        <item>Opponent</item>
     </string-array>
 
 

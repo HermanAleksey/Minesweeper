@@ -9,24 +9,31 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
+import com.example.sapper.Constant
 import com.example.sapper.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         button_main_company.setOnClickListener {
-
+            startActivity(Intent(this, CompanyLevelActivity::class.java))
         }
 
         button_main_custom_game.setOnClickListener {
-            startActivity(Intent(this, CustomGameSettingsActivity::class.java))
+            val intent = Intent(this, GameSettingsActivity::class.java)
+            intent.putExtra(Constant().GAME_MODE, Constant().GAME_MODE_CREATIVE)
+            startActivity(intent)
+//            startActivity(Intent(this, CustomGameSettingsActivity::class.java))
         }
 
         button_main_multiplayer.setOnClickListener {
-
+            val intent = Intent(this, GameSettingsActivity::class.java)
+            intent.putExtra(Constant().GAME_MODE, Constant().GAME_MODE_BLUETOOTH)
+            startActivity(intent)
         }
     }
 

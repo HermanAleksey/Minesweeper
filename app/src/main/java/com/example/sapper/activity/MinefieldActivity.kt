@@ -2,21 +2,17 @@ package com.example.sapper.activity
 
 import Saper
 import android.content.Intent
-import android.content.res.ColorStateList
-import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.example.sapper.Constant
 import com.example.sapper.MinefieldAdapter
 import com.example.sapper.R
-import kotlinx.android.synthetic.main.activity_game_settings.*
 import kotlinx.android.synthetic.main.activity_minefield.*
-import kotlin.properties.Delegates
 
 class MinefieldActivity : AppCompatActivity() {
 
@@ -25,16 +21,16 @@ class MinefieldActivity : AppCompatActivity() {
         setContentView(R.layout.activity_minefield)
 
         val width = intent.getIntExtra(
-            CustomGameSettingsActivity().WIDTH_TAG, 0
+            Constant().WIDTH_TAG, 0
         )
         val height = intent.getIntExtra(
-            CustomGameSettingsActivity().HEIGHT_TAG, 0
+            Constant().HEIGHT_TAG, 0
         )
         val minesCount = intent.getIntExtra(
-            CustomGameSettingsActivity().MINES_COUNT_TAG, 0
+            Constant().MINES_COUNT_TAG, 0
         )
         val firstClickCanBeOnAMine = intent.getBooleanExtra(
-            CustomGameSettingsActivity().CHECKBOX_TAG, false
+            Constant().FIRST_CLICK_MINE_TAG, false
         )
 
         textview_minefield_field_width.text = "$width"
@@ -54,7 +50,7 @@ class MinefieldActivity : AppCompatActivity() {
 //        Log.d("s", Saper().getFieldAsString(hostField!!))
 
         val userField =
-            Saper().generateUserMinefield(width, height)
+            Saper().(width, height)
 
         MinefieldAdapter().setupMinefield(userField, arrayButtonsField)
 
@@ -63,7 +59,7 @@ class MinefieldActivity : AppCompatActivity() {
         togglebutton_minefield_flag
             .setOnClickListener(onToggleButtonClickListener)
 
-        /*hostField =*/ setOnClickListenerForField(
+        hostField = setOnClickListenerForField(
             arrayButtonsField, userField, hostField, minesCount, firstClickCanBeOnAMine
         )
 
@@ -75,7 +71,7 @@ class MinefieldActivity : AppCompatActivity() {
         hostField: Array<Array<Char>>?,
         minesCount: Int,
         firstClickCanBeOnAMine: Boolean
-    )/*: Array<Array<Char>>*/ {
+    ): Array<Array<Char>> {
         for (y in arrayButtonsField.indices) {
             for (x in arrayButtonsField[y].indices) {
                 arrayButtonsField[x][y].setOnClickListener {
@@ -109,7 +105,7 @@ class MinefieldActivity : AppCompatActivity() {
 
                         }
 
-                        val loose = Saper().openCoordinate(x, y, hostField!!, userField)
+                        val loose = Saper().openCoordinate(x, y, hostField, userField)
                         if (!loose) {
                             Toast.makeText(this, "You проиграл", Toast.LENGTH_LONG).show()
                         }
@@ -149,26 +145,26 @@ override fun onRestoreInstanceState(savedInstanceState: Bundle) {
     super.onRestoreInstanceState(savedInstanceState)
 
     textview_minefield_field_width.text =
-        savedInstanceState.getInt(CustomGameSettingsActivity().WIDTH_TAG).toString()
+        savedInstanceState.getInt(Constant().WIDTH_TAG).toString()
     textview_minefield_field_height.text =
-        savedInstanceState.getInt(CustomGameSettingsActivity().HEIGHT_TAG).toString()
+        savedInstanceState.getInt(Constant().HEIGHT_TAG).toString()
     textview_minefield_mines_counter.text =
-        savedInstanceState.getInt(CustomGameSettingsActivity().MINES_COUNT_TAG).toString()
+        savedInstanceState.getInt(Constant().MINES_COUNT_TAG).toString()
 }
 
 override fun onSaveInstanceState(outState: Bundle) {
     super.onSaveInstanceState(outState)
 
     outState.putInt(
-        CustomGameSettingsActivity().WIDTH_TAG,
+        Constant().WIDTH_TAG,
         textview_minefield_field_width.text.toString().toInt()
     )
     outState.putInt(
-        CustomGameSettingsActivity().HEIGHT_TAG,
+        Constant().HEIGHT_TAG,
         textview_minefield_field_height.text.toString().toInt()
     )
     outState.putInt(
-        CustomGameSettingsActivity().MINES_COUNT_TAG,
+        Constant().MINES_COUNT_TAG,
         textview_minefield_mines_counter.text.toString().toInt()
     )
 }

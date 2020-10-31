@@ -2,6 +2,7 @@
     <string name="company">Кампания</string>
     <string name="singleplayer">Своя игра</string>
     <string name="multiplayer">Сетевая игра</string>
+    <string name="bluetooth">Bluetooth</string>
     <string name="rules">Правила</string>
     <string name="rulesOfTheGame">blablablablablablabblablablablablablablablablablablablablablablabl
         ablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablab
@@ -25,6 +26,18 @@
         <item>20*20</item>
         <item>25*25</item>
         <item>Другой вариант…</item>
+    </string-array>
+    <string-array name="fieldMinesCount">
+        <item>8</item>
+        <item>16</item>
+        <item>24</item>
+        <item>32</item>
+        <item>48</item>
+        <item>Другой вариант…</item>
+    </string-array>
+    <string-array name="minerRole">
+        <item>Я</item>
+        <item>Оппонент</item>
     </string-array>
 
     <!--    dialog size     -->
