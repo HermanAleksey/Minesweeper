@@ -69,10 +69,10 @@
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="mines left"/>
+                android:text="mines count"/>
 
             <TextView
-                android:id="@+id/textview_minefield_mines_counter"
+                android:id="@+id/textview_minefield_mines_count"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -89,12 +89,30 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/linear_layout_minefield"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_margin="10dp"
-            android:isScrollContainer="true"/>
+            android:isScrollContainer="true">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="horizontal|vertical">
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/linear_layout_minefield"
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content" />
+                </HorizontalScrollView>
+            </ScrollView>
+
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout

@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 
 class MinefieldAdapter {
 
+    /*Установка видимого минного поля в соответствии с переданным массивом*/
     fun setupMinefield(
         minefield: Array<Array<Char>>,
         arrayButtonsField: Array<Array<Button>>
@@ -27,7 +28,6 @@ class MinefieldAdapter {
                     Saper().UNKNOWN_SPOT -> {
                         arrayButtonsField[x][y]
                             .setBackgroundResource(R.drawable.ic_baseline_remove_red_eye_24)
-                        //.setText("")
                     }
                     Saper().FLAG -> {
                         arrayButtonsField[x][y]
@@ -63,6 +63,7 @@ class MinefieldAdapter {
         setupMinefield(userField, arrayButtonsField)
     }
 
+    /*generating visual (buttons) minefield*/
     fun createMinefield(
         width: Int,
         height: Int,
@@ -75,12 +76,11 @@ class MinefieldAdapter {
         for (y in 0 until height) {
 
             val linearLayoutString = LinearLayout(context)
-            linearLayoutString.id //=
 
             val layoutParams: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT,
-                1.0f
+                LinearLayout.LayoutParams.WRAP_CONTENT
+//                ,1.0f
             )
 
             linearLayoutMinefield.addView(linearLayoutString, layoutParams)
@@ -90,9 +90,10 @@ class MinefieldAdapter {
                 arrayButtonsField[x][y] = button
 
                 val param: ViewGroup.LayoutParams = LinearLayout.LayoutParams(
-                    0,
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    1.0f
+                    90,
+                    90
+//                    ViewGroup.LayoutParams.MATCH_PARENT,
+//                    ,1.0f
                 )
                 button.layoutParams = param
                 button.minWidth

@@ -65,15 +65,15 @@ class GameSettingsActivity : AppCompatActivity(),
             )
             myIntent.putExtra(
                 Constant().HEIGHT_TAG,
-                sizeParams.substringBeforeLast('*')
+                sizeParams.substringBeforeLast('*').toInt()
             )
             myIntent.putExtra(
                 Constant().WIDTH_TAG,
-                sizeParams.substringAfterLast('*')
+                sizeParams.substringAfterLast('*').toInt()
             )
             myIntent.putExtra(
                 Constant().MINES_COUNT_TAG,
-                spin_game_settings_mines_count.selectedItem.toString()
+                spin_game_settings_mines_count.selectedItem.toString().toInt()
             )
             myIntent.putExtra(
                 Constant().GAME_TIME_TAG,
