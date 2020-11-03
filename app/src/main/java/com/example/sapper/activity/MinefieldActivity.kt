@@ -69,20 +69,20 @@ class MinefieldActivity : AppCompatActivity() {
 
         val hostField: HostField = HostField(width, height, minesCount)
         val userField: UserField = UserField(width, height, minesCount)
-//        var HostField: Array<Array<Char>>? = null
-//        val userField = Saper().(width, height)
 
         MinefieldAdapter().setupMinefield(userField.content, arrayButtonsField)
 
+        /*for turning on only 1 button in the same time*/
         togglebutton_minefield_open
             .setOnClickListener(onToggleButtonClickListener)
         togglebutton_minefield_flag
             .setOnClickListener(onToggleButtonClickListener)
 
         setOnClickListenerForField(
-            arrayButtonsField, userField.content, hostField.content//, minesCount, firstClickCanBeOnAMine
+            arrayButtonsField,
+            userField.content,
+            hostField.content
         )
-
     }
 
     /*define how each cell gonna react to click with flag/open selected*/
@@ -90,47 +90,12 @@ class MinefieldActivity : AppCompatActivity() {
         arrayButtonsField: Array<Array<Button>>,
         userField: Array<Array<Char>>,
         hostField: Array<Array<Char>>
-//        ,        minesCount: Int,
-//        firstClickCanBeOnAMine: Boolean
     ) {
         for (y in arrayButtonsField.indices) {
             for (x in arrayButtonsField[y].indices) {
                 arrayButtonsField[x][y].setOnClickListener {
 
                     if (togglebutton_minefield_open.isChecked) {
-
-//                        if (hostField == null) {
-//
-//                            val newField: Array<Array<Char>>
-//                            if (!firstClickCanBeOnAMine) {
-//
-//                                newField = Saper().generateMinefield(
-//                                    userField[0].size,
-//                                    userField.size,
-//                                    minesCount, x, y
-//                                )
-//                                Log.d("s", Saper().getFieldAsString(newField))
-//                            } else {
-//                                newField = Saper().generateMinefield(
-//                                    userField[0].size,
-//                                    userField.size,
-//                                    minesCount
-//                                )
-//                            }
-//
-//                            setOnClickListenerForField(
-//                                arrayButtonsField,
-//                                userField,
-//                                newField,
-//                                minesCount,
-//                                firstClickCanBeOnAMine
-//                            )
-//                            arrayButtonsField[x][y].callOnClick()
-//
-//                            return@setOnClickListener
-//
-//                        }
-
                         val keepGame = Saper().openCoordinate(x, y, hostField, userField)
                         if (!keepGame) {
                             Toast.makeText(this, "You проиграл", Toast.LENGTH_LONG).show()
@@ -138,7 +103,7 @@ class MinefieldActivity : AppCompatActivity() {
                             /*если не проиграл - проверить, возможно теперь условия выполняются.*/
                             /*т.к. openCoordinate возвращает false только если проиграл и не отличает
                             * продолжение игры от победы*/
-                            if (Saper().checkWinCondition(hostField,userField)){
+                            if (Saper().checkWinCondition(hostField, userField)) {
                                 startActivity(Intent(this, MainActivity::class.java))
                             }
                         }
@@ -176,7 +141,6 @@ class MinefieldActivity : AppCompatActivity() {
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-
         textview_minefield_field_width.text =
             savedInstanceState.getInt(Constant().WIDTH_TAG).toString()
         textview_minefield_field_height.text =
@@ -187,7 +151,6 @@ class MinefieldActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-
         outState.putInt(
             Constant().WIDTH_TAG,
             textview_minefield_field_width.text.toString().toInt()

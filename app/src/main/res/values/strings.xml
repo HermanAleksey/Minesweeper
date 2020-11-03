@@ -19,6 +19,7 @@
     <string name="height">Height:</string>
     <string name="mines">Mines:</string>
     <string name="cancel">Cancel</string>
+    <string name="update">Update</string>
 
     <string-array name="fieldSizes">
         <item>8*8</item>
@@ -57,4 +58,10 @@
 
     <string name="enterAllParamsBeforeStart">You have tp enter all parameters before starting the game</string>
     <string name="firstClickCanBeOnAMine">First click can be on a mine</string>
+
+    <!--game modes-->
+    <string name="gameModeBluetooth">Bluetooth game</string>
+    <string name="gameModeCasual">Casual game</string>
+    <string name="gameModeCompany">Company game</string>
+
 </resources>

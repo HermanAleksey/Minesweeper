@@ -18,6 +18,7 @@
     <string name="height">Высота:</string>
     <string name="mines">Мины:</string>
     <string name="cancel">Отмена</string>
+    <string name="update">Обновить</string>
 
     <string-array name="fieldSizes">
         <item>8*8</item>
@@ -55,4 +56,9 @@
 
     <string name="enterAllParamsBeforeStart">Вы должны выбрать все параметры перед началом игры</string>
     <string name="firstClickCanBeOnAMine">Первое нажатие может быть на мине</string>
+
+    <!--game modes-->
+    <string name="gameModeBluetooth">Bluetooth игра</string>
+    <string name="gameModeCasual">Своя игра</string>
+    <string name="gameModeCompany">Кампания</string>
 </resources>

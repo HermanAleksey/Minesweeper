@@ -11,6 +11,7 @@ class Constant {
     val WHO_MINER_TAG = "com.example.sapper.Miner"
     val CLOSE_AFTER_GAME_TAG: String = "com.example.sapper.GameSettings.CloseAfterGame"
     val FIRST_CLICK_MINE_TAG: String = "com.example.sapper.GameSettings.FirstClickMine"
+    val USE_SAME_FIELD_TAG: String = "com.example.sapper.GameSettings.useSameField"
 
     val GAME_MODE = "com.example.sapper.activity.gameMode"
     val GAME_MODE_COMPANY = "com.example.sapper.activity.gameModeCompany"
@@ -18,7 +19,13 @@ class Constant {
 
     val GAME_MODE_CREATIVE = "com.example.sapper.activity.gameModeCreative"
     var GAME_MODE_NONE: String = "com.example.sapper.activity.None"
-
     val GAME_MODE_BLUETOOTH = "com.example.sapper.activity.gameModeBluetooth"
     val GAME_MODE_INTERNET = "com.example.sapper.activity.gameModeInternet"
+
+    val BLUETOOTH_ROLE = "com.example.sapper.activity.blueRole"
+    val ROLE_CLIENT = "com.example.sapper.activity.clientRole"
+    val ROLE_SERVER = "com.example.sapper.activity.serverRole"
+
+
+    val REQUEST_ENABLE_BLUETOOTH: Int = 10001
 }

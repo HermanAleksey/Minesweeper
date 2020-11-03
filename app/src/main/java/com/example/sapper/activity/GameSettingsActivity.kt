@@ -2,8 +2,10 @@ package com.example.sapper.activity
 
 import android.app.TimePickerDialog
 import android.app.TimePickerDialog.OnTimeSetListener
+import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -38,7 +40,8 @@ class GameSettingsActivity : AppCompatActivity(),
         when (mode) {
             Constant().GAME_MODE_CREATIVE -> {
                 tv_game_settings_game_mode.text = getString(R.string.singleplayer)
-                ll_game_settings_miner.visibility = View.GONE
+//                ll_game_settings_miner.visibility = View.GONE
+                ll_game_settings_use_same_field.visibility = View.GONE
                 ll_game_settings_exit.visibility = View.GONE
             }
             Constant().GAME_MODE_BLUETOOTH -> {
@@ -55,9 +58,21 @@ class GameSettingsActivity : AppCompatActivity(),
 
         /*setting click listener for button Create */
         btn_game_settings_create_game.setOnClickListener {
-            val myIntent = if (mode == Constant().GAME_MODE_BLUETOOTH) {
-                Intent(this, WaitingRoomActivity::class.java)
-            } else Intent(this, MinefieldActivity::class.java)
+            val myIntent = when (mode ) {
+                Constant().GAME_MODE_BLUETOOTH -> {
+                    //if bluetooth is turned off - asking to turn it on
+                    val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+                    if (!bluetoothAdapter.isEnabled) {
+                        val enableIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+                        startActivityForResult(enableIntent, Constant().REQUEST_ENABLE_BLUETOOTH)
+                        return@setOnClickListener
+                    }
+                    Intent(this, WaitingRoomActivity::class.java)
+                }
+                else -> {
+                    Intent(this, MinefieldActivity::class.java)
+                }
+            }
             val sizeParams = spin_game_settings_field_size.selectedItem.toString()
             myIntent.putExtra(
                 Constant().GAME_MODE,
@@ -83,10 +98,15 @@ class GameSettingsActivity : AppCompatActivity(),
                 Constant().FIRST_CLICK_MINE_TAG,
                 cb_game_settings_first_click_mine.isChecked
             )
+
             if (mode == Constant().GAME_MODE_BLUETOOTH) {
                 myIntent.putExtra(
-                    Constant().WHO_MINER_TAG,
-                    spin_game_settings_miner.selectedItem.toString()
+                    Constant().BLUETOOTH_ROLE,
+                    Constant().ROLE_SERVER
+                )
+                myIntent.putExtra(
+                    Constant().USE_SAME_FIELD_TAG,
+                    cb_game_settings_use_same_field.isChecked
                 )
                 myIntent.putExtra(
                     Constant().CLOSE_AFTER_GAME_TAG,
@@ -145,12 +165,6 @@ class GameSettingsActivity : AppCompatActivity(),
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
-        /*miner role*/
-        val adapterGameSettingsMinerSelection: ArrayAdapter<String> = ArrayAdapter(
-            this, R.layout.spinner_layout_game_settings,
-            R.id.textview_spinner_layout_text, resources.getStringArray(R.array.minerRole)
-        )
-        spin_game_settings_miner.adapter = adapterGameSettingsMinerSelection
     }
 
     /*option menu*/

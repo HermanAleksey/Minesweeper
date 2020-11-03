@@ -85,22 +85,39 @@
             android:text="Выбрать"/>
     </LinearLayout>
 
+<!--    <LinearLayout-->
+<!--        android:id="@+id/ll_game_settings_miner"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content">-->
+<!--        <TextView-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:text="Минёр:"/>-->
+
+<!--        <Spinner-->
+<!--            android:id="@+id/spin_game_settings_miner"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_height="match_parent" />-->
+
+<!--    </LinearLayout>-->
+
     <LinearLayout
-        android:id="@+id/ll_game_settings_miner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="Минёр:"/>
+            android:text="Первое нажатие может быть миной:"/>
 
-        <Spinner
-            android:id="@+id/spin_game_settings_miner"
+        <CheckBox
+            android:id="@+id/cb_game_settings_first_click_mine"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent" />
-
+            android:layout_height="match_parent"
+            android:checked="true"/>
     </LinearLayout>
 
     <LinearLayout
@@ -121,20 +138,20 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_game_settings_use_same_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="Первое нажатие может быть миной:"/>
+            android:text="Использовать одинаковое поле:"/>
 
         <CheckBox
-            android:id="@+id/cb_game_settings_first_click_mine"
+            android:id="@+id/cb_game_settings_use_same_field"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:checked="true"/>
+            android:layout_height="match_parent" />
     </LinearLayout>
 
     <Button

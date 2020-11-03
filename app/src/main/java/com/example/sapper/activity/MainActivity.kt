@@ -1,10 +1,12 @@
 package com.example.sapper.activity
 
 import Saper
+import android.bluetooth.BluetoothAdapter
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
@@ -27,13 +29,26 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, GameSettingsActivity::class.java)
             intent.putExtra(Constant().GAME_MODE, Constant().GAME_MODE_CREATIVE)
             startActivity(intent)
-//            startActivity(Intent(this, CustomGameSettingsActivity::class.java))
         }
 
         button_main_multiplayer.setOnClickListener {
             val intent = Intent(this, GameSettingsActivity::class.java)
             intent.putExtra(Constant().GAME_MODE, Constant().GAME_MODE_BLUETOOTH)
             startActivity(intent)
+        }
+        button_main_multiplayer_client.setOnClickListener {
+            /*if bluetooth is turned off -> request to turn on
+            * if already turned on - start new activity for searching game*/
+            val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+            if (!bluetoothAdapter.isEnabled) {
+                val enableIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+                startActivityForResult(enableIntent, Constant().REQUEST_ENABLE_BLUETOOTH)
+            } else {
+                val intent = Intent(this, WaitingRoomActivity::class.java)
+                intent.putExtra(Constant().GAME_MODE, Constant().GAME_MODE_BLUETOOTH)
+                intent.putExtra(Constant().BLUETOOTH_ROLE, Constant().ROLE_CLIENT)
+                startActivity(intent)
+            }
         }
     }
 
