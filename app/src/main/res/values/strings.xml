@@ -64,4 +64,7 @@
     <string name="gameModeCasual">Casual game</string>
     <string name="gameModeCompany">Company game</string>
 
+    <string name="win">Win!</string>
+    <string name="lose">Defeat…</string>
+
 </resources>

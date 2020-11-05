@@ -5,6 +5,7 @@ import Saper
 import UserField
 import android.content.Intent
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -23,6 +24,8 @@ class MinefieldActivity : AppCompatActivity() {
     var height: Int = 0
     var width: Int = 0
     var minesCount: Int = 0
+    var gameTimeMinutes: Int = 0
+    var gameTimeSeconds: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,9 +36,34 @@ class MinefieldActivity : AppCompatActivity() {
         height = intent.getIntExtra(GameConstant().HEIGHT_TAG, 0)
         width = intent.getIntExtra(GameConstant().WIDTH_TAG, 0)
         minesCount = intent.getIntExtra(GameConstant().MINES_COUNT_TAG, 0)
-        val gameTime = intent.getStringExtra(GameConstant().GAME_TIME_TAG)
+        gameTimeMinutes = intent.getIntExtra(GameConstant().GAME_TIME_MINUTES_TAG, 0)
+        gameTimeSeconds = intent.getIntExtra(GameConstant().GAME_TIME_SECONDS_TAG, 0)
         val firstClickCanBeOnAMine =
             intent.getBooleanExtra(GameConstant().FIRST_CLICK_MINE_TAG, false)
+
+        val gameTimerMilli = translateToMilli("$gameTimeMinutes:$gameTimeSeconds")
+        if (gameTimerMilli == 0L){
+            
+        } else {
+            object : CountDownTimer(gameTimerMilli, 1000) {
+                override fun onTick(millisUntilFinished: Long) {
+                    if (tv_minefield_seconds.text != "0") {
+                        tv_minefield_seconds.text =
+                            "${tv_minefield_seconds.text.toString().toInt() - 1}"
+                    } else {
+                        tv_minefield_minutes.text =
+                            "${tv_minefield_minutes.text.toString().toInt() - 1}"
+                        tv_minefield_seconds.text = "59"
+                    }
+                }
+
+                override fun onFinish() {
+                    val mIntent = Intent(this@MinefieldActivity, GameResultsActivity::class.java)
+                    mIntent.putExtra(GameConstant().GAME_RESULT, GameConstant().GAME_RESULT_DEFEAT)
+                    startActivity(mIntent)
+                }
+            }.start()
+        }
 
         var useSameField: Boolean = false
         var closeAfterGame: Boolean = false
@@ -45,12 +73,13 @@ class MinefieldActivity : AppCompatActivity() {
             closeAfterGame =
                 intent.getBooleanExtra(GameConstant().CLOSE_AFTER_GAME_TAG, false)
         }
-        Toast.makeText(this, "useSameField:$useSameField", Toast.LENGTH_SHORT).show()
+
 
         /*filling view*/
         textview_minefield_field_width.text = "$width"
         textview_minefield_field_height.text = "$height"
-        textview_minefield_time_passed.text = gameTime
+        tv_minefield_minutes.text = "$gameTimeMinutes"
+        tv_minefield_seconds.text = "$gameTimeSeconds"
         textview_minefield_mines_count.text = "$minesCount"
 
         val linearLayoutMinefield =
@@ -82,6 +111,13 @@ class MinefieldActivity : AppCompatActivity() {
         )
     }
 
+    private fun translateToMilli(str: String): Long{
+        val hours = str.substringBefore(":").toInt()
+        val minutes = str.substringAfter(":").toInt()
+
+        return ((hours*60)+minutes)*1000.toLong()
+    }
+
     /*define how each cell gonna react to click with flag/open selected*/
     private fun setOnClickListenerForField(
         arrayButtonsField: Array<Array<Button>>,
@@ -98,13 +134,17 @@ class MinefieldActivity : AppCompatActivity() {
 
                         val keepGame = Saper().openCoordinate(x, y, hostField!!.content, userField)
                         if (!keepGame) {
-                            Toast.makeText(this, "You проиграл", Toast.LENGTH_LONG).show()
+                            val mIntent = Intent(this, GameResultsActivity::class.java)
+                            mIntent.putExtra(GameConstant().GAME_RESULT,GameConstant().GAME_RESULT_DEFEAT)
+                            startActivity(mIntent)
                         } else {
                             /*если не проиграл - проверить, возможно теперь условия выполняются.*/
                             /*т.к. openCoordinate возвращает false только если проиграл и не отличает
                             * продолжение игры от победы*/
                             if (Saper().checkWinCondition(hostField!!.content, userField)) {
-                                startActivity(Intent(this, MainActivity::class.java))
+                                val mIntent = Intent(this, GameResultsActivity::class.java)
+                                mIntent.putExtra(GameConstant().GAME_RESULT,GameConstant().GAME_RESULT_WIN)
+                                startActivity(mIntent)
                             }
                         }
                         MinefieldAdapter().setupMinefield(userField, arrayButtonsField)
@@ -114,7 +154,9 @@ class MinefieldActivity : AppCompatActivity() {
                         val win = Saper().useFlagOnSpot(x, y, hostField!!.content, userField)
                         MinefieldAdapter().setupMinefield(userField, arrayButtonsField)
                         if (win) {
-                            startActivity(Intent(this, MainActivity::class.java))
+                            val mIntent = Intent(this, GameResultsActivity::class.java)
+                            mIntent.putExtra(GameConstant().GAME_RESULT,GameConstant().GAME_RESULT_WIN)
+                            startActivity(mIntent)
                         }
                     }
                 }
@@ -163,5 +205,9 @@ class MinefieldActivity : AppCompatActivity() {
             GameConstant().MINES_COUNT_TAG,
             textview_minefield_mines_count.text.toString().toInt()
         )
+    }
+
+    override fun onBackPressed() {
+        finish()
     }
 }

@@ -1,25 +1,37 @@
 package com.example.sapper.activity
 
-import Saper
-import android.bluetooth.BluetoothAdapter
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.os.CountDownTimer
+import android.os.SystemClock
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
+import android.widget.Chronometer
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import com.example.sapper.Constant
 import com.example.sapper.R
 import kotlinx.android.synthetic.main.activity_main.*
+import java.text.SimpleDateFormat
+import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        object : CountDownTimer(5000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+            }
+
+            override fun onFinish() {
+            }
+        }.start()
 
         button_main_company.setOnClickListener {
             startActivity(Intent(this, CompanyLevelActivity::class.java))
@@ -30,26 +42,25 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra(Constant().GAME_MODE, Constant().GAME_MODE_CREATIVE)
             startActivity(intent)
         }
-
-        button_main_multiplayer.setOnClickListener {
-            val intent = Intent(this, GameSettingsActivity::class.java)
-            intent.putExtra(Constant().GAME_MODE, Constant().GAME_MODE_BLUETOOTH)
-            startActivity(intent)
-        }
-        button_main_multiplayer_client.setOnClickListener {
-            /*if bluetooth is turned off -> request to turn on
-            * if already turned on - start new activity for searching game*/
-            val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-            if (!bluetoothAdapter.isEnabled) {
-                val enableIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-                startActivityForResult(enableIntent, Constant().REQUEST_ENABLE_BLUETOOTH)
-            } else {
-                val intent = Intent(this, WaitingRoomActivity::class.java)
-                intent.putExtra(Constant().GAME_MODE, Constant().GAME_MODE_BLUETOOTH)
-                intent.putExtra(Constant().BLUETOOTH_ROLE, Constant().ROLE_CLIENT)
-                startActivity(intent)
-            }
-        }
+//        button_main_multiplayer.setOnClickListener {
+//            val intent = Intent(this, GameSettingsActivity::class.java)
+//            intent.putExtra(Constant().GAME_MODE, Constant().GAME_MODE_BLUETOOTH)
+//            startActivity(intent)
+//        }
+//        button_main_multiplayer_client.setOnClickListener {
+//            /*if bluetooth is turned off -> request to turn on
+//            * if already turned on - start new activity for searching game*/
+//            val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+//            if (!bluetoothAdapter.isEnabled) {
+//                val enableIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+//                startActivityForResult(enableIntent, Constant().REQUEST_ENABLE_BLUETOOTH)
+//            } else {
+//                val intent = Intent(this, WaitingRoomActivity::class.java)
+//                intent.putExtra(Constant().GAME_MODE, Constant().GAME_MODE_BLUETOOTH)
+//                intent.putExtra(Constant().BLUETOOTH_ROLE, Constant().ROLE_CLIENT)
+//                startActivity(intent)
+//            }
+//        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -76,3 +87,5 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
+
+

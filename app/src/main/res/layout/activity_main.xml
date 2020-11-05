@@ -39,21 +39,22 @@
             style="@style/StyleMenuButtonFormat"
             android:layout_margin="8dp"/>
 
-        <Button
-            android:id="@+id/button_main_multiplayer"
-            android:layout_width="196dp"
-            android:layout_height="wrap_content"
-            android:text="@string/multiplayer"
-            style="@style/StyleMenuButtonFormat"
-            android:layout_margin="8dp"/>
 
-        <Button
-            android:id="@+id/button_main_multiplayer_client"
-            android:layout_width="196dp"
-            android:layout_height="wrap_content"
-            android:text="Client"
-            style="@style/StyleMenuButtonFormat"
-            android:layout_margin="8dp"/>
+<!--        <Button-->
+<!--            android:id="@+id/button_main_multiplayer"-->
+<!--            android:layout_width="196dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/multiplayer"-->
+<!--            style="@style/StyleMenuButtonFormat"-->
+<!--            android:layout_margin="8dp"/>-->
+
+<!--        <Button-->
+<!--            android:id="@+id/button_main_multiplayer_client"-->
+<!--            android:layout_width="196dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Client"-->
+<!--            style="@style/StyleMenuButtonFormat"-->
+<!--            android:layout_margin="8dp"/>-->
 
     </LinearLayout>
 

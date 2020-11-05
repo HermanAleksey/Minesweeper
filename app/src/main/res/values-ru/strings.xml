@@ -61,4 +61,7 @@
     <string name="gameModeBluetooth">Bluetooth игра</string>
     <string name="gameModeCasual">Своя игра</string>
     <string name="gameModeCompany">Кампания</string>
+
+    <string name="win">Победа!</string>
+    <string name="lose">Поражение…</string>
 </resources>

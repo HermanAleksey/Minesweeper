@@ -1,7 +1,5 @@
 package com.example.sapper.activity
 
-import android.app.TimePickerDialog
-import android.app.TimePickerDialog.OnTimeSetListener
 import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.os.Bundle
@@ -28,11 +26,17 @@ class GameSettingsActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.new_activity_game_settings)
 
+        np_game_settings_minutes.minValue = 0
+        np_game_settings_minutes.maxValue = 59
+        np_game_settings_seconds.minValue = 0
+        np_game_settings_seconds.maxValue = 59
+
+
         val mode = if (savedInstanceState == null) {
             intent.getStringExtra(Constant().GAME_MODE)
         } else {
-            tv_game_settings_game_time_selected.text =
-                savedInstanceState.getString(GameConstant().GAME_TIME_TAG, "00:00")
+//            tv_game_settings_game_time_selected.text =
+//                savedInstanceState.getString(GameConstant().GAME_TIME_TAG, "00:00")
             savedInstanceState.getString(Constant().GAME_MODE)
         }
         /*setting game mode note*/
@@ -59,11 +63,6 @@ class GameSettingsActivity : AppCompatActivity(),
             if (cb_game_settings_use_same_field.isChecked){
                 cb_game_settings_first_click_mine.isChecked = false
             }
-        }
-
-        /*Time picker button*/
-        btn_game_settings_game_time.setOnClickListener {
-            showTimePickerDialog()
         }
 
         /*setting click listener for button Create */
@@ -101,8 +100,12 @@ class GameSettingsActivity : AppCompatActivity(),
                 spin_game_settings_mines_count.selectedItem.toString().toInt()
             )
             myIntent.putExtra(
-                GameConstant().GAME_TIME_TAG,
-                tv_game_settings_game_time_selected.text.toString()
+                GameConstant().GAME_TIME_MINUTES_TAG,
+                np_game_settings_minutes.value
+            )
+            myIntent.putExtra(
+                GameConstant().GAME_TIME_SECONDS_TAG,
+                np_game_settings_seconds.value
             )
             myIntent.putExtra(
                 GameConstant().FIRST_CLICK_MINE_TAG,
@@ -129,10 +132,9 @@ class GameSettingsActivity : AppCompatActivity(),
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(Constant().GAME_MODE, tv_game_settings_game_mode.text.toString())
         outState.putString(
-            GameConstant().GAME_TIME_TAG,
-            tv_game_settings_game_time_selected.text.toString()
+            Constant().GAME_MODE,
+            tv_game_settings_game_mode.text.toString()
         )
     }
 
@@ -209,26 +211,5 @@ class GameSettingsActivity : AppCompatActivity(),
     private fun showSettingMinesCountDialog() {
         val settingMinesCountDialog = DialogSettingMinesCount()
         settingMinesCountDialog.show(supportFragmentManager, Constant().SETTING_MINES_COUNT_DIALOG)
-    }
-
-    private fun showTimePickerDialog() {
-        val hour = 0
-        val minute = 0
-        val callBack =
-            OnTimeSetListener { view, hourOfDay, minute ->
-                tv_game_settings_game_time_selected.text =
-                    "$hourOfDay:$minute"
-            }
-        val timePickerDialog = TimePickerDialog(
-            this,
-            android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
-            callBack,
-            hour,
-            minute,
-            true
-        )
-        timePickerDialog.setTitle("Choose time:")
-        timePickerDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
-        timePickerDialog.show()
     }
 }
