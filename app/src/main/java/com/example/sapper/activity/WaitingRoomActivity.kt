@@ -14,8 +14,10 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.example.sapper.Constant
+import com.example.sapper.GameConstant
 import com.example.sapper.R
 import kotlinx.android.synthetic.main.activity_waiting_room.*
+import kotlinx.android.synthetic.main.new_activity_game_settings.*
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
@@ -55,7 +57,7 @@ class WaitingRoomActivity : AppCompatActivity() {
         }
 
         role = intent.getStringExtra(Constant().BLUETOOTH_ROLE)!!
-        when (role){
+        when (role) {
             Constant().ROLE_SERVER -> {
                 ll_client_waiting_room.visibility = View.GONE
                 //fill info about game
@@ -72,20 +74,20 @@ class WaitingRoomActivity : AppCompatActivity() {
 
     }
 
-    private fun fillServerRoomInfoFromIntent(){
-        val gameMode = when (intent.getStringExtra(Constant().GAME_MODE)){
+    private fun fillServerRoomInfoFromIntent() {
+        val gameMode = when (intent.getStringExtra(Constant().GAME_MODE)) {
             Constant().GAME_MODE_BLUETOOTH -> getString(R.string.gameModeBluetooth)
             Constant().GAME_MODE_COMPANY -> getString(R.string.gameModeCompany)
             Constant().GAME_MODE_CREATIVE -> getString(R.string.gameModeCasual)
             else -> ""
         }
-        val width = intent.getIntExtra(Constant().WIDTH_TAG, 0)
-        val height = intent.getIntExtra(Constant().HEIGHT_TAG, 0)
-        val minesCount = intent.getIntExtra(Constant().MINES_COUNT_TAG, 0)
-        val gameTime = intent.getStringExtra(Constant().GAME_TIME_TAG)
-        val firstClickMine = intent.getBooleanExtra(Constant().FIRST_CLICK_MINE_TAG, false)
-        val exitOnLose = intent.getBooleanExtra(Constant().CLOSE_AFTER_GAME_TAG, false)
-        val useSameField = intent.getBooleanExtra(Constant().USE_SAME_FIELD_TAG, false)
+        val width = intent.getIntExtra(GameConstant().WIDTH_TAG, 0)
+        val height = intent.getIntExtra(GameConstant().HEIGHT_TAG, 0)
+        val minesCount = intent.getIntExtra(GameConstant().MINES_COUNT_TAG, 0)
+        val gameTime = intent.getStringExtra(GameConstant().GAME_TIME_TAG)
+        val firstClickMine = intent.getBooleanExtra(GameConstant().FIRST_CLICK_MINE_TAG, false)
+        val exitOnLose = intent.getBooleanExtra(GameConstant().CLOSE_AFTER_GAME_TAG, false)
+        val useSameField = intent.getBooleanExtra(GameConstant().USE_SAME_FIELD_TAG, false)
 
         tv_host_room_game_mode.text = gameMode
         tv_host_room_field_height.text = height.toString()
@@ -94,9 +96,12 @@ class WaitingRoomActivity : AppCompatActivity() {
         tv_host_room_time_limit.text = gameTime
         chb_host_room_first_click.isChecked = firstClickMine
         cb_host_room_exit.isChecked = exitOnLose
+        cb_host_room_use_same_field.isChecked = useSameField
+
+        tv_host_room_player_1_name.text = bluetoothAdapter.name
     }
 
-    private fun sendMessageToConnectedDevice(str: String){
+    private fun sendMessageToConnectedDevice(str: String) {
         sendReceive.write(str.toByteArray())
     }
 
@@ -126,6 +131,18 @@ class WaitingRoomActivity : AppCompatActivity() {
             title = "Connecting"
         }
         //host LL
+        btn_host_room_start_game.setOnClickListener {
+            sendMessageToConnectedDevice("start game")
+//            val minefieldIntent = Intent(this,MinefieldActivity::class.java)
+//            minefieldIntent.putExtra(Constant().GAME_MODE, Constant().GAME_MODE_BLUETOOTH)
+//            minefieldIntent.putExtra(GameConstant().WIDTH_TAG,tv_host_room_field_width.text.toString().toInt())
+//            minefieldIntent.putExtra(GameConstant().HEIGHT_TAG,tv_host_room_field_height.text.toString().toInt())
+//            minefieldIntent.putExtra(GameConstant().MINES_COUNT_TAG,tv_host_room_mines_amount.text.toString().toInt())
+//            minefieldIntent.putExtra(GameConstant().GAME_TIME_TAG,tv_host_room_time_limit.text.toString())
+//            minefieldIntent.putExtra(GameConstant().USE_SAME_FIELD_TAG,cb_host_room_use_same_field.isChecked)
+//            minefieldIntent.putExtra(GameConstant().FIRST_CLICK_MINE_TAG,cb_game_settings_first_click_mine.isChecked)
+//            startActivity(minefieldIntent)
+        }
     }
 
     val handler: Handler = Handler {
@@ -138,7 +155,33 @@ class WaitingRoomActivity : AppCompatActivity() {
             }
             STATE_CONNECTED -> {
                 title = "Connected"
+                if (role == Constant().ROLE_CLIENT) {
+                    //make LL of room info visible
+                    ll_host_waiting_room.visibility = View.VISIBLE
+                    ll_client_waiting_room.visibility = View.GONE
+                    btn_host_room_start_game.visibility = View.GONE
+                    //setup nickname of client
+                    tv_host_room_player_2_name.text = bluetoothAdapter.name
+                    //now possible to start game
+                    btn_host_room_start_game.isClickable = true
 
+                    sendMessageToConnectedDevice("initial")
+                    //sending username
+                    sendMessageToConnectedDevice("ClientName:${bluetoothAdapter.name};")
+                }
+                if (role == Constant().ROLE_SERVER) {
+                    sendMessageToConnectedDevice("initial")
+                    //sending username
+                    sendMessageToConnectedDevice("ServerName:${bluetoothAdapter.name};")
+                    //server sending info about room
+                    sendMessageToConnectedDevice("ServerRoomMode:${tv_host_room_game_mode.text};")
+                    sendMessageToConnectedDevice("ServerRoomHeight:${tv_host_room_field_height.text};")
+                    sendMessageToConnectedDevice("ServerRoomWidth:${tv_host_room_field_width.text};")
+                    sendMessageToConnectedDevice("ServerRoomMinesCount:${tv_host_room_mines_amount.text};")
+                    sendMessageToConnectedDevice("ServerRoomTimeLimit:${tv_host_room_time_limit.text};")
+                    sendMessageToConnectedDevice("ServerRoomFirstClick:${chb_host_room_first_click.isChecked};")
+                    sendMessageToConnectedDevice("ServerRoomSameField:${cb_host_room_use_same_field.isChecked};")
+                }
             }
             STATE_CONNECTION_FAILED -> {
                 title = "Connection failed"
@@ -146,14 +189,56 @@ class WaitingRoomActivity : AppCompatActivity() {
             STATE_MESSAGE_RECIEVED -> {
                 val readBuffer: ByteArray = it.obj as ByteArray
                 val tempMessage = String(readBuffer, 0, it.arg1)
-//                tv_message.text = tempMessage
-                Toast.makeText(this, tempMessage, Toast.LENGTH_SHORT).show()
-                when (tempMessage.toLowerCase(Locale.ROOT)) {
-                    "startGame" -> {
-                        /*переход на активность, где будет игра*/
-                        val intent = Intent(this, MainActivity::class.java)
-                        startActivity(intent)
-                        /*также необходимо передать поле игрока и хоста*/
+
+                if (role == Constant().ROLE_SERVER) {
+                    if (tempMessage.startsWith("initial")) {
+                        //processing client nickname from Client
+                        tv_host_room_player_2_name.text =
+                            tempMessage.substringAfter("ClientName:").substringBefore(";")
+                    }
+                    if (tempMessage.startsWith("endGameClient")){
+                        MinefieldActivity().finish()
+                    }
+                }
+                if (role == Constant().ROLE_CLIENT) {
+                    if (tempMessage.startsWith("initial")) {
+                        tv_host_room_player_1_name.text =
+                            tempMessage.substringAfter("ServerName:").substringBefore(";")
+                        tv_host_room_game_mode.text =
+                            tempMessage.substringAfter("ServerRoomMode:").substringBefore(";")
+                        tv_host_room_field_height.text =
+                            tempMessage.substringAfter("ServerRoomHeight:").substringBefore(";")
+                        tv_host_room_field_width.text =
+                            tempMessage.substringAfter("ServerRoomWidth:").substringBefore(";")
+                        tv_host_room_mines_amount.text =
+                            tempMessage.substringAfter("ServerRoomMinesCount:").substringBefore(";")
+                        tv_host_room_time_limit.text =
+                            tempMessage.substringAfter("ServerRoomTimeLimit:").substringBefore(";")
+
+                        chb_host_room_first_click.isChecked =
+                            tempMessage.substringAfter("ServerRoomFirstClick:")
+                                .substringBefore(";") == "true"
+                        cb_host_room_exit.isChecked =
+                            tempMessage.substringAfter("ServerRoomLeaveAfter:")
+                                .substringBefore(";") == "true"
+                        cb_host_room_use_same_field.isChecked =
+                            tempMessage.substringAfter("ServerRoomSameField:")
+                                .substringBefore(";") == "true"
+                    } else
+                    if (tempMessage.startsWith("start game")){
+                        val minefieldIntent = Intent(this,MinefieldActivity::class.java)
+                        minefieldIntent.putExtra(Constant().GAME_MODE, Constant().GAME_MODE_BLUETOOTH)
+                        minefieldIntent.putExtra(GameConstant().WIDTH_TAG,tv_host_room_field_width.text.toString().toInt())
+                        minefieldIntent.putExtra(GameConstant().HEIGHT_TAG,tv_host_room_field_height.text.toString().toInt())
+                        minefieldIntent.putExtra(GameConstant().MINES_COUNT_TAG,tv_host_room_mines_amount.text.toString().toInt())
+                        minefieldIntent.putExtra(GameConstant().GAME_TIME_TAG,tv_host_room_time_limit.text.toString())
+                        minefieldIntent.putExtra(GameConstant().USE_SAME_FIELD_TAG,cb_host_room_use_same_field.isChecked)
+                        minefieldIntent.putExtra(GameConstant().CLOSE_AFTER_GAME_TAG,cb_game_settings_exit.isChecked)
+//                        minefieldIntent.putExtra(GameConstant().FIRST_CLICK_MINE_TAG,cb_game_settings_first_click_mine.isChecked)
+                        startActivity(minefieldIntent)
+                    }
+                    if (tempMessage.startsWith("endGameServer")){
+                        MinefieldActivity().finish()
                     }
                 }
             }

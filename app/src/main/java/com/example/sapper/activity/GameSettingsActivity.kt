@@ -5,15 +5,14 @@ import android.app.TimePickerDialog.OnTimeSetListener
 import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sapper.Constant
+import com.example.sapper.GameConstant
 import com.example.sapper.R
 import com.example.sapper.dialog.DialogSettingMinesCount
 import com.example.sapper.dialog.DialogSettingsSize
@@ -33,14 +32,13 @@ class GameSettingsActivity : AppCompatActivity(),
             intent.getStringExtra(Constant().GAME_MODE)
         } else {
             tv_game_settings_game_time_selected.text =
-                savedInstanceState.getString(Constant().GAME_TIME_TAG, "0:0")
+                savedInstanceState.getString(GameConstant().GAME_TIME_TAG, "00:00")
             savedInstanceState.getString(Constant().GAME_MODE)
         }
         /*setting game mode note*/
         when (mode) {
             Constant().GAME_MODE_CREATIVE -> {
                 tv_game_settings_game_mode.text = getString(R.string.singleplayer)
-//                ll_game_settings_miner.visibility = View.GONE
                 ll_game_settings_use_same_field.visibility = View.GONE
                 ll_game_settings_exit.visibility = View.GONE
             }
@@ -50,6 +48,18 @@ class GameSettingsActivity : AppCompatActivity(),
         }
 
         configureSpinners()
+
+        /*can't be selected and FirstClickNotMine and UseSameField*/
+        cb_game_settings_first_click_mine.setOnClickListener{
+            if (cb_game_settings_first_click_mine.isChecked){
+                cb_game_settings_use_same_field.isChecked = false
+            }
+        }
+        cb_game_settings_use_same_field.setOnClickListener{
+            if (cb_game_settings_use_same_field.isChecked){
+                cb_game_settings_first_click_mine.isChecked = false
+            }
+        }
 
         /*Time picker button*/
         btn_game_settings_game_time.setOnClickListener {
@@ -79,23 +89,23 @@ class GameSettingsActivity : AppCompatActivity(),
                 mode
             )
             myIntent.putExtra(
-                Constant().HEIGHT_TAG,
+                GameConstant().HEIGHT_TAG,
                 sizeParams.substringBeforeLast('*').toInt()
             )
             myIntent.putExtra(
-                Constant().WIDTH_TAG,
+                GameConstant().WIDTH_TAG,
                 sizeParams.substringAfterLast('*').toInt()
             )
             myIntent.putExtra(
-                Constant().MINES_COUNT_TAG,
+                GameConstant().MINES_COUNT_TAG,
                 spin_game_settings_mines_count.selectedItem.toString().toInt()
             )
             myIntent.putExtra(
-                Constant().GAME_TIME_TAG,
+                GameConstant().GAME_TIME_TAG,
                 tv_game_settings_game_time_selected.text.toString()
             )
             myIntent.putExtra(
-                Constant().FIRST_CLICK_MINE_TAG,
+                GameConstant().FIRST_CLICK_MINE_TAG,
                 cb_game_settings_first_click_mine.isChecked
             )
 
@@ -105,11 +115,11 @@ class GameSettingsActivity : AppCompatActivity(),
                     Constant().ROLE_SERVER
                 )
                 myIntent.putExtra(
-                    Constant().USE_SAME_FIELD_TAG,
+                    GameConstant().USE_SAME_FIELD_TAG,
                     cb_game_settings_use_same_field.isChecked
                 )
                 myIntent.putExtra(
-                    Constant().CLOSE_AFTER_GAME_TAG,
+                    GameConstant().CLOSE_AFTER_GAME_TAG,
                     cb_game_settings_exit.isChecked
                 )
             }
@@ -121,7 +131,7 @@ class GameSettingsActivity : AppCompatActivity(),
         super.onSaveInstanceState(outState)
         outState.putString(Constant().GAME_MODE, tv_game_settings_game_mode.text.toString())
         outState.putString(
-            Constant().GAME_TIME_TAG,
+            GameConstant().GAME_TIME_TAG,
             tv_game_settings_game_time_selected.text.toString()
         )
     }
