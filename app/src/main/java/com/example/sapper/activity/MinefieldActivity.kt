@@ -6,17 +6,19 @@ import UserField
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
+import android.os.Handler
+import android.os.SystemClock
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
-import android.widget.Toast
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sapper.Constant
 import com.example.sapper.GameConstant
 import com.example.sapper.MinefieldAdapter
 import com.example.sapper.R
 import kotlinx.android.synthetic.main.activity_minefield.*
+
 
 class MinefieldActivity : AppCompatActivity() {
 
@@ -27,9 +29,48 @@ class MinefieldActivity : AppCompatActivity() {
     var gameTimeMinutes: Int = 0
     var gameTimeSeconds: Int = 0
 
+    lateinit var tv_minefield_seconds: TextView
+    lateinit var tv_minefield_minutes: TextView
+
+    lateinit var handler: Handler
+
+    var millisecondTime: Long = 0
+    var startTime: Long = 0
+    var timeBuff: Long = 0
+    var updateTime: Long = 0
+    var seconds: Int = 0
+    var minutes: Int = 0
+    var milliSeconds: Int = 0
+    var runnable: Runnable = object : Runnable {
+        override fun run() {
+            millisecondTime = SystemClock.uptimeMillis() - startTime
+            updateTime = timeBuff + millisecondTime
+            seconds = (updateTime / 1000).toInt()
+            minutes = seconds / 60
+            seconds %= 60
+            milliSeconds = (updateTime % 1000).toInt()
+            tv_minefield_seconds.text = "${
+                if (seconds < 10) {
+                    "0$seconds"
+                } else seconds
+            }"
+            tv_minefield_minutes.text = "${
+                if (minutes < 10) {
+                    "0$minutes"
+                } else minutes
+            }"
+            handler.postDelayed(this, 0)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_minefield)
+
+        tv_minefield_seconds = findViewById(R.id.tv_minefield_seconds)
+        tv_minefield_minutes = findViewById(R.id.tv_minefield_minutes)
+
+        handler = Handler()
 
         /*getting data about game depends on game mode*/
         val gameMode = intent.getStringExtra(Constant().GAME_MODE)
@@ -42,8 +83,9 @@ class MinefieldActivity : AppCompatActivity() {
             intent.getBooleanExtra(GameConstant().FIRST_CLICK_MINE_TAG, false)
 
         val gameTimerMilli = translateToMilli("$gameTimeMinutes:$gameTimeSeconds")
-        if (gameTimerMilli == 0L){
-            
+        if (gameTimerMilli == 0L) {
+            startTime = SystemClock.uptimeMillis()
+            runnable.run()
         } else {
             object : CountDownTimer(gameTimerMilli, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
@@ -92,8 +134,8 @@ class MinefieldActivity : AppCompatActivity() {
             )
 
         /*generating field only if first click can be on mine*/
-        if (firstClickCanBeOnAMine){
-            hostField = HostField(width,height,minesCount)
+        if (firstClickCanBeOnAMine) {
+            hostField = HostField(width, height, minesCount)
         }
         val userField = UserField(width, height, minesCount)
 
@@ -111,11 +153,11 @@ class MinefieldActivity : AppCompatActivity() {
         )
     }
 
-    private fun translateToMilli(str: String): Long{
+    private fun translateToMilli(str: String): Long {
         val hours = str.substringBefore(":").toInt()
         val minutes = str.substringAfter(":").toInt()
 
-        return ((hours*60)+minutes)*1000.toLong()
+        return ((hours * 60) + minutes) * 1000.toLong()
     }
 
     /*define how each cell gonna react to click with flag/open selected*/
@@ -129,13 +171,16 @@ class MinefieldActivity : AppCompatActivity() {
                     if (togglebutton_minefield_open.isChecked) {
 
                         if (hostField == null) {
-                            hostField = HostField(width,height,minesCount,x,y)
+                            hostField = HostField(width, height, minesCount, x, y)
                         }
 
                         val keepGame = Saper().openCoordinate(x, y, hostField!!.content, userField)
                         if (!keepGame) {
                             val mIntent = Intent(this, GameResultsActivity::class.java)
-                            mIntent.putExtra(GameConstant().GAME_RESULT,GameConstant().GAME_RESULT_DEFEAT)
+                            mIntent.putExtra(
+                                GameConstant().GAME_RESULT,
+                                GameConstant().GAME_RESULT_DEFEAT
+                            )
                             startActivity(mIntent)
                         } else {
                             /*если не проиграл - проверить, возможно теперь условия выполняются.*/
@@ -143,7 +188,10 @@ class MinefieldActivity : AppCompatActivity() {
                             * продолжение игры от победы*/
                             if (Saper().checkWinCondition(hostField!!.content, userField)) {
                                 val mIntent = Intent(this, GameResultsActivity::class.java)
-                                mIntent.putExtra(GameConstant().GAME_RESULT,GameConstant().GAME_RESULT_WIN)
+                                mIntent.putExtra(
+                                    GameConstant().GAME_RESULT,
+                                    GameConstant().GAME_RESULT_WIN
+                                )
                                 startActivity(mIntent)
                             }
                         }
@@ -155,7 +203,10 @@ class MinefieldActivity : AppCompatActivity() {
                         MinefieldAdapter().setupMinefield(userField, arrayButtonsField)
                         if (win) {
                             val mIntent = Intent(this, GameResultsActivity::class.java)
-                            mIntent.putExtra(GameConstant().GAME_RESULT,GameConstant().GAME_RESULT_WIN)
+                            mIntent.putExtra(
+                                GameConstant().GAME_RESULT,
+                                GameConstant().GAME_RESULT_WIN
+                            )
                             startActivity(mIntent)
                         }
                     }
