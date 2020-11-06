@@ -194,12 +194,14 @@ class GameSettingsActivity : AppCompatActivity(),
 
     /*callbacks from dialogs*/
     override fun sendSizeParams(width: Int, height: Int) {
-        textview_game_settings_selected_width.text = width.toString()
-        textview_game_settings_selected_height.text = height.toString()
+        TODO("DISPLAY CHOSEN VALUE")
+//        textview_game_settings_selected_width.text = width.toString()
+//        textview_game_settings_selected_height.text = height.toString()
     }
 
     override fun sendMinesCount(count: Int) {
-        textview_game_settings_selected_mines_count.text = count.toString()
+        TODO("DISPLAY CHOSEN VALUE")
+//        textview_game_settings_selected_mines_count.text = count.toString()
     }
 
     /*showing dialogs*/

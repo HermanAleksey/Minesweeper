@@ -4,14 +4,13 @@ import HostField
 import Saper
 import UserField
 import android.content.Intent
+import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
 import android.os.SystemClock
 import android.view.View
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sapper.Constant
 import com.example.sapper.GameConstant
@@ -32,6 +31,9 @@ class MinefieldActivity : AppCompatActivity() {
     lateinit var tv_minefield_seconds: TextView
     lateinit var tv_minefield_minutes: TextView
 
+    var gameTimerMilli: Long = 0
+    private var countDownTimer: CountDownTimer? = null
+
     lateinit var handler: Handler
 
     var millisecondTime: Long = 0
@@ -41,7 +43,7 @@ class MinefieldActivity : AppCompatActivity() {
     var seconds: Int = 0
     var minutes: Int = 0
     var milliSeconds: Int = 0
-    var runnable: Runnable = object : Runnable {
+    private var runnable: Runnable = object : Runnable {
         override fun run() {
             millisecondTime = SystemClock.uptimeMillis() - startTime
             updateTime = timeBuff + millisecondTime
@@ -67,9 +69,9 @@ class MinefieldActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_minefield)
 
+        /*For timer*/
         tv_minefield_seconds = findViewById(R.id.tv_minefield_seconds)
         tv_minefield_minutes = findViewById(R.id.tv_minefield_minutes)
-
         handler = Handler()
 
         /*getting data about game depends on game mode*/
@@ -82,12 +84,13 @@ class MinefieldActivity : AppCompatActivity() {
         val firstClickCanBeOnAMine =
             intent.getBooleanExtra(GameConstant().FIRST_CLICK_MINE_TAG, false)
 
-        val gameTimerMilli = translateToMilli("$gameTimeMinutes:$gameTimeSeconds")
+        /*stopwatch / timer starting*/
+        gameTimerMilli = translateToMilli("$gameTimeMinutes:$gameTimeSeconds")
         if (gameTimerMilli == 0L) {
             startTime = SystemClock.uptimeMillis()
             runnable.run()
         } else {
-            object : CountDownTimer(gameTimerMilli, 1000) {
+            countDownTimer = object : CountDownTimer(gameTimerMilli, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
                     if (tv_minefield_seconds.text != "0") {
                         tv_minefield_seconds.text =
@@ -100,9 +103,7 @@ class MinefieldActivity : AppCompatActivity() {
                 }
 
                 override fun onFinish() {
-                    val mIntent = Intent(this@MinefieldActivity, GameResultsActivity::class.java)
-                    mIntent.putExtra(GameConstant().GAME_RESULT, GameConstant().GAME_RESULT_DEFEAT)
-                    startActivity(mIntent)
+                    intentToResultActivity(false)
                 }
             }.start()
         }
@@ -118,20 +119,60 @@ class MinefieldActivity : AppCompatActivity() {
 
 
         /*filling view*/
-        textview_minefield_field_width.text = "$width"
-        textview_minefield_field_height.text = "$height"
+        tv_minefield_field_width.text = "$width"
+        tv_minefield_field_height.text = "$height"
         tv_minefield_minutes.text = "$gameTimeMinutes"
         tv_minefield_seconds.text = "$gameTimeSeconds"
-        textview_minefield_mines_count.text = "$minesCount"
-
+        tv_minefield_mines.text = "$minesCount"
         val linearLayoutMinefield =
             findViewById<LinearLayout>(R.id.linear_layout_minefield)
-
         /*Visual minefield (from buttons)*/
         val arrayButtonsField =
             MinefieldAdapter().createMinefield(
                 width, height, linearLayoutMinefield, this
             )
+
+        /*spinner have to restore previous selected*/
+        val adapterMinefieldCellSize: ArrayAdapter<String> = ArrayAdapter(
+            this, R.layout.spinner_layout_game_settings,
+            R.id.textview_spinner_layout_text, resources.getStringArray(R.array.minefieldCellSizes)
+        )
+        spin_minefield_cell_size.adapter = adapterMinefieldCellSize
+        /*getting previous selected size from sharedPreferences*/
+        val sharedPreferences = getPreferences(MODE_PRIVATE)
+        val selectedCellSize = sharedPreferences.getInt(Constant().CELL_SIZE, 0)
+        spin_minefield_cell_size.setSelection(selectedCellSize)
+        spin_minefield_cell_size.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?, itemSelected: View?,
+                    selectedItemPosition: Int, selectedId: Long
+                ) {
+                    //saving changes on sharedPrefs
+                    sharedPreferences.edit()
+                        .putInt(Constant().CELL_SIZE, selectedItemPosition)
+                        .apply()
+                    //for each size defined constant values
+                    val value = when (selectedItemPosition) {
+                        0 -> 60
+                        1 -> 80
+                        2 -> 100
+                        3 -> 130
+                        else -> 0
+                    }
+                    //if size was changed - changing views
+                    arrayButtonsField.forEach {
+                        it.forEach { btn ->
+                            val params = btn.layoutParams
+                            params.width = value
+                            params.height = value
+                            btn.layoutParams = params
+                        }
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
 
         /*generating field only if first click can be on mine*/
         if (firstClickCanBeOnAMine) {
@@ -176,23 +217,19 @@ class MinefieldActivity : AppCompatActivity() {
 
                         val keepGame = Saper().openCoordinate(x, y, hostField!!.content, userField)
                         if (!keepGame) {
-                            val mIntent = Intent(this, GameResultsActivity::class.java)
-                            mIntent.putExtra(
-                                GameConstant().GAME_RESULT,
-                                GameConstant().GAME_RESULT_DEFEAT
-                            )
-                            startActivity(mIntent)
+                            if (countDownTimer != null){
+                                countDownTimer!!.cancel()
+                            }
+                            intentToResultActivity(false)
                         } else {
                             /*если не проиграл - проверить, возможно теперь условия выполняются.*/
                             /*т.к. openCoordinate возвращает false только если проиграл и не отличает
                             * продолжение игры от победы*/
                             if (Saper().checkWinCondition(hostField!!.content, userField)) {
-                                val mIntent = Intent(this, GameResultsActivity::class.java)
-                                mIntent.putExtra(
-                                    GameConstant().GAME_RESULT,
-                                    GameConstant().GAME_RESULT_WIN
-                                )
-                                startActivity(mIntent)
+                                if (countDownTimer != null){
+                                    countDownTimer!!.cancel()
+                                }
+                                intentToResultActivity(true)
                             }
                         }
                         MinefieldAdapter().setupMinefield(userField, arrayButtonsField)
@@ -202,17 +239,63 @@ class MinefieldActivity : AppCompatActivity() {
                         val win = Saper().useFlagOnSpot(x, y, hostField!!.content, userField)
                         MinefieldAdapter().setupMinefield(userField, arrayButtonsField)
                         if (win) {
-                            val mIntent = Intent(this, GameResultsActivity::class.java)
-                            mIntent.putExtra(
-                                GameConstant().GAME_RESULT,
-                                GameConstant().GAME_RESULT_WIN
-                            )
-                            startActivity(mIntent)
+                            if (countDownTimer != null){
+                                countDownTimer!!.cancel()
+                            }
+                            intentToResultActivity(true)
                         }
                     }
                 }
             }
         }
+    }
+
+    private fun intentToResultActivity(result: Boolean) {
+        val mIntent = Intent(this, GameResultsActivity::class.java)
+        if (result) {
+            mIntent.putExtra(
+                GameConstant().GAME_RESULT,
+                GameConstant().GAME_RESULT_WIN
+            )
+        } else {
+            mIntent.putExtra(
+                GameConstant().GAME_RESULT,
+                GameConstant().GAME_RESULT_DEFEAT
+            )
+        }
+        mIntent.putExtra(
+            GameConstant().WIDTH_TAG,
+            tv_minefield_field_width.text.toString().toInt()
+        )
+        mIntent.putExtra(
+            GameConstant().HEIGHT_TAG,
+            tv_minefield_field_height.text.toString().toInt()
+        )
+        mIntent.putExtra(
+            GameConstant().MINES_COUNT_TAG,
+            tv_minefield_mines.text.toString().toInt()
+        )
+        if (gameTimerMilli == 0L) {
+            mIntent.putExtra(
+                GameConstant().GAME_TIME_MINUTES_TAG,
+                tv_minefield_minutes.text.toString().toInt()
+            )
+            mIntent.putExtra(
+                GameConstant().GAME_TIME_SECONDS_TAG,
+                tv_minefield_seconds.text.toString().toInt()
+            )
+        } else {
+            mIntent.putExtra(
+                GameConstant().GAME_TIME_MINUTES_TAG,
+                (gameTimeMinutes - tv_minefield_minutes.text.toString().toInt())
+            )
+            mIntent.putExtra(
+                GameConstant().GAME_TIME_SECONDS_TAG,
+                (gameTimeSeconds - tv_minefield_seconds.text.toString().toInt())
+            )
+        }
+        startActivity(mIntent)
+        finish()
     }
 
 
@@ -234,11 +317,11 @@ class MinefieldActivity : AppCompatActivity() {
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        textview_minefield_field_width.text =
+        tv_minefield_field_width.text =
             savedInstanceState.getInt(GameConstant().WIDTH_TAG).toString()
-        textview_minefield_field_height.text =
+        tv_minefield_field_height.text =
             savedInstanceState.getInt(GameConstant().HEIGHT_TAG).toString()
-        textview_minefield_mines_count.text =
+        tv_minefield_mines.text =
             savedInstanceState.getInt(GameConstant().MINES_COUNT_TAG).toString()
     }
 
@@ -246,15 +329,15 @@ class MinefieldActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
         outState.putInt(
             GameConstant().WIDTH_TAG,
-            textview_minefield_field_width.text.toString().toInt()
+            tv_minefield_field_width.text.toString().toInt()
         )
         outState.putInt(
             GameConstant().HEIGHT_TAG,
-            textview_minefield_field_height.text.toString().toInt()
+            tv_minefield_field_height.text.toString().toInt()
         )
         outState.putInt(
             GameConstant().MINES_COUNT_TAG,
-            textview_minefield_mines_count.text.toString().toInt()
+            tv_minefield_mines.text.toString().toInt()
         )
     }
 

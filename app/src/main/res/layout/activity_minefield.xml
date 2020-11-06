@@ -31,7 +31,7 @@
                 android:layout_gravity="center">
 
                 <TextView
-                    android:id="@+id/textview_minefield_field_width"
+                    android:id="@+id/tv_minefield_field_width"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="w"/>
@@ -42,7 +42,7 @@
                     android:text="*"/>
 
                 <TextView
-                    android:id="@+id/textview_minefield_field_height"
+                    android:id="@+id/tv_minefield_field_height"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="h"/>
@@ -91,7 +91,7 @@
                 android:text="mines count"/>
 
             <TextView
-                android:id="@+id/textview_minefield_mines_count"
+                android:id="@+id/tv_minefield_mines"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -139,20 +139,30 @@
         android:layout_height="0dp"
         android:layout_weight="2">
 
-        <Button
-            android:id="@+id/button_minefield_zoom"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:text="Zoom"/>
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/chooseCellSize"/>
+
+            <Spinner
+                android:id="@+id/spin_minefield_cell_size"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
         <ToggleButton
             android:id="@+id/togglebutton_minefield_flag"
             android:layout_weight="1"
             android:gravity="center"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
             android:textOn="FLAG"
@@ -162,7 +172,7 @@
             android:id="@+id/togglebutton_minefield_open"
             android:layout_weight="1"
             android:gravity="center"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
             android:textOn="open cell"

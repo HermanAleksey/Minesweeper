@@ -9,14 +9,13 @@ class Constant {
     val COMPANY_LEVEL = "com.example.sapper.activity.companyLevel"
 
     val GAME_MODE_CREATIVE = "com.example.sapper.activity.gameModeCreative"
-    var GAME_MODE_NONE: String = "com.example.sapper.activity.None"
     val GAME_MODE_BLUETOOTH = "com.example.sapper.activity.gameModeBluetooth"
     val GAME_MODE_INTERNET = "com.example.sapper.activity.gameModeInternet"
 
     val BLUETOOTH_ROLE = "com.example.sapper.activity.blueRole"
     val ROLE_CLIENT = "com.example.sapper.activity.clientRole"
     val ROLE_SERVER = "com.example.sapper.activity.serverRole"
-
-
     val REQUEST_ENABLE_BLUETOOTH: Int = 10001
+
+    val CELL_SIZE = "com.example.sapper.activity.activity_minefield.cell_size"
 }

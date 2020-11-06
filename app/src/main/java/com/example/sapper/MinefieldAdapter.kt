@@ -92,8 +92,6 @@ class MinefieldAdapter {
                 val param: ViewGroup.LayoutParams = LinearLayout.LayoutParams(
                     90,
                     90
-//                    ViewGroup.LayoutParams.MATCH_PARENT,
-//                    ,1.0f
                 )
                 button.layoutParams = param
                 button.minWidth

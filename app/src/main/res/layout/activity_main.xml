@@ -39,6 +39,36 @@
             style="@style/StyleMenuButtonFormat"
             android:layout_margin="8dp"/>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="add"
+            android:onClick="clickAdd" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="all"
+            android:onClick="clickAll" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="remove"
+            android:onClick="clickRemove" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ID"
+            android:onClick="clickId" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Amount"
+            android:onClick="clickAmount" />
+        <EditText
+            android:id="@+id/et_test"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
 
 <!--        <Button-->
 <!--            android:id="@+id/button_main_multiplayer"-->

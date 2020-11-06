@@ -40,6 +40,13 @@
         <item>Я</item>
         <item>Оппонент</item>
     </string-array>
+    <string name="chooseCellSize">Размер ячейки:</string>
+    <string-array name="minefieldCellSizes">
+        <item>Маленький</item>
+        <item>Средний</item>
+        <item>Большой</item>
+        <item>Огромный</item>
+    </string-array>
 
     <!--    dialog size     -->
     <string name="dialogGameSettingsSizeTitle">Выбор размера поля</string>
