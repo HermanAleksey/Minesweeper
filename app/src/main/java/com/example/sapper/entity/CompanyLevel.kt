@@ -1,4 +1,4 @@
-package com.example.sapper
+package com.example.sapper.entity
 
 data class CompanyLevel(
     val id: Int,

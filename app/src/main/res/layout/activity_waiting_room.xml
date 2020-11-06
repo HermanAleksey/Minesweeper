@@ -36,7 +36,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Режим игры:" />
+                android:text="@string/game_mode" />
 
             <TextView
                 android:id="@+id/tv_host_room_game_mode"
@@ -57,7 +57,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Размер поля:" />
+                android:text="@string/minefieldSize" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -95,7 +95,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Количество мин:" />
+                android:text="@string/minesCount" />
 
             <TextView
                 android:id="@+id/tv_host_room_mines_amount"
@@ -115,7 +115,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Временное ограничение:" />
+                android:text="@string/timeLimit" />
 
             <TextView
                 android:id="@+id/tv_host_room_time_limit"
@@ -135,7 +135,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Первый клик может быть миной:" />
+                android:text="@string/firstClickCanBeOnAMine" />
 
             <CheckBox
                 android:id="@+id/chb_host_room_first_click"
@@ -155,7 +155,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Выход по окончанию:" />
+                android:text="@string/leaveAfterMatch" />
 
             <CheckBox
                 android:id="@+id/cb_host_room_exit"
@@ -175,7 +175,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Использовать одинаковое поле:" />
+                android:text="@string/useTheSameField" />
 
             <CheckBox
                 android:id="@+id/cb_host_room_use_same_field"
@@ -190,7 +190,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:gravity="center|bottom"
-            android:text="Player 1" />
+            android:text="@string/player_1" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -206,7 +206,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Nickname:" />
+                    android:text="@string/nickname" />
 
                 <TextView
                     android:id="@+id/tv_host_room_player_1_name"
@@ -222,7 +222,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:gravity="center|bottom"
-            android:text="Player 2" />
+            android:text="@string/player_2" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -238,7 +238,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Nickname:" />
+                    android:text="@string/nickname" />
 
                 <TextView
                     android:id="@+id/tv_host_room_player_2_name"

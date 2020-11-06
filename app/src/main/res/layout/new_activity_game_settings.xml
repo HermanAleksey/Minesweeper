@@ -13,7 +13,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="Game mode:"
+            android:text="@string/game_mode"
             android:gravity="end"/>
 
         <TextView
@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center|bottom"
-        android:text="Параметры размеров поля"/>
+        android:text="@string/fieldSizeOptions"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,7 +37,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="Высота и ширина:"/>
+            android:text="@string/heightAndWidth"/>
 
         <Spinner
             android:id="@+id/spin_game_settings_field_size"
@@ -53,7 +53,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="Количество мин:"/>
+            android:text="@string/minesCount"/>
 
         <Spinner
             android:id="@+id/spin_game_settings_mines_count"
@@ -69,7 +69,7 @@
             android:layout_width="0dp"
             android:layout_weight="2"
             android:layout_height="match_parent"
-            android:text="Ограничение по времени:"/>
+            android:text="@string/timeLimit"/>
 
         <NumberPicker
             android:id="@+id/np_game_settings_minutes"
@@ -122,7 +122,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="Первое нажатие может быть миной:"/>
+            android:text="@string/firstClickCanBeOnAMine"/>
 
         <CheckBox
             android:id="@+id/cb_game_settings_first_click_mine"
@@ -140,7 +140,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="Выйти сразу после окончания:"/>
+            android:text="@string/leaveAfterMatch"/>
 
         <CheckBox
             android:id="@+id/cb_game_settings_exit"
@@ -157,7 +157,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="Использовать одинаковое поле:"/>
+            android:text="@string/useTheSameField"/>
 
         <CheckBox
             android:id="@+id/cb_game_settings_use_same_field"
@@ -170,6 +170,6 @@
         android:id="@+id/btn_game_settings_create_game"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Создать игру"/>
+        android:text="@string/createGame"/>
 
 </LinearLayout>

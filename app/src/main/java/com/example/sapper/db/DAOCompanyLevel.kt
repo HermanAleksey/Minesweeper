@@ -1,7 +1,7 @@
-package com.example.sapper
+package com.example.sapper.db
 
 import android.database.sqlite.SQLiteDatabase
-import android.util.Log
+import com.example.sapper.entity.CompanyLevel
 
 class DAOCompanyLevel(private val db: SQLiteDatabase) {
 

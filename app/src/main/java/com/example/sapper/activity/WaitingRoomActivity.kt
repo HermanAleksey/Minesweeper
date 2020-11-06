@@ -12,9 +12,8 @@ import android.os.Message
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.Toast
-import com.example.sapper.Constant
-import com.example.sapper.GameConstant
+import com.example.sapper.constant.Constant
+import com.example.sapper.constant.GameConstant
 import com.example.sapper.R
 import kotlinx.android.synthetic.main.activity_waiting_room.*
 import kotlinx.android.synthetic.main.new_activity_game_settings.*

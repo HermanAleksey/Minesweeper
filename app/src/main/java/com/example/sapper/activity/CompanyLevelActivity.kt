@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.example.sapper.Constant
+import com.example.sapper.constant.Constant
 import com.example.sapper.R
 import kotlinx.android.synthetic.main.activity_company_level.*
 

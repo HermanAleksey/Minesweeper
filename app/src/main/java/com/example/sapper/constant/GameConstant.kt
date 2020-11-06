@@ -1,4 +1,4 @@
-package com.example.sapper
+package com.example.sapper.constant
 
 class GameConstant {
     val HEIGHT_TAG: String = "com.example.sapper.height"

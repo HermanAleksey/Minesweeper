@@ -70,7 +70,29 @@
     <string name="gameModeCasual">Casual game</string>
     <string name="gameModeCompany">Company game</string>
 
+    <!--Result game activity-->
     <string name="win">Win!</string>
     <string name="lose">Defeat…</string>
+    <string name="GameResultText1">"Game on an "</string>
+    <string name="GameResultText2">" by "</string>
+    <string name="GameResultText7">" field"</string>
+    <string name="GameResultText3">"with the number of mines equal to "</string>
+    <string name="GameResultText4">"was completed in "</string>
+    <string name="GameResultText5">" minutes and "</string>
+    <string name="GameResultText6">" seconds"</string>
+
+
+    <string name="game_mode">Game mode:</string>
+    <string name="fieldSizeOptions">Field size options</string>
+    <string name="heightAndWidth">Height and width</string>
+    <string name="minesCount">Mines count</string>
+    <string name="timeLimit">Time limit</string>
+    <string name="leaveAfterMatch">Leave after match</string>
+    <string name="useTheSameField">Use the same minefield</string>
+    <string name="createGame">Create game</string>
+    <string name="minefieldSize">Minefield size</string>
+    <string name="nickname">Nickname</string>
+    <string name="player_1">Player 1</string>
+    <string name="player_2">Player 2</string>
 
 </resources>

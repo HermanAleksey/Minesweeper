@@ -1,4 +1,4 @@
-package com.example.sapper
+package com.example.sapper.constant
 
 class Constant {
     val SETTING_SIZE_DIALOG: String = "com.example.sapper.DialogSettingSize"

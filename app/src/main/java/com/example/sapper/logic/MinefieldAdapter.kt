@@ -1,10 +1,11 @@
-package com.example.sapper
+package com.example.sapper.logic
 
 import Saper
 import android.content.Context
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
+import com.example.sapper.R
 
 class MinefieldAdapter {
 

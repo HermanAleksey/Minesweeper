@@ -2,18 +2,13 @@ package com.example.sapper.activity
 
 import android.content.Context
 import android.content.Intent
-import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.example.sapper.CompanyLevel
-import com.example.sapper.Constant
-import com.example.sapper.DAOCompanyLevel
+import com.example.sapper.constant.Constant
 import com.example.sapper.R
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -77,38 +72,38 @@ class MainActivity : AppCompatActivity() {
         positiveButton.setTextColor(context.resources.getColor(R.color.colorPrimaryDark))
     }
 
-    fun clickAll(view: View) {
-        val db: SQLiteDatabase = baseContext.openOrCreateDatabase("app.db", MODE_PRIVATE, null)
-        Log.e("TAG", "clickAll: ${DAOCompanyLevel(db).getAllCompanyLevels()}")
-        db.close()
-    }
-
-    fun clickRemove(view: View) {
-        val db: SQLiteDatabase = baseContext.openOrCreateDatabase("app.db", MODE_PRIVATE, null)
-        Log.e("TAG", "clickRemove: ${DAOCompanyLevel(db).removeAllCompanyLevels()}")
-        db.close()
-    }
-    fun clickId(view: View) {
-        val db: SQLiteDatabase = baseContext.openOrCreateDatabase("app.db", MODE_PRIVATE, null)
-        val id = et_test.text.toString().toInt()
-        Log.e("TAG", "clickId: ${DAOCompanyLevel(db).getCompanyLevelById(id)}")
-        db.close()
-    }
-
-    var id = 2
-    fun clickAdd(view: View) {
-        val db: SQLiteDatabase = baseContext.openOrCreateDatabase("app.db", MODE_PRIVATE, null)
-        val obj = CompanyLevel(id,1,1,1,1,1,false)
-        Log.e("TAG", "clickId: ${DAOCompanyLevel(db).insertCompanyLevel(obj)}")
-        id++
-        db.close()
-    }
-
-    fun clickAmount(view: View) {
-        val db: SQLiteDatabase = baseContext.openOrCreateDatabase("app.db", MODE_PRIVATE, null)
-        Log.e("TAG", "clickAmount: ${DAOCompanyLevel(db).getTheNumberOfRecords()}")
-        db.close()
-    }
+//    fun clickAll(view: View) {
+//        val db: SQLiteDatabase = baseContext.openOrCreateDatabase("app.db", MODE_PRIVATE, null)
+//        Log.e("TAG", "clickAll: ${DAOCompanyLevel(db).getAllCompanyLevels()}")
+//        db.close()
+//    }
+//
+//    fun clickRemove(view: View) {
+//        val db: SQLiteDatabase = baseContext.openOrCreateDatabase("app.db", MODE_PRIVATE, null)
+//        Log.e("TAG", "clickRemove: ${DAOCompanyLevel(db).removeAllCompanyLevels()}")
+//        db.close()
+//    }
+//    fun clickId(view: View) {
+//        val db: SQLiteDatabase = baseContext.openOrCreateDatabase("app.db", MODE_PRIVATE, null)
+//        val id = et_test.text.toString().toInt()
+//        Log.e("TAG", "clickId: ${DAOCompanyLevel(db).getCompanyLevelById(id)}")
+//        db.close()
+//    }
+//
+//    var id = 2
+//    fun clickAdd(view: View) {
+//        val db: SQLiteDatabase = baseContext.openOrCreateDatabase("app.db", MODE_PRIVATE, null)
+//        val obj = CompanyLevel(id,1,1,1,1,1,false)
+//        Log.e("TAG", "clickId: ${DAOCompanyLevel(db).insertCompanyLevel(obj)}")
+//        id++
+//        db.close()
+//    }
+//
+//    fun clickAmount(view: View) {
+//        val db: SQLiteDatabase = baseContext.openOrCreateDatabase("app.db", MODE_PRIVATE, null)
+//        Log.e("TAG", "clickAmount: ${DAOCompanyLevel(db).getTheNumberOfRecords()}")
+//        db.close()
+//    }
 
 }
 

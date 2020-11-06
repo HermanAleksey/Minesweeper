@@ -69,6 +69,28 @@
     <string name="gameModeCasual">Своя игра</string>
     <string name="gameModeCompany">Кампания</string>
 
+    <!--Result game activity-->
     <string name="win">Победа!</string>
     <string name="lose">Поражение…</string>
+    <string name="GameResultText1">"Игра на поле размером "</string>
+    <string name="GameResultText2">" на "</string>
+    <string name="GameResultText7" />
+    <string name="GameResultText3">" с количеством мин, равным "</string>
+    <string name="GameResultText4">"была окончена за "</string>
+    <string name="GameResultText5">" минут и "</string>
+    <string name="GameResultText6">" секунд"</string>
+
+
+    <string name="game_mode">Режим игры:</string>
+    <string name="fieldSizeOptions">Параметры размеров поля</string>
+    <string name="heightAndWidth">Высота и ширина</string>
+    <string name="minesCount">Количество мин</string>
+    <string name="timeLimit">Ограничение по времени</string>
+    <string name="leaveAfterMatch">Выйти сразу после окончания</string>
+    <string name="useTheSameField">Использовать одинаковое поле</string>
+    <string name="createGame">Создать игру</string>
+    <string name="minefieldSize">Размер поля</string>
+    <string name="nickname">Имя пользователя</string>
+    <string name="player_1">Игрок 1</string>
+    <string name="player_2">Игрок 2</string>
 </resources>

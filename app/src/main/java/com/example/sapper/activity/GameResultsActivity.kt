@@ -4,10 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NavUtils
-import com.example.sapper.GameConstant
+import com.example.sapper.constant.GameConstant
 import com.example.sapper.R
 import kotlinx.android.synthetic.main.activity_game_results.*
-import kotlinx.android.synthetic.main.activity_minefield.*
 
 
 class GameResultsActivity : AppCompatActivity() {

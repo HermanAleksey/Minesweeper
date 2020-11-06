@@ -4,7 +4,6 @@ import HostField
 import Saper
 import UserField
 import android.content.Intent
-import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
@@ -12,9 +11,9 @@ import android.os.SystemClock
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.example.sapper.Constant
-import com.example.sapper.GameConstant
-import com.example.sapper.MinefieldAdapter
+import com.example.sapper.constant.Constant
+import com.example.sapper.constant.GameConstant
+import com.example.sapper.logic.MinefieldAdapter
 import com.example.sapper.R
 import kotlinx.android.synthetic.main.activity_minefield.*
 
