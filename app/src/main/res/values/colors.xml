@@ -5,6 +5,6 @@
     <color name="colorAccent">#D7D7DD</color>
 
     <color name="colorAllLabels">#444</color>
-    <color name="colorMainBackground">#00DDDDDD</color>
+    <color name="colorMainBackground">#DDDDDD</color>
     <color name="colorBlack">#000</color>
 </resources>

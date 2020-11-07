@@ -176,6 +176,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
+            android:checked="true"
             android:textOn="open cell"
             android:textOff="open cell" />
 

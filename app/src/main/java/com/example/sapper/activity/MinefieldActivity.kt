@@ -152,19 +152,38 @@ class MinefieldActivity : AppCompatActivity() {
                         .putInt(Constant().CELL_SIZE, selectedItemPosition)
                         .apply()
                     //for each size defined constant values
-                    val value = when (selectedItemPosition) {
-                        0 -> 60
-                        1 -> 80
-                        2 -> 100
-                        3 -> 130
-                        else -> 0
+                    val sizeParam: Int
+                    val textParam: Float
+                    when (selectedItemPosition) {
+                        0 -> {
+                            sizeParam = 60
+                            textParam = 9f
+                        }
+                        1 -> {
+                            sizeParam = 80
+                            textParam = 14f
+                        }
+                        2 -> {
+                            sizeParam = 100
+                            textParam = 22f
+                        }
+                        3 -> {
+                            sizeParam = 130
+                            textParam = 26f
+                        }
+                        else -> {
+                            sizeParam = 0
+                            textParam = 0f
+                        }
+
                     }
                     //if size was changed - changing views
                     arrayButtonsField.forEach {
                         it.forEach { btn ->
+                            btn.textSize = textParam
                             val params = btn.layoutParams
-                            params.width = value
-                            params.height = value
+                            params.width = sizeParam
+                            params.height = sizeParam
                             btn.layoutParams = params
                         }
                     }
@@ -216,7 +235,7 @@ class MinefieldActivity : AppCompatActivity() {
 
                         val keepGame = Saper().openCoordinate(x, y, hostField!!.content, userField)
                         if (!keepGame) {
-                            if (countDownTimer != null){
+                            if (countDownTimer != null) {
                                 countDownTimer!!.cancel()
                             }
                             intentToResultActivity(false)
@@ -225,7 +244,7 @@ class MinefieldActivity : AppCompatActivity() {
                             /*т.к. openCoordinate возвращает false только если проиграл и не отличает
                             * продолжение игры от победы*/
                             if (Saper().checkWinCondition(hostField!!.content, userField)) {
-                                if (countDownTimer != null){
+                                if (countDownTimer != null) {
                                     countDownTimer!!.cancel()
                                 }
                                 intentToResultActivity(true)
@@ -238,7 +257,7 @@ class MinefieldActivity : AppCompatActivity() {
                         val win = Saper().useFlagOnSpot(x, y, hostField!!.content, userField)
                         MinefieldAdapter().setupMinefield(userField, arrayButtonsField)
                         if (win) {
-                            if (countDownTimer != null){
+                            if (countDownTimer != null) {
                                 countDownTimer!!.cancel()
                             }
                             intentToResultActivity(true)
