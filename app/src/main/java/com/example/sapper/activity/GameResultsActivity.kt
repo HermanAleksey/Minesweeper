@@ -35,5 +35,7 @@ class GameResultsActivity : AppCompatActivity() {
         NavUtils.navigateUpFromSameTask(this)
     }
 
-    fun onConfirmButtonClick(view: View) {}
+    fun onConfirmButtonClick(view: View) {
+        finish()
+    }
 }

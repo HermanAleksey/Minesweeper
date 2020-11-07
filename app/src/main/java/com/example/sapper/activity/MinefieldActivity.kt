@@ -3,13 +3,17 @@ package com.example.sapper.activity
 import HostField
 import Saper
 import UserField
+import android.content.Context
 import android.content.Intent
-import android.os.Bundle
-import android.os.CountDownTimer
-import android.os.Handler
-import android.os.SystemClock
+import android.media.AudioAttributes
+import android.media.AudioManager
+import android.media.SoundPool
+import android.os.*
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sapper.constant.Constant
 import com.example.sapper.constant.GameConstant
@@ -64,9 +68,34 @@ class MinefieldActivity : AppCompatActivity() {
         }
     }
 
+    private lateinit var soundPool: SoundPool
+    private var soundExplosion: Int = 0
+    private var soundWin: Int = 0
+    private var soundFlagDrop: Int = 0
+    private var soundTap: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_minefield)
+        /*sound pool settings for diff versions*/
+        soundPool = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val audioAttributes = AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_MEDIA)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .build()
+
+            SoundPool.Builder()
+                .setMaxStreams(1)
+                .setAudioAttributes(audioAttributes)
+                .build()
+        } else {
+            SoundPool(7, AudioManager.STREAM_MUSIC, 0)
+        }
+        /*loading sounds */
+        soundExplosion = soundPool.load(this, R.raw.explosion_8bit, 1)
+        soundWin = soundPool.load(this, R.raw.win_01, 1)
+        soundFlagDrop = soundPool.load(this, R.raw.flag_drop, 1)
+        soundTap = soundPool.load(this, R.raw.new_tap, 1)
 
         /*For timer*/
         tv_minefield_seconds = findViewById(R.id.tv_minefield_seconds)
@@ -227,48 +256,67 @@ class MinefieldActivity : AppCompatActivity() {
         for (y in arrayButtonsField.indices) {
             for (x in arrayButtonsField[y].indices) {
                 arrayButtonsField[x][y].setOnClickListener {
+                    /*Opener*/
                     if (togglebutton_minefield_open.isChecked) {
-
                         if (hostField == null) {
                             hostField = HostField(width, height, minesCount, x, y)
                         }
+                        playSound(soundTap)
 
                         val keepGame = Saper().openCoordinate(x, y, hostField!!.content, userField)
                         if (!keepGame) {
-                            intentToResultActivity(false)
-                            if (countDownTimer != null) {
-                                countDownTimer!!.cancel()
-                            }
+                            playSound(soundExplosion)
+                            tv_minefield_seconds.postDelayed({
+                                intentToResultActivity(false)
+                                if (countDownTimer != null) {
+                                    countDownTimer!!.cancel()
+                                }
+                            }, 500)
                         } else {
                             /*если не проиграл - проверить, возможно теперь условия выполняются.*/
                             /*т.к. openCoordinate возвращает false только если проиграл и не отличает
                             * продолжение игры от победы*/
                             if (Saper().checkWinCondition(hostField!!.content, userField)) {
-                                intentToResultActivity(true)
-                                if (countDownTimer != null) {
-                                    countDownTimer!!.cancel()
-                                }
+                                playSound(soundWin)
+                                tv_minefield_seconds.postDelayed({
+                                    intentToResultActivity(true)
+                                    if (countDownTimer != null) {
+                                        countDownTimer!!.cancel()
+                                    }
+                                },500)
                             }
                         }
                         MinefieldAdapter().setupMinefield(userField, arrayButtonsField)
                     }
-
+                    /*FLAG*/
                     if (togglebutton_minefield_flag.isChecked) {
                         if (hostField == null) {
                             hostField = HostField(width, height, minesCount, x, y)
                         }
+                        playSound(soundFlagDrop)
                         val win = Saper().useFlagOnSpot(x, y, hostField!!.content, userField)
                         MinefieldAdapter().setupMinefield(userField, arrayButtonsField)
                         if (win) {
-                            intentToResultActivity(true)
-                            if (countDownTimer != null) {
-                                countDownTimer!!.cancel()
-                            }
+                            playSound(soundWin)
+                            tv_minefield_seconds.postDelayed({
+                                intentToResultActivity(true)
+                                if (countDownTimer != null) {
+                                    countDownTimer!!.cancel()
+                                }
+                            },500)
                         }
                     }
                 }
             }
         }
+    }
+
+    private fun playSound(sound: Int){
+        soundPool.play(
+            sound,
+            1.0.toFloat(), 1.0.toFloat(),
+            1, 0, 1.0.toFloat()
+        )
     }
 
     private fun intentToResultActivity(result: Boolean) {
@@ -313,9 +361,8 @@ class MinefieldActivity : AppCompatActivity() {
         finish()
     }
 
-
     //чтобы одновременно включена была только 1 кнопка
-    val onToggleButtonClickListener = View.OnClickListener {
+    private val onToggleButtonClickListener = View.OnClickListener {
         when (it.id) {
             togglebutton_minefield_open.id -> {
                 if (togglebutton_minefield_open.isChecked) {
@@ -358,5 +405,33 @@ class MinefieldActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         finish()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.item_toolbar_rules) {
+            showGameRulesAlertDialog(this)
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun showGameRulesAlertDialog(context: Context) {
+        val dialog = AlertDialog.Builder(context)
+            .setTitle(R.string.rules)
+            .setMessage("R.string.rulesOfTheGame")
+            .setPositiveButton(R.string.understand, null)
+            .show()
+
+        val positiveButton: Button = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+        positiveButton.setTextColor(context.resources.getColor(R.color.colorPrimaryDark))
+    }
+
+    override fun onDestroy() {
+        soundPool.release()
+        super.onDestroy()
     }
 }

@@ -61,10 +61,10 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun showGameRulesAlertDialog(context: Context) {
+    private fun showGameRulesAlertDialog(context: Context) {
         val dialog = AlertDialog.Builder(context)
             .setTitle(R.string.rules)
-            .setMessage(R.string.rulesOfTheGame)
+            .setMessage("R.string.rules? IDK maybe info about game should be placed there ")
             .setPositiveButton(R.string.understand, null)
             .show()
 

@@ -1,6 +1,7 @@
 package com.example.sapper.activity
 
 import android.bluetooth.BluetoothAdapter
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -8,6 +9,8 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sapper.constant.Constant
 import com.example.sapper.constant.GameConstant
@@ -186,9 +189,20 @@ class GameSettingsActivity : AppCompatActivity(),
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.item_toolbar_rules) {
-            MainActivity().showGameRulesAlertDialog(this)
+            showGameRulesAlertDialog(this)
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun showGameRulesAlertDialog(context: Context) {
+        val dialog = AlertDialog.Builder(context)
+            .setTitle(R.string.rules)
+            .setMessage("R.string.navigation what to do with all this settings")
+            .setPositiveButton(R.string.understand, null)
+            .show()
+
+        val positiveButton: Button = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+        positiveButton.setTextColor(context.resources.getColor(R.color.colorPrimaryDark))
     }
 
     /*callbacks from dialogs*/

@@ -12,21 +12,25 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.GameResultsActivity"
-            android:parentActivityName=".activity.MainActivity"></activity>
+        <activity
+            android:name=".activity.GameResultsActivity"
+            android:parentActivityName=".activity.MainActivity" />
 <!--        <activity-->
 <!--            android:name=".activity.SearchingBluetoothGameActivity"-->
 <!--            android:parentActivityName=".activity.MainActivity" />-->
         <activity android:name=".activity.WaitingRoomActivity" />
         <activity
             android:name=".activity.GameSettingsActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".activity.MainActivity" />
         <activity
             android:name=".activity.CompanyLevelActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:parentActivityName=".activity.MainActivity" />
         <activity
             android:name=".activity.MinefieldActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:parentActivityName=".activity.MainActivity" />
         <activity
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait">
