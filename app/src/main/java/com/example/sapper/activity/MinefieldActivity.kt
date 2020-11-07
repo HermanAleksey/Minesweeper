@@ -235,32 +235,35 @@ class MinefieldActivity : AppCompatActivity() {
 
                         val keepGame = Saper().openCoordinate(x, y, hostField!!.content, userField)
                         if (!keepGame) {
+                            intentToResultActivity(false)
                             if (countDownTimer != null) {
                                 countDownTimer!!.cancel()
                             }
-                            intentToResultActivity(false)
                         } else {
                             /*если не проиграл - проверить, возможно теперь условия выполняются.*/
                             /*т.к. openCoordinate возвращает false только если проиграл и не отличает
                             * продолжение игры от победы*/
                             if (Saper().checkWinCondition(hostField!!.content, userField)) {
+                                intentToResultActivity(true)
                                 if (countDownTimer != null) {
                                     countDownTimer!!.cancel()
                                 }
-                                intentToResultActivity(true)
                             }
                         }
                         MinefieldAdapter().setupMinefield(userField, arrayButtonsField)
                     }
 
                     if (togglebutton_minefield_flag.isChecked) {
+                        if (hostField == null) {
+                            hostField = HostField(width, height, minesCount, x, y)
+                        }
                         val win = Saper().useFlagOnSpot(x, y, hostField!!.content, userField)
                         MinefieldAdapter().setupMinefield(userField, arrayButtonsField)
                         if (win) {
+                            intentToResultActivity(true)
                             if (countDownTimer != null) {
                                 countDownTimer!!.cancel()
                             }
-                            intentToResultActivity(true)
                         }
                     }
                 }
@@ -270,17 +273,11 @@ class MinefieldActivity : AppCompatActivity() {
 
     private fun intentToResultActivity(result: Boolean) {
         val mIntent = Intent(this, GameResultsActivity::class.java)
-        if (result) {
-            mIntent.putExtra(
-                GameConstant().GAME_RESULT,
-                GameConstant().GAME_RESULT_WIN
-            )
-        } else {
-            mIntent.putExtra(
-                GameConstant().GAME_RESULT,
-                GameConstant().GAME_RESULT_DEFEAT
-            )
-        }
+
+        mIntent.putExtra(
+            GameConstant().GAME_RESULT,
+            result
+        )
         mIntent.putExtra(
             GameConstant().WIDTH_TAG,
             tv_minefield_field_width.text.toString().toInt()

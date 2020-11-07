@@ -14,7 +14,7 @@ class GameResultsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_results)
 
-        val result = intent.getBooleanExtra(GameConstant().GAME_RESULT, false)
+        val result = intent.getBooleanExtra(GameConstant().GAME_RESULT, true)
         tv_game_result_result.text = if (result) {
             resources.getString(R.string.win)
         } else resources.getString(R.string.lose)
