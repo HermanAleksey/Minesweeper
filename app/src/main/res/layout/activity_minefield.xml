@@ -159,26 +159,35 @@
 
         </LinearLayout>
 
-        <ToggleButton
-            android:id="@+id/togglebutton_minefield_flag"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:textOn="FLAG"
-            android:textOff="FLAG"/>
+<!--        <ToggleButton-->
+<!--            android:id="@+id/togglebutton_minefield_flag"-->
+<!--            android:layout_weight="1"-->
+<!--            android:gravity="center"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_margin="10dp"-->
+<!--            android:textOn="FLAG"-->
+<!--            android:textOff="FLAG"/>-->
+
+<!--        <ToggleButton-->
+<!--            android:id="@+id/togglebutton_minefield_open"-->
+<!--            android:layout_weight="1"-->
+<!--            android:gravity="center"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_margin="10dp"-->
+<!--            android:checked="true"-->
+<!--            android:textOn="open cell"-->
+<!--            android:textOff="open cell" />-->
 
         <ToggleButton
-            android:id="@+id/togglebutton_minefield_open"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:id="@+id/togglebutton_minefield_flag"
+            android:layout_width="61dp"
+            android:layout_height="63dp"
+            android:background="@drawable/my_tooggle_button"
             android:layout_margin="10dp"
-            android:checked="true"
-            android:textOn="open cell"
-            android:textOff="open cell" />
+            android:textOff=""
+            android:textOn="" />
 
     </LinearLayout>
 

@@ -230,10 +230,10 @@ class MinefieldActivity : AppCompatActivity() {
         MinefieldAdapter().setupMinefield(userField.content, arrayButtonsField)
 
         /*for turning on only 1 button in the same time*/
-        togglebutton_minefield_open
-            .setOnClickListener(onToggleButtonClickListener)
-        togglebutton_minefield_flag
-            .setOnClickListener(onToggleButtonClickListener)
+//        togglebutton_minefield_open
+//            .setOnClickListener(onToggleButtonClickListener)
+//        togglebutton_minefield_flag
+//            .setOnClickListener(onToggleButtonClickListener)
 
         setOnClickListenerForField(
             arrayButtonsField,
@@ -257,7 +257,7 @@ class MinefieldActivity : AppCompatActivity() {
             for (x in arrayButtonsField[y].indices) {
                 arrayButtonsField[x][y].setOnClickListener {
                     /*Opener*/
-                    if (togglebutton_minefield_open.isChecked) {
+                    if (!togglebutton_minefield_flag.isChecked) {
                         if (hostField == null) {
                             hostField = HostField(width, height, minesCount, x, y)
                         }
@@ -362,20 +362,20 @@ class MinefieldActivity : AppCompatActivity() {
     }
 
     //чтобы одновременно включена была только 1 кнопка
-    private val onToggleButtonClickListener = View.OnClickListener {
-        when (it.id) {
-            togglebutton_minefield_open.id -> {
-                if (togglebutton_minefield_open.isChecked) {
-                    togglebutton_minefield_flag.isChecked = false
-                }
-            }
-            togglebutton_minefield_flag.id -> {
-                if (togglebutton_minefield_flag.isChecked) {
-                    togglebutton_minefield_open.isChecked = false
-                }
-            }
-        }
-    }
+//    private val onToggleButtonClickListener = View.OnClickListener {
+//        when (it.id) {
+//            togglebutton_minefield_open.id -> {
+//                if (togglebutton_minefield_open.isChecked) {
+//                    togglebutton_minefield_flag.isChecked = false
+//                }
+//            }
+//            togglebutton_minefield_flag.id -> {
+//                if (togglebutton_minefield_flag.isChecked) {
+//                    togglebutton_minefield_open.isChecked = false
+//                }
+//            }
+//        }
+//    }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)

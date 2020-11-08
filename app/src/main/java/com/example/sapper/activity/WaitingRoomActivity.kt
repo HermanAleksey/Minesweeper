@@ -16,7 +16,7 @@ import com.example.sapper.constant.Constant
 import com.example.sapper.constant.GameConstant
 import com.example.sapper.R
 import kotlinx.android.synthetic.main.activity_waiting_room.*
-import kotlinx.android.synthetic.main.new_activity_game_settings.*
+import kotlinx.android.synthetic.main.activity_game_settings.*
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream

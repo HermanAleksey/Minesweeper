@@ -15,7 +15,7 @@ import com.example.sapper.constant.GameConstant
 import com.example.sapper.db.DAOCompanyLevel
 import com.example.sapper.entity.CompanyLevel
 import kotlinx.android.synthetic.main.activity_company_level.*
-import kotlinx.android.synthetic.main.new_activity_game_settings.*
+import kotlinx.android.synthetic.main.activity_game_settings.*
 
 class CompanyLevelActivity : AppCompatActivity() {
 

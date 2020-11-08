@@ -7,6 +7,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="MyCheckBoxStyle" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/colorBlack</item>
+        <item name="colorPrimaryDark">@color/colorBlack</item>
+        <item name="colorAccent">@color/colorBlack</item>
+    </style>
+
     <style name="StyleMenuButtonFormat">
         <item name="android:textAllCaps">false</item>
         <item name="android:layout_gravity">center</item>

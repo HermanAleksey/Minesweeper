@@ -17,7 +17,7 @@ import com.example.sapper.constant.GameConstant
 import com.example.sapper.R
 import com.example.sapper.dialog.DialogSettingMinesCount
 import com.example.sapper.dialog.DialogSettingsSize
-import kotlinx.android.synthetic.main.new_activity_game_settings.*
+import kotlinx.android.synthetic.main.activity_game_settings.*
 
 
 class GameSettingsActivity : AppCompatActivity(),
@@ -26,7 +26,7 @@ class GameSettingsActivity : AppCompatActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.new_activity_game_settings)
+        setContentView(R.layout.activity_game_settings)
 
         np_game_settings_minutes.minValue = 0
         np_game_settings_minutes.maxValue = 59

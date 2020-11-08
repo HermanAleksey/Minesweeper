@@ -87,8 +87,8 @@
     <string name="heightAndWidth">Height and width</string>
     <string name="minesCount">Mines count</string>
     <string name="timeLimit">Time limit</string>
-    <string name="leaveAfterMatch">Leave after match</string>
-    <string name="useTheSameField">Use the same minefield</string>
+    <string name="leaveAfterMatch">Leave after match:</string>
+    <string name="useTheSameField">Use the same minefield:</string>
     <string name="createGame">Create game</string>
     <string name="minefieldSize">Minefield size</string>
     <string name="nickname">Nickname</string>
