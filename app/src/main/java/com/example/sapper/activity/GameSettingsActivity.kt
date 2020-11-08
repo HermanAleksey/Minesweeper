@@ -44,12 +44,12 @@ class GameSettingsActivity : AppCompatActivity(),
         /*setting game mode note*/
         when (mode) {
             Constant().GAME_MODE_CREATIVE -> {
-                tv_game_settings_game_mode.text = getString(R.string.singleplayer)
+                title = getString(R.string.singleplayer)
                 ll_game_settings_use_same_field.visibility = View.GONE
                 ll_game_settings_exit.visibility = View.GONE
             }
             Constant().GAME_MODE_BLUETOOTH -> {
-                tv_game_settings_game_mode.text = getString(R.string.bluetooth)
+                title = getString(R.string.bluetooth)
             }
         }
 
@@ -136,7 +136,7 @@ class GameSettingsActivity : AppCompatActivity(),
         super.onSaveInstanceState(outState)
         outState.putString(
             Constant().GAME_MODE,
-            tv_game_settings_game_mode.text.toString()
+            title.toString()
         )
     }
 

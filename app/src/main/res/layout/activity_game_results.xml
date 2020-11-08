@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@drawable/test_back">
+        android:background="@drawable/background_border_1">
 
         <TextView
             android:id="@+id/tv_game_result_result"
@@ -22,7 +22,7 @@
             android:gravity="center"
             android:fontFamily="@font/art_modern_ap"
             android:textColor="@color/colorBlack"
-            android:textSize="62sp"
+            android:textSize="50sp"
             android:text="@string/lose"/>
 
     </LinearLayout>
@@ -130,6 +130,8 @@
             android:text="@string/GameResultText6"/>
     </LinearLayout>
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -138,7 +140,7 @@
         <Button
             android:id="@+id/btn_game_result_confirm"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
             android:layout_margin="60dp"
             style="@style/StyleMenuButtonFormat"
             android:text="@string/confirm"

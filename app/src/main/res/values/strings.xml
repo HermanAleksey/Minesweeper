@@ -63,7 +63,7 @@
     <string name="inputMinesCountValue">Input the number of mines:</string>
 
     <string name="enterAllParamsBeforeStart">You have tp enter all parameters before starting the game</string>
-    <string name="firstClickCanBeOnAMine">First click can be on a mine</string>
+    <string name="firstClickCanBeOnAMine">First click can be on a mine:</string>
 
     <!--game modes-->
     <string name="gameModeBluetooth">Bluetooth game</string>
@@ -83,7 +83,7 @@
 
 
     <string name="game_mode">Game mode:</string>
-    <string name="fieldSizeOptions">Field size options</string>
+    <string name="fieldSizeOptions">Field settings</string>
     <string name="heightAndWidth">Height and width</string>
     <string name="minesCount">Mines count</string>
     <string name="timeLimit">Time limit</string>

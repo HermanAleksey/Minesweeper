@@ -12,7 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:fontFamily="@font/bungee_shade_regular"
+        android:layout_margin="20dp"
+        android:fontFamily="@font/art_modern_ap"
         android:textSize="36sp"
         android:text="@string/company"
         android:textColor="#000" />

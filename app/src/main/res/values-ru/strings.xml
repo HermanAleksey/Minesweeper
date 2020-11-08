@@ -62,7 +62,7 @@
     <string name="inputMinesCountValue">Введите количество мин:</string>
 
     <string name="enterAllParamsBeforeStart">Вы должны выбрать все параметры перед началом игры</string>
-    <string name="firstClickCanBeOnAMine">Первое нажатие может быть на мине</string>
+    <string name="firstClickCanBeOnAMine">Первое нажатие может быть на мине:</string>
 
     <!--game modes-->
     <string name="gameModeBluetooth">Bluetooth игра</string>
@@ -82,7 +82,7 @@
 
 
     <string name="game_mode">Режим игры:</string>
-    <string name="fieldSizeOptions">Параметры размеров поля</string>
+    <string name="fieldSizeOptions">Настройки поля</string>
     <string name="heightAndWidth">Высота и ширина</string>
     <string name="minesCount">Количество мин</string>
     <string name="timeLimit">Ограничение по времени</string>
