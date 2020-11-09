@@ -19,6 +19,7 @@ import com.example.sapper.constant.Constant
 import com.example.sapper.constant.GameConstant
 import com.example.sapper.logic.MinefieldAdapter
 import com.example.sapper.R
+import kotlinx.android.synthetic.main.activity_company_level.*
 import kotlinx.android.synthetic.main.activity_minefield.*
 
 
@@ -120,12 +121,20 @@ class MinefieldActivity : AppCompatActivity() {
         } else {
             countDownTimer = object : CountDownTimer(gameTimerMilli, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
-                    if (tv_minefield_seconds.text != "0") {
+                    if (tv_minefield_seconds.text != "00") {
+//                        tv_minefield_seconds.text =
+//                            "${tv_minefield_seconds.text.toString().toInt() - 1}"
                         tv_minefield_seconds.text =
-                            "${tv_minefield_seconds.text.toString().toInt() - 1}"
+                            if (tv_minefield_seconds.text.toString().toInt() < 10) {
+                                "0${tv_minefield_seconds.text.toString().toInt() - 1}"
+                            } else "${tv_minefield_seconds.text.toString().toInt() - 1}"
                     } else {
+//                        tv_minefield_minutes.text =
+//                            "${tv_minefield_minutes.text.toString().toInt() - 1}"
                         tv_minefield_minutes.text =
-                            "${tv_minefield_minutes.text.toString().toInt() - 1}"
+                            if (tv_minefield_minutes.text.toString().toInt() < 10) {
+                                "0${tv_minefield_minutes.text.toString().toInt() - 1}"
+                            } else "${tv_minefield_minutes.text.toString().toInt() - 1}"
                         tv_minefield_seconds.text = "59"
                     }
                 }
@@ -149,8 +158,13 @@ class MinefieldActivity : AppCompatActivity() {
         /*filling view*/
         tv_minefield_field_width.text = "$width"
         tv_minefield_field_height.text = "$height"
-        tv_minefield_minutes.text = "$gameTimeMinutes"
-        tv_minefield_seconds.text = "$gameTimeSeconds"
+        tv_minefield_minutes.text = if (gameTimeMinutes < 10) {
+            "0$gameTimeMinutes"
+        } else "$gameTimeMinutes"
+        tv_minefield_seconds.text = if (gameTimeSeconds < 10) {
+            "0$gameTimeSeconds"
+        } else "$gameTimeSeconds"
+
         tv_minefield_mines.text = "$minesCount"
         val linearLayoutMinefield =
             findViewById<LinearLayout>(R.id.linear_layout_minefield)
@@ -239,6 +253,18 @@ class MinefieldActivity : AppCompatActivity() {
             arrayButtonsField,
             userField.content
         )
+
+        /*zoom buttons*/
+        btn_minefield_reduce_size.setOnClickListener {
+            val currentPos = spin_minefield_cell_size.selectedItemPosition
+            if (currentPos == 0) return@setOnClickListener
+            spin_minefield_cell_size.setSelection(currentPos - 1)
+        }
+        btn_minefield_increase_size.setOnClickListener {
+            val currentPos = spin_minefield_cell_size.selectedItemPosition
+            if (currentPos == 3) return@setOnClickListener
+            spin_minefield_cell_size.setSelection(currentPos + 1)
+        }
     }
 
     private fun translateToMilli(str: String): Long {
@@ -283,7 +309,7 @@ class MinefieldActivity : AppCompatActivity() {
                                     if (countDownTimer != null) {
                                         countDownTimer!!.cancel()
                                     }
-                                },500)
+                                }, 500)
                             }
                         }
                         MinefieldAdapter().setupMinefield(userField, arrayButtonsField)
@@ -303,7 +329,7 @@ class MinefieldActivity : AppCompatActivity() {
                                 if (countDownTimer != null) {
                                     countDownTimer!!.cancel()
                                 }
-                            },500)
+                            }, 500)
                         }
                     }
                 }
@@ -311,7 +337,7 @@ class MinefieldActivity : AppCompatActivity() {
         }
     }
 
-    private fun playSound(sound: Int){
+    private fun playSound(sound: Int) {
         soundPool.play(
             sound,
             1.0.toFloat(), 1.0.toFloat(),
@@ -348,34 +374,24 @@ class MinefieldActivity : AppCompatActivity() {
                 tv_minefield_seconds.text.toString().toInt()
             )
         } else {
-            mIntent.putExtra(
-                GameConstant().GAME_TIME_MINUTES_TAG,
-                (gameTimeMinutes - tv_minefield_minutes.text.toString().toInt())
-            )
+            var seconds = gameTimeSeconds - tv_minefield_seconds.text.toString().toInt()
+            var minutes = gameTimeMinutes - tv_minefield_minutes.text.toString().toInt()
+            if (seconds<0) {
+                seconds += 60
+                minutes--
+            }
             mIntent.putExtra(
                 GameConstant().GAME_TIME_SECONDS_TAG,
-                (gameTimeSeconds - tv_minefield_seconds.text.toString().toInt())
+                seconds
+            )
+            mIntent.putExtra(
+                GameConstant().GAME_TIME_MINUTES_TAG,
+                minutes
             )
         }
         startActivity(mIntent)
         finish()
     }
-
-    //чтобы одновременно включена была только 1 кнопка
-//    private val onToggleButtonClickListener = View.OnClickListener {
-//        when (it.id) {
-//            togglebutton_minefield_open.id -> {
-//                if (togglebutton_minefield_open.isChecked) {
-//                    togglebutton_minefield_flag.isChecked = false
-//                }
-//            }
-//            togglebutton_minefield_flag.id -> {
-//                if (togglebutton_minefield_flag.isChecked) {
-//                    togglebutton_minefield_open.isChecked = false
-//                }
-//            }
-//        }
-//    }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)

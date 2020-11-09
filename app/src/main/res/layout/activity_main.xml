@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:text="@string/company"
             style="@style/StyleMenuButtonFormat"
+            android:background="@drawable/my_main_button"
             android:layout_margin="8dp"/>
 
         <Button
@@ -39,6 +40,7 @@
             style="@style/StyleMenuButtonFormat"
             android:background="@drawable/my_main_button"
             android:layout_margin="8dp"/>
+
 
 
         <!--        <Button

@@ -47,6 +47,7 @@
             android:layout_height="wrap_content"
             style="@style/StyleMenuButtonFormat"
             android:padding="20dp"
+            android:background="@drawable/my_main_button"
             android:text="@string/cancel"/>
 
     </LinearLayout>

@@ -236,6 +236,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="100dp"
                 android:layout_marginTop="30dp"
+                android:background="@drawable/my_main_button"
                 android:text="@string/createGame"
                 android:textSize="22sp" />
 

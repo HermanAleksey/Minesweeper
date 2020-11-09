@@ -144,6 +144,7 @@
             android:layout_margin="60dp"
             style="@style/StyleMenuButtonFormat"
             android:text="@string/confirm"
+            android:background="@drawable/my_main_button"
             android:onClick="onConfirmButtonClick"/>
 
     </LinearLayout>
