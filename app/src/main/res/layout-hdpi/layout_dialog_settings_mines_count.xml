@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorMainBackground">
+
+    <TextView
+        style="@style/StyleGameSettingsToggleButtonFormat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/dialogGameSettingsMinesCountTitle"
+        android:textSize="21sp" />
+
+    <TextView
+        style="@style/StyleGameSettingsToggleButtonFormat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="20dp"
+        android:gravity="center"
+        android:textSize="15sp"
+        android:text="@string/dialogGameSettingsMinesCountMessage" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="20dp"
+        android:paddingHorizontal="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/inputMinesCountValue"
+            android:textSize="15sp"
+            style="@style/StyleGameSettingsToggleButtonFormat"
+            />
+
+        <EditText
+            android:id="@+id/edittext_settings_dialog_mines_count"
+            android:inputType="numberSigned"
+            android:layout_width="40dp"
+            android:textSize="15sp"
+            android:layout_height="wrap_content"
+            style="@style/StyleGameSettingsToggleButtonFormat"
+            android:layout_marginStart="10dp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/button_setting_mines_count_fragment_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingVertical="14dp"
+            android:text="@string/cancel"
+            android:textSize="20sp"
+            style="@style/StyleMenuButtonFormat"/>
+
+        <Button
+            android:id="@+id/button_setting_mines_count_fragment_accept"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingVertical="14dp"
+            android:text="@string/confirm"
+            android:textSize="20sp"
+            style="@style/StyleMenuButtonFormat"/>
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

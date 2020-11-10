@@ -15,22 +15,22 @@
         <activity
             android:name=".activity.GameResultsActivity"
             android:parentActivityName=".activity.MainActivity" />
-<!--        <activity-->
-<!--            android:name=".activity.SearchingBluetoothGameActivity"-->
-<!--            android:parentActivityName=".activity.MainActivity" />-->
+        <!--        <activity-->
+        <!--            android:name=".activity.SearchingBluetoothGameActivity"-->
+        <!--            android:parentActivityName=".activity.MainActivity" />-->
         <activity android:name=".activity.WaitingRoomActivity" />
         <activity
             android:name=".activity.GameSettingsActivity"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".activity.MainActivity" />
+            android:parentActivityName=".activity.MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.CompanyLevelActivity"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".activity.MainActivity" />
+            android:parentActivityName=".activity.MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MinefieldActivity"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".activity.MainActivity" />
+            android:parentActivityName=".activity.MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait">
@@ -40,6 +40,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-5303222102711101~9781743838" />
     </application>
 
 </manifest>

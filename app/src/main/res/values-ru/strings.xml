@@ -53,7 +53,7 @@
     <string name="dialogGameSettingsSizeMessage">Укажите свои значения для ширины (х) и высоты (у) поля:</string>
     <string name="inputWidthValue">Введите ширину поля:</string>
     <string name="inputHeightValue">Введите высоту поля:</string>
-    <string name="confirm">Подтвердить</string>
+    <string name="confirm">Ок</string>
     <string name="parametersDoNotMeetRequirements">Введенные параметры не соответствуют требованиям</string>
 
     <!--    dialog mines count     -->
@@ -86,4 +86,8 @@
     <string name="nickname">Имя пользователя</string>
     <string name="player_1">Игрок 1</string>
     <string name="player_2">Игрок 2</string>
+    <string name="completion_time">Время прохождения</string>
+    <string name="field_size">Размер поля:</string>
+
+    <string name="mines_count_cant_be_greater_that_square">Количество мин не может превышать площадь поля</string>
 </resources>

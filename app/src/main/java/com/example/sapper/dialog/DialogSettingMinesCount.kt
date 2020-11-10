@@ -71,9 +71,8 @@ class DialogSettingMinesCount : DialogFragment() {
     private fun isMeetsTheRequirements(editTextFieldWidth: EditText): Boolean {
         if (editTextFieldWidth.text.isEmpty() ||
             editTextFieldWidth.text.trim(' ').toString().toInt() < 1
-        ) {
-            return false
-        }
+        ) return false
+
 
         return true
     }

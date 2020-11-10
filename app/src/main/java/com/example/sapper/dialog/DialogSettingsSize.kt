@@ -70,8 +70,8 @@ class DialogSettingsSize : DialogFragment() {
     ): Boolean {
         if (editTextFieldWidth.text.isEmpty() ||
             editTextFieldHeight.text.isEmpty() ||
-            editTextFieldWidth.text.toString().trim(' ').toInt() <= 1 ||
-            editTextFieldHeight.text.toString().trim(' ').toInt() <= 1
+            editTextFieldWidth.text.toString().trim(' ').toInt() < 3 ||
+            editTextFieldHeight.text.toString().trim(' ').toInt() < 3
         ) {
             return false
         }

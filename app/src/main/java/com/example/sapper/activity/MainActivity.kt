@@ -9,8 +9,11 @@ import android.view.MenuItem
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.example.sapper.constant.Constant
 import com.example.sapper.R
+import com.example.sapper.constant.Constant
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -19,6 +22,18 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+//        val adView = AdView(this)
+//        adView.adSize = AdSize.BANNER
+//        adView.adUnitId = "ca-app-pub-3940256099942544/6300978111"
+
+        MobileAds.initialize(
+            this
+        ) { }
+
+        val mAdView = findViewById<AdView>(R.id.adView)
+        val adRequest: AdRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
 
         Log.e("TAG", "onCreate: ${resources.displayMetrics.densityDpi}")
 
@@ -31,25 +46,7 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra(Constant().GAME_MODE, Constant().GAME_MODE_CREATIVE)
             startActivity(intent)
         }
-//        button_main_multiplayer.setOnClickListener {
-//            val intent = Intent(this, GameSettingsActivity::class.java)
-//            intent.putExtra(Constant().GAME_MODE, Constant().GAME_MODE_BLUETOOTH)
-//            startActivity(intent)
-//        }
-//        button_main_multiplayer_client.setOnClickListener {
-//            /*if bluetooth is turned off -> request to turn on
-//            * if already turned on - start new activity for searching game*/
-//            val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-//            if (!bluetoothAdapter.isEnabled) {
-//                val enableIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-//                startActivityForResult(enableIntent, Constant().REQUEST_ENABLE_BLUETOOTH)
-//            } else {
-//                val intent = Intent(this, WaitingRoomActivity::class.java)
-//                intent.putExtra(Constant().GAME_MODE, Constant().GAME_MODE_BLUETOOTH)
-//                intent.putExtra(Constant().BLUETOOTH_ROLE, Constant().ROLE_CLIENT)
-//                startActivity(intent)
-//            }
-//        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

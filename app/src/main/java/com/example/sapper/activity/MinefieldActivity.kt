@@ -196,34 +196,27 @@ class MinefieldActivity : AppCompatActivity() {
                         .apply()
                     //for each size defined constant values
                     val sizeParam: Int
-                    val textParam: Float
                     when (selectedItemPosition) {
                         0 -> {
                             sizeParam = 60
-                            textParam = 9f
                         }
                         1 -> {
                             sizeParam = 80
-                            textParam = 14f
                         }
                         2 -> {
                             sizeParam = 100
-                            textParam = 22f
                         }
                         3 -> {
                             sizeParam = 130
-                            textParam = 26f
                         }
                         else -> {
                             sizeParam = 0
-                            textParam = 0f
                         }
 
                     }
                     //if size was changed - changing views
                     arrayButtonsField.forEach {
                         it.forEach { btn ->
-                            btn.textSize = textParam
                             val params = btn.layoutParams
                             params.width = sizeParam
                             params.height = sizeParam
@@ -231,7 +224,6 @@ class MinefieldActivity : AppCompatActivity() {
                         }
                     }
                 }
-
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
 
@@ -419,10 +411,6 @@ class MinefieldActivity : AppCompatActivity() {
         )
     }
 
-    override fun onBackPressed() {
-        finish()
-    }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
@@ -446,7 +434,18 @@ class MinefieldActivity : AppCompatActivity() {
         positiveButton.setTextColor(context.resources.getColor(R.color.colorPrimaryDark))
     }
 
+    override fun onBackPressed() {
+        if (countDownTimer != null) {
+            countDownTimer!!.cancel()
+        }
+        soundPool.release()
+        finish()
+    }
+
     override fun onDestroy() {
+        if (countDownTimer != null) {
+            countDownTimer!!.cancel()
+        }
         soundPool.release()
         super.onDestroy()
     }

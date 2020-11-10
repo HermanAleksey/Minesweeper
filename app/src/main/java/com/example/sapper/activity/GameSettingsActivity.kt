@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sapper.constant.Constant
@@ -23,6 +24,10 @@ import kotlinx.android.synthetic.main.activity_game_settings.*
 class GameSettingsActivity : AppCompatActivity(),
     DialogSettingsSize.DialogSettingsSizeListener,
     DialogSettingMinesCount.DialogSettingMinesCountListener {
+
+    var customWidth = 3
+    var customHeight = 3
+    var customMinesCount = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,20 +61,20 @@ class GameSettingsActivity : AppCompatActivity(),
         configureSpinners()
 
         /*can't be selected and FirstClickNotMine and UseSameField*/
-        cb_game_settings_first_click_mine.setOnClickListener{
-            if (cb_game_settings_first_click_mine.isChecked){
+        cb_game_settings_first_click_mine.setOnClickListener {
+            if (cb_game_settings_first_click_mine.isChecked) {
                 cb_game_settings_use_same_field.isChecked = false
             }
         }
-        cb_game_settings_use_same_field.setOnClickListener{
-            if (cb_game_settings_use_same_field.isChecked){
+        cb_game_settings_use_same_field.setOnClickListener {
+            if (cb_game_settings_use_same_field.isChecked) {
                 cb_game_settings_first_click_mine.isChecked = false
             }
         }
 
         /*setting click listener for button Create */
         btn_game_settings_create_game.setOnClickListener {
-            val myIntent = when (mode ) {
+            val myIntent = when (mode) {
                 Constant().GAME_MODE_BLUETOOTH -> {
                     //if bluetooth is turned off - asking to turn it on
                     val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
@@ -84,23 +89,55 @@ class GameSettingsActivity : AppCompatActivity(),
                     Intent(this, MinefieldActivity::class.java)
                 }
             }
-            val sizeParams = spin_game_settings_field_size.selectedItem.toString()
+
             myIntent.putExtra(
                 Constant().GAME_MODE,
                 mode
             )
+            /*processing custom params*/
+            val mMinesCount = if (
+                spin_game_settings_field_size.selectedItemPosition == 5) {
+                customMinesCount
+            } else {
+                spin_game_settings_field_size.selectedItem
+                    .toString().toInt()
+            }
+            val mHeight = if (spin_game_settings_field_size.selectedItemPosition == 5) {
+                customHeight
+            } else {
+                spin_game_settings_field_size.selectedItem
+                    .toString().substringBeforeLast('*').toInt()
+            }
+            val mWidth = if (spin_game_settings_field_size.selectedItemPosition == 5) {
+                customWidth
+            } else {
+                spin_game_settings_field_size.selectedItem
+                    .toString().substringAfterLast('*').toInt()
+            }
+            if (mWidth*mHeight<mMinesCount){
+                Toast.makeText(
+                    this, resources.getString(
+                        R.string.mines_count_cant_be_greater_that_square
+                    ), Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
             myIntent.putExtra(
                 GameConstant().HEIGHT_TAG,
-                sizeParams.substringBeforeLast('*').toInt()
+//                sizeParams.substringBeforeLast('*').toInt()
+                mHeight
             )
             myIntent.putExtra(
                 GameConstant().WIDTH_TAG,
-                sizeParams.substringAfterLast('*').toInt()
+//                sizeParams.substringAfterLast('*').toInt()
+                mWidth
             )
             myIntent.putExtra(
                 GameConstant().MINES_COUNT_TAG,
-                spin_game_settings_mines_count.selectedItem.toString().toInt()
+//                spin_game_settings_mines_count.selectedItem.toString().toInt()
+                mMinesCount
             )
+
             myIntent.putExtra(
                 GameConstant().GAME_TIME_MINUTES_TAG,
                 np_game_settings_minutes.value
@@ -129,6 +166,7 @@ class GameSettingsActivity : AppCompatActivity(),
                 )
             }
             startActivity(myIntent)
+            finish()
         }
     }
 
@@ -207,14 +245,12 @@ class GameSettingsActivity : AppCompatActivity(),
 
     /*callbacks from dialogs*/
     override fun sendSizeParams(width: Int, height: Int) {
-        TODO("DISPLAY CHOSEN VALUE")
-//        textview_game_settings_selected_width.text = width.toString()
-//        textview_game_settings_selected_height.text = height.toString()
+        customHeight = height
+        customWidth = width
     }
 
     override fun sendMinesCount(count: Int) {
-        TODO("DISPLAY CHOSEN VALUE")
-//        textview_game_settings_selected_mines_count.text = count.toString()
+        customMinesCount = count
     }
 
     /*showing dialogs*/

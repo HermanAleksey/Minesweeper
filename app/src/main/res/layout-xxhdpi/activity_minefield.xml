@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Field size:"
+                android:text="@string/field_size"
                 android:textSize="20sp" />
 
             <LinearLayout
@@ -117,7 +117,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Mines:"
+                android:text="@string/mines"
                 android:textSize="20sp" />
 
             <TextView

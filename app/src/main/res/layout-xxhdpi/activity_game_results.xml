@@ -121,9 +121,9 @@
             <TextView
                 style="@style/StyleGameResultGameDescriptionXXHDPI"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:text="Completion time" />
+                android:text="@string/completion_time" />
 
             <TextView
                 style="@style/StyleGameResultGameDescriptionXXHDPI"

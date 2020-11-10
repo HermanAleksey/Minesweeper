@@ -17,9 +17,47 @@ class MinefieldAdapter {
         for (x in minefield.indices) {
             for (y in minefield[x].indices) {
                 if (minefield[x][y].isDigit()) {
-                    arrayButtonsField[x][y].setBackgroundResource(0)
-                    arrayButtonsField[x][y].text = minefield[x][y].toString()
-                    continue
+//                    arrayButtonsField[x][y].setBackgroundResource(0)
+//                    arrayButtonsField[x][y].text = minefield[x][y].toString()
+//                    continue
+                    when (minefield[x][y]){
+                        '0' -> {
+                            arrayButtonsField[x][y].text = "0"
+                            arrayButtonsField[x][y].setBackgroundResource(R.drawable.number_0)
+                        }
+                        '1' -> {
+                            arrayButtonsField[x][y].text = "1"
+                            arrayButtonsField[x][y].setBackgroundResource(R.drawable.number_1)
+                        }
+                        '2' -> {
+                            arrayButtonsField[x][y].text = "2"
+                            arrayButtonsField[x][y].setBackgroundResource(R.drawable.number_2)
+                        }
+                        '3' -> {
+                            arrayButtonsField[x][y].text = "3"
+                            arrayButtonsField[x][y].setBackgroundResource(R.drawable.number_3)
+                        }
+                        '4' -> {
+                            arrayButtonsField[x][y].text = "4"
+                            arrayButtonsField[x][y].setBackgroundResource(R.drawable.number_4)
+                        }
+                        '5' -> {
+                            arrayButtonsField[x][y].text = "5"
+                            arrayButtonsField[x][y].setBackgroundResource(R.drawable.number_5)
+                        }
+                        '6' -> {
+                            arrayButtonsField[x][y].text = "6"
+                            arrayButtonsField[x][y].setBackgroundResource(R.drawable.number_6)
+                        }
+                        '7' -> {
+                            arrayButtonsField[x][y].text = "7"
+                            arrayButtonsField[x][y].setBackgroundResource(R.drawable.number_7)
+                        }
+                        '8' -> {
+                            arrayButtonsField[x][y].text = "8"
+                            arrayButtonsField[x][y].setBackgroundResource(R.drawable.number_8)
+                        }
+                    }
                 }
                 when (minefield[x][y]) {
                     Saper().EMPTY_SPOT -> {
@@ -41,27 +79,6 @@ class MinefieldAdapter {
                 }
             }
         }
-    }
-
-    fun openCell(
-        x: Int, y: Int,
-        hostField: Array<Array<Char>>,
-        userField: Array<Array<Char>>,
-        arrayButtonsField: Array<Array<Button>>
-    ) {
-        Saper().openCoordinate(x, y, hostField, userField)
-        setupMinefield(userField, arrayButtonsField)
-    }
-
-    fun useFlagOnSpot(
-        x: Int,
-        y: Int,
-        hostField: Array<Array<Char>>,
-        userField: Array<Array<Char>>,
-        arrayButtonsField: Array<Array<Button>>
-    ) {
-        Saper().useFlagOnSpot(x, y, hostField, userField)
-        setupMinefield(userField, arrayButtonsField)
     }
 
     /*generating visual (buttons) minefield*/
@@ -96,6 +113,7 @@ class MinefieldAdapter {
                 )
                 button.layoutParams = param
                 button.minWidth
+                button.textSize = 0f
                 linearLayoutString.addView(button, param)
             }
 

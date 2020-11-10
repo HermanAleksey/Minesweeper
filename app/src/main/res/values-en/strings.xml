@@ -87,5 +87,9 @@
     <string name="nickname">Nickname</string>
     <string name="player_1">Player 1</string>
     <string name="player_2">Player 2</string>
+    <string name="field_size">Field size:</string>
+
+    <string name="completion_time">Completion time</string>
+    <string name="mines_count_cant_be_greater_that_square">The number of mines cannot exceed the area of the field</string>
 
 </resources>
