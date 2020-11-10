@@ -3,6 +3,7 @@ package com.example.sapper.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
@@ -18,6 +19,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        Log.e("TAG", "onCreate: ${resources.displayMetrics.densityDpi}")
 
         button_main_company.setOnClickListener {
             startActivity(Intent(this, CompanyLevelActivity::class.java))

@@ -31,9 +31,14 @@ class CompanyLevelActivity : AppCompatActivity() {
         val numOfElemsOnLastLine = numberOfLevels % 4
         if (numOfElemsOnLastLine != 0) numberOfLines++
 
+        val metrics = resources.displayMetrics
+        var height = 100
+        when (metrics.densityDpi){
+            480 -> height = 120
+        }
         val layoutParams: ViewGroup.LayoutParams = LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
-            100
+            height
         )
         val buttonLayoutParams: ViewGroup.LayoutParams = LinearLayout.LayoutParams(
             0,

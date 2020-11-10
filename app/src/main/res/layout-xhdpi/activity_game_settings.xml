@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    style="@style/StyleSettingsText"
+                    style="@style/StyleSettingsTextXHDPI"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="@string/heightAndWidth" />
@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    style="@style/StyleSettingsText"
+                    style="@style/StyleSettingsTextXHDPI"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="@string/minesCount" />
@@ -108,7 +108,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    style="@style/StyleSettingsText"
+                    style="@style/StyleSettingsTextXHDPI"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="@string/timeLimit" />
@@ -148,7 +148,7 @@
                     android:gravity="center">
 
                     <TextView
-                        style="@style/StyleSettingsText"
+                        style="@style/StyleSettingsTextXHDPI"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="@string/firstClickCanBeOnAMine" />
@@ -179,7 +179,7 @@
                     android:gravity="center">
 
                     <TextView
-                        style="@style/StyleSettingsText"
+                        style="@style/StyleSettingsTextXHDPI"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="@string/leaveAfterMatch" />
@@ -210,7 +210,7 @@
                     android:gravity="center">
 
                     <TextView
-                        style="@style/StyleSettingsText"
+                        style="@style/StyleSettingsTextXHDPI"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="@string/useTheSameField" />

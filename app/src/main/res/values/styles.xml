@@ -21,7 +21,23 @@
         <item name="android:textSize">26sp</item>
     </style>
 
+    <style name="StyleMenuButtonFormatHDPI">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">#444</item>
+        <item name="fontFamily">@font/inverserif_regular</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
     <style name="StyleSettingsText">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">#222</item>
+        <item name="fontFamily">@font/times_new_roman</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="StyleSettingsTextXHDPI">
         <item name="android:layout_gravity">center</item>
         <item name="android:textColor">#222</item>
         <item name="fontFamily">@font/times_new_roman</item>
@@ -35,6 +51,22 @@
         <item name="android:textColor">#444</item>
         <item name="fontFamily">@font/inverserif_regular</item>
         <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="StyleGameResultGameDescriptionXXHDPI">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">#444</item>
+        <item name="fontFamily">@font/inverserif_regular</item>
+        <item name="android:textSize">19sp</item>
+    </style>
+
+    <style name="StyleGameResultGameDescriptionXHDPI">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">#444</item>
+        <item name="fontFamily">@font/inverserif_regular</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="StyleAllMachineText16sp">

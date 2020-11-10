@@ -168,10 +168,11 @@
             android:id="@+id/btn_game_result_confirm"
             style="@style/StyleMenuButtonFormat"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_margin="60dp"
+            android:layout_height="50dp"
+            android:layout_margin="90dp"
             android:background="@drawable/my_main_button"
             android:onClick="onConfirmButtonClick"
+            android:textSize="20sp"
             android:text="@string/confirm" />
 
     </LinearLayout>

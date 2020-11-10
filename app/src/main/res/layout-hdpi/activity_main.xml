@@ -17,18 +17,18 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/bungee_shade_regular"
-            android:textSize="36sp"
+            android:textSize="30sp"
             android:text="@string/app_name"
-            android:paddingTop="52dp"
+            android:paddingTop="40dp"
             android:textColor="#000"
-            android:paddingBottom="120dp"/>
+            android:paddingBottom="80dp"/>
 
         <Button
             android:id="@+id/button_main_company"
             android:layout_width="210dp"
             android:layout_height="wrap_content"
             android:text="@string/company"
-            style="@style/StyleMenuButtonFormat"
+            style="@style/StyleMenuButtonFormatHDPI"
             android:background="@drawable/my_main_button"
             android:layout_margin="8dp"/>
 
@@ -37,14 +37,17 @@
             android:layout_width="210dp"
             android:layout_height="wrap_content"
             android:text="@string/singleplayer"
-            style="@style/StyleMenuButtonFormat"
+            style="@style/StyleMenuButtonFormatHDPI"
             android:background="@drawable/my_main_button"
             android:layout_margin="8dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="all"/>
+            android:text="HDPI" />
+
     </LinearLayout>
+
+
 
 </LinearLayout>

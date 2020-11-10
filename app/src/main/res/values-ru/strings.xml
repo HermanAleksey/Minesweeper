@@ -72,13 +72,6 @@
     <!--Result game activity-->
     <string name="win">Победа!</string>
     <string name="lose">Поражение…</string>
-    <string name="GameResultText1">"Игра на поле размером "</string>
-    <string name="GameResultText2">" на "</string>
-    <string name="GameResultText7" />
-    <string name="GameResultText3">" с количеством мин, равным "</string>
-    <string name="GameResultText4">"была окончена за "</string>
-    <string name="GameResultText5">" минут и "</string>
-    <string name="GameResultText6">" секунд"</string>
 
 
     <string name="game_mode">Режим игры:</string>

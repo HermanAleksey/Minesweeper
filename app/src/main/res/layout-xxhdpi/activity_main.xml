@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,42 +8,42 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/colorMainBackground">
+        android:background="@color/colorMainBackground"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/bungee_shade_regular"
-            android:textSize="36sp"
-            android:text="@string/app_name"
             android:paddingTop="52dp"
+            android:paddingBottom="120dp"
+            android:text="@string/app_name"
             android:textColor="#000"
-            android:paddingBottom="120dp"/>
+            android:textSize="36sp" />
 
         <Button
             android:id="@+id/button_main_company"
+            style="@style/StyleMenuButtonFormat"
             android:layout_width="210dp"
             android:layout_height="wrap_content"
-            android:text="@string/company"
-            style="@style/StyleMenuButtonFormat"
+            android:layout_margin="8dp"
             android:background="@drawable/my_main_button"
-            android:layout_margin="8dp"/>
+            android:text="@string/company" />
 
         <Button
             android:id="@+id/button_main_custom_game"
+            style="@style/StyleMenuButtonFormat"
             android:layout_width="210dp"
             android:layout_height="wrap_content"
-            android:text="@string/singleplayer"
-            style="@style/StyleMenuButtonFormat"
+            android:layout_margin="8dp"
             android:background="@drawable/my_main_button"
-            android:layout_margin="8dp"/>
+            android:text="@string/singleplayer" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="all"/>
-    </LinearLayout>
+            android:text="XXHDPI" />
 
+    </LinearLayout>
 </LinearLayout>
