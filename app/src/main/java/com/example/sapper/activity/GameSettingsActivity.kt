@@ -19,15 +19,12 @@ import com.example.sapper.R
 import com.example.sapper.dialog.DialogSettingMinesCount
 import com.example.sapper.dialog.DialogSettingsSize
 import kotlinx.android.synthetic.main.activity_game_settings.*
+import kotlinx.android.synthetic.main.activity_minefield.*
 
 
 class GameSettingsActivity : AppCompatActivity(),
     DialogSettingsSize.DialogSettingsSizeListener,
     DialogSettingMinesCount.DialogSettingMinesCountListener {
-
-    var customWidth = 3
-    var customHeight = 3
-    var customMinesCount = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +55,14 @@ class GameSettingsActivity : AppCompatActivity(),
             }
         }
 
-        configureSpinners()
+        configureFieldSizeSpinner()
+        configureMinesCountSpinner()
+//        spin_game_settings_field_size.setOnClickListener {
+//            configureFieldSizeSpinner()
+//        }
+//        spin_game_settings_mines_count.setOnClickListener {
+//            configureMinesCountSpinner()
+//        }
 
         /*can't be selected and FirstClickNotMine and UseSameField*/
         cb_game_settings_first_click_mine.setOnClickListener {
@@ -94,48 +98,20 @@ class GameSettingsActivity : AppCompatActivity(),
                 Constant().GAME_MODE,
                 mode
             )
-            /*processing custom params*/
-            val mMinesCount = if (
-                spin_game_settings_field_size.selectedItemPosition == 5) {
-                customMinesCount
-            } else {
-                spin_game_settings_field_size.selectedItem
-                    .toString().toInt()
-            }
-            val mHeight = if (spin_game_settings_field_size.selectedItemPosition == 5) {
-                customHeight
-            } else {
-                spin_game_settings_field_size.selectedItem
-                    .toString().substringBeforeLast('*').toInt()
-            }
-            val mWidth = if (spin_game_settings_field_size.selectedItemPosition == 5) {
-                customWidth
-            } else {
-                spin_game_settings_field_size.selectedItem
-                    .toString().substringAfterLast('*').toInt()
-            }
-            if (mWidth*mHeight<mMinesCount){
-                Toast.makeText(
-                    this, resources.getString(
-                        R.string.mines_count_cant_be_greater_that_square
-                    ), Toast.LENGTH_SHORT
-                ).show()
-                return@setOnClickListener
-            }
             myIntent.putExtra(
                 GameConstant().HEIGHT_TAG,
-//                sizeParams.substringBeforeLast('*').toInt()
-                mHeight
+                spin_game_settings_field_size.selectedItem
+                    .toString().substringBeforeLast('*').toInt()
             )
             myIntent.putExtra(
                 GameConstant().WIDTH_TAG,
-//                sizeParams.substringAfterLast('*').toInt()
-                mWidth
+                spin_game_settings_field_size.selectedItem
+                    .toString().substringAfterLast('*').toInt()
             )
             myIntent.putExtra(
                 GameConstant().MINES_COUNT_TAG,
-//                spin_game_settings_mines_count.selectedItem.toString().toInt()
-                mMinesCount
+                spin_game_settings_mines_count.selectedItem
+                    .toString().toInt()
             )
 
             myIntent.putExtra(
@@ -178,8 +154,7 @@ class GameSettingsActivity : AppCompatActivity(),
         )
     }
 
-    private fun configureSpinners() {
-        /*mine field size*/
+    private fun configureFieldSizeSpinner (){
         val adapterGameSettingsSizeSelection: ArrayAdapter<String> = ArrayAdapter(
             this, R.layout.spinner_layout_game_settings,
             R.id.textview_spinner_layout_text, resources.getStringArray(R.array.fieldSizes)
@@ -198,7 +173,9 @@ class GameSettingsActivity : AppCompatActivity(),
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
-        /*mines count*/
+    }
+
+    private fun configureMinesCountSpinner() {
         val adapterGameSettingsMinesCountSelection: ArrayAdapter<String> = ArrayAdapter(
             this, R.layout.spinner_layout_game_settings,
             R.id.textview_spinner_layout_text, resources.getStringArray(R.array.fieldMinesCount)
@@ -245,12 +222,32 @@ class GameSettingsActivity : AppCompatActivity(),
 
     /*callbacks from dialogs*/
     override fun sendSizeParams(width: Int, height: Int) {
-        customHeight = height
-        customWidth = width
+        val adapterGameSettingsSizeSelection: ArrayAdapter<String> = ArrayAdapter(
+            this, R.layout.spinner_layout_game_settings,
+            R.id.textview_spinner_layout_text, arrayListOf("$width*$height")
+        )
+        spin_game_settings_field_size.adapter = adapterGameSettingsSizeSelection
+
+        spin_game_settings_field_size.setOnTouchListener { v, event ->
+            configureFieldSizeSpinner()
+            v.performClick()
+            true
+        }
     }
 
     override fun sendMinesCount(count: Int) {
-        customMinesCount = count
+        /*when selected custom variant from spinner - show it*/
+        val adapterGameSettingsMinesCountSelection: ArrayAdapter<String> = ArrayAdapter(
+            this, R.layout.spinner_layout_game_settings,
+            R.id.textview_spinner_layout_text, arrayListOf("$count")
+        )
+        spin_game_settings_mines_count.adapter = adapterGameSettingsMinesCountSelection
+
+        spin_game_settings_mines_count.setOnTouchListener { v, event ->
+            configureMinesCountSpinner()
+            v.performClick()
+            true
+        }
     }
 
     /*showing dialogs*/
