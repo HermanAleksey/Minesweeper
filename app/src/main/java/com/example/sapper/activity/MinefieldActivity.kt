@@ -15,15 +15,18 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.sapper.IIntent
 import com.example.sapper.constant.Constant
 import com.example.sapper.constant.GameConstant
 import com.example.sapper.logic.MinefieldAdapter
 import com.example.sapper.R
+import com.example.sapper.logic.SoundPoolWorker
+import com.example.sapper.logic.TimeWorker
 import kotlinx.android.synthetic.main.activity_company_level.*
 import kotlinx.android.synthetic.main.activity_minefield.*
 
 
-class MinefieldActivity : AppCompatActivity() {
+open class MinefieldActivity : AppCompatActivity(), IIntent {
 
     var hostField: HostField? = null
     var height: Int = 0
@@ -31,9 +34,6 @@ class MinefieldActivity : AppCompatActivity() {
     var minesCount: Int = 0
     var gameTimeMinutes: Int = 0
     var gameTimeSeconds: Int = 0
-
-    lateinit var tv_minefield_seconds: TextView
-    lateinit var tv_minefield_minutes: TextView
 
     var gameTimerMilli: Long = 0
     private var countDownTimer: CountDownTimer? = null
@@ -68,6 +68,8 @@ class MinefieldActivity : AppCompatActivity() {
             handler.postDelayed(this, 0)
         }
     }
+    private lateinit var timeWorker: TimeWorker
+    private lateinit var soundPoolWorker: SoundPoolWorker
 
     private lateinit var soundPool: SoundPool
     private var soundExplosion: Int = 0
@@ -79,32 +81,14 @@ class MinefieldActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_minefield)
         /*sound pool settings for diff versions*/
-        soundPool = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val audioAttributes = AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_MEDIA)
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .build()
-
-            SoundPool.Builder()
-                .setMaxStreams(1)
-                .setAudioAttributes(audioAttributes)
-                .build()
-        } else {
-            SoundPool(7, AudioManager.STREAM_MUSIC, 0)
-        }
-        /*loading sounds */
-        soundExplosion = soundPool.load(this, R.raw.explosion_8bit, 1)
-        soundWin = soundPool.load(this, R.raw.win_01, 1)
-        soundFlagDrop = soundPool.load(this, R.raw.flag_drop, 1)
-        soundTap = soundPool.load(this, R.raw.new_tap, 1)
+        soundPoolWorker = SoundPoolWorker()
+        soundPool = soundPoolWorker.getSoundPool()
+        loadSounds()
 
         /*For timer*/
-        tv_minefield_seconds = findViewById(R.id.tv_minefield_seconds)
-        tv_minefield_minutes = findViewById(R.id.tv_minefield_minutes)
         handler = Handler()
 
         /*getting data about game depends on game mode*/
-        val gameMode = intent.getStringExtra(Constant().GAME_MODE)
         height = intent.getIntExtra(GameConstant().HEIGHT_TAG, 0)
         width = intent.getIntExtra(GameConstant().WIDTH_TAG, 0)
         minesCount = intent.getIntExtra(GameConstant().MINES_COUNT_TAG, 0)
@@ -114,58 +98,21 @@ class MinefieldActivity : AppCompatActivity() {
             intent.getBooleanExtra(GameConstant().FIRST_CLICK_MINE_TAG, false)
 
         /*stopwatch / timer starting*/
-        gameTimerMilli = translateToMilli("$gameTimeMinutes:$gameTimeSeconds")
+        timeWorker = TimeWorker(this)
+        gameTimerMilli = timeWorker.translateToMilli("$gameTimeMinutes:$gameTimeSeconds")
         if (gameTimerMilli == 0L) {
             startTime = SystemClock.uptimeMillis()
             runnable.run()
         } else {
-            countDownTimer = object : CountDownTimer(gameTimerMilli, 1000) {
-                override fun onTick(millisUntilFinished: Long) {
-                    if (tv_minefield_seconds.text != "00") {
-//                        tv_minefield_seconds.text =
-//                            "${tv_minefield_seconds.text.toString().toInt() - 1}"
-                        tv_minefield_seconds.text =
-                            if (tv_minefield_seconds.text.toString().toInt() < 10) {
-                                "0${tv_minefield_seconds.text.toString().toInt() - 1}"
-                            } else "${tv_minefield_seconds.text.toString().toInt() - 1}"
-                    } else {
-//                        tv_minefield_minutes.text =
-//                            "${tv_minefield_minutes.text.toString().toInt() - 1}"
-                        tv_minefield_minutes.text =
-                            if (tv_minefield_minutes.text.toString().toInt() < 10) {
-                                "0${tv_minefield_minutes.text.toString().toInt() - 1}"
-                            } else "${tv_minefield_minutes.text.toString().toInt() - 1}"
-                        tv_minefield_seconds.text = "59"
-                    }
-                }
-
-                override fun onFinish() {
-                    intentToResultActivity(false)
-                }
-            }.start()
+            timeWorker.getCountDownTimer(
+                tv_minefield_minutes,
+                tv_minefield_seconds, gameTimerMilli
+            ).start()
         }
-
-        var useSameField: Boolean = false
-        var closeAfterGame: Boolean = false
-        if (gameMode == Constant().GAME_MODE_BLUETOOTH) {
-            useSameField =
-                intent.getBooleanExtra(GameConstant().USE_SAME_FIELD_TAG, false)
-            closeAfterGame =
-                intent.getBooleanExtra(GameConstant().CLOSE_AFTER_GAME_TAG, false)
-        }
-
 
         /*filling view*/
-        tv_minefield_field_width.text = "$width"
-        tv_minefield_field_height.text = "$height"
-        tv_minefield_minutes.text = if (gameTimeMinutes < 10) {
-            "0$gameTimeMinutes"
-        } else "$gameTimeMinutes"
-        tv_minefield_seconds.text = if (gameTimeSeconds < 10) {
-            "0$gameTimeSeconds"
-        } else "$gameTimeSeconds"
+        placeValuesIntoViews()
 
-        tv_minefield_mines.text = "$minesCount"
         val linearLayoutMinefield =
             findViewById<LinearLayout>(R.id.linear_layout_minefield)
         /*Visual minefield (from buttons)*/
@@ -174,58 +121,27 @@ class MinefieldActivity : AppCompatActivity() {
                 width, height, linearLayoutMinefield, this
             )
 
-        /*spinner have to restore previous selected*/
-        val adapterMinefieldCellSize: ArrayAdapter<String> = ArrayAdapter(
-            this, R.layout.spinner_layout_game_settings,
-            R.id.textview_spinner_layout_text, resources.getStringArray(R.array.minefieldCellSizes)
-        )
-        spin_minefield_cell_size.adapter = adapterMinefieldCellSize
-        /*getting previous selected size from sharedPreferences*/
-        val sharedPreferences = getPreferences(MODE_PRIVATE)
-        val selectedCellSize = sharedPreferences.getInt(Constant().CELL_SIZE, 0)
-        spin_minefield_cell_size.setSelection(selectedCellSize)
-        spin_minefield_cell_size.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?, itemSelected: View?,
-                    selectedItemPosition: Int, selectedId: Long
-                ) {
-                    //saving changes on sharedPrefs
-                    sharedPreferences.edit()
-                        .putInt(Constant().CELL_SIZE, selectedItemPosition)
-                        .apply()
-                    //for each size defined constant values
-                    val sizeParam: Int
-                    when (selectedItemPosition) {
-                        0 -> {
-                            sizeParam = 60
-                        }
-                        1 -> {
-                            sizeParam = 80
-                        }
-                        2 -> {
-                            sizeParam = 100
-                        }
-                        3 -> {
-                            sizeParam = 130
-                        }
-                        else -> {
-                            sizeParam = 0
-                        }
-
-                    }
-                    //if size was changed - changing views
-                    arrayButtonsField.forEach {
-                        it.forEach { btn ->
-                            val params = btn.layoutParams
-                            params.width = sizeParam
-                            params.height = sizeParam
-                            btn.layoutParams = params
-                        }
+        /*SeekBar for controlling cells size*/
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            seek_bar_minefield_cell_size.min = 30
+        }
+        seek_bar_minefield_cell_size.max = 200
+        seek_bar_minefield_cell_size.setOnSeekBarChangeListener(object :
+            SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                arrayButtonsField.forEach {
+                    it.forEach { btn ->
+                        val params = btn.layoutParams
+                        params.width = progress
+                        params.height = progress
+                        btn.layoutParams = params
                     }
                 }
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+        })
 
         /*generating field only if first click can be on mine*/
         if (firstClickCanBeOnAMine) {
@@ -235,36 +151,31 @@ class MinefieldActivity : AppCompatActivity() {
 
         MinefieldAdapter().setupMinefield(userField.content, arrayButtonsField)
 
-        /*for turning on only 1 button in the same time*/
-//        togglebutton_minefield_open
-//            .setOnClickListener(onToggleButtonClickListener)
-//        togglebutton_minefield_flag
-//            .setOnClickListener(onToggleButtonClickListener)
-
         setOnClickListenerForField(
             arrayButtonsField,
             userField.content
         )
-
-        /*zoom buttons*/
-        btn_minefield_reduce_size.setOnClickListener {
-            val currentPos = spin_minefield_cell_size.selectedItemPosition
-            if (currentPos == 0) return@setOnClickListener
-            spin_minefield_cell_size.setSelection(currentPos - 1)
-        }
-        btn_minefield_increase_size.setOnClickListener {
-            val currentPos = spin_minefield_cell_size.selectedItemPosition
-            if (currentPos == 3) return@setOnClickListener
-            spin_minefield_cell_size.setSelection(currentPos + 1)
-        }
     }
 
-    private fun translateToMilli(str: String): Long {
-        val hours = str.substringBefore(":").toInt()
-        val minutes = str.substringAfter(":").toInt()
-
-        return ((hours * 60) + minutes) * 1000.toLong()
+    private fun placeValuesIntoViews (){
+        tv_minefield_field_width.text = "$width"
+        tv_minefield_field_height.text = "$height"
+        tv_minefield_minutes.text = if (gameTimeMinutes < 10) {
+            "0$gameTimeMinutes"
+        } else "$gameTimeMinutes"
+        tv_minefield_seconds.text = if (gameTimeSeconds < 10) {
+            "0$gameTimeSeconds"
+        } else "$gameTimeSeconds"
+        tv_minefield_mines.text = "$minesCount"
     }
+
+    private fun loadSounds() {
+        soundExplosion = soundPool.load(this, R.raw.explosion_8bit, 1)
+        soundWin = soundPool.load(this, R.raw.win_01, 1)
+        soundFlagDrop = soundPool.load(this, R.raw.flag_drop, 1)
+        soundTap = soundPool.load(this, R.raw.new_tap, 1)
+    }
+
 
     /*define how each cell gonna react to click with flag/open selected*/
     private fun setOnClickListenerForField(
@@ -279,29 +190,17 @@ class MinefieldActivity : AppCompatActivity() {
                         if (hostField == null) {
                             hostField = HostField(width, height, minesCount, x, y)
                         }
-                        playSound(soundTap)
+                        soundPoolWorker.playSound(soundPool, soundTap)
 
                         val keepGame = Saper().openCoordinate(x, y, hostField!!.content, userField)
                         if (!keepGame) {
-                            playSound(soundExplosion)
-                            tv_minefield_seconds.postDelayed({
-                                intentToResultActivity(false)
-                                if (countDownTimer != null) {
-                                    countDownTimer!!.cancel()
-                                }
-                            }, 500)
+                            performEndEvents(false)
                         } else {
                             /*если не проиграл - проверить, возможно теперь условия выполняются.*/
                             /*т.к. openCoordinate возвращает false только если проиграл и не отличает
                             * продолжение игры от победы*/
                             if (Saper().checkWinCondition(hostField!!.content, userField)) {
-                                playSound(soundWin)
-                                tv_minefield_seconds.postDelayed({
-                                    intentToResultActivity(true)
-                                    if (countDownTimer != null) {
-                                        countDownTimer!!.cancel()
-                                    }
-                                }, 500)
+                                performEndEvents(true)
                             }
                         }
                         MinefieldAdapter().setupMinefield(userField, arrayButtonsField)
@@ -311,17 +210,11 @@ class MinefieldActivity : AppCompatActivity() {
                         if (hostField == null) {
                             hostField = HostField(width, height, minesCount, x, y)
                         }
-                        playSound(soundFlagDrop)
+                        soundPoolWorker.playSound(soundPool, soundFlagDrop)
                         val win = Saper().useFlagOnSpot(x, y, hostField!!.content, userField)
                         MinefieldAdapter().setupMinefield(userField, arrayButtonsField)
                         if (win) {
-                            playSound(soundWin)
-                            tv_minefield_seconds.postDelayed({
-                                intentToResultActivity(true)
-                                if (countDownTimer != null) {
-                                    countDownTimer!!.cancel()
-                                }
-                            }, 500)
+                            performEndEvents(true)
                         }
                     }
                 }
@@ -329,15 +222,18 @@ class MinefieldActivity : AppCompatActivity() {
         }
     }
 
-    private fun playSound(sound: Int) {
-        soundPool.play(
-            sound,
-            1.0.toFloat(), 1.0.toFloat(),
-            1, 0, 1.0.toFloat()
-        )
+    private fun performEndEvents(result: Boolean) {
+        val sound = if (result) soundWin else soundExplosion
+        soundPoolWorker.playSound(soundPool, sound)
+        tv_minefield_seconds.postDelayed({
+            intentToResultActivity(result)
+            if (countDownTimer != null) {
+                countDownTimer!!.cancel()
+            }
+        }, 500)
     }
 
-    private fun intentToResultActivity(result: Boolean) {
+    override fun intentToResultActivity(result: Boolean) {
         val mIntent = Intent(this, GameResultsActivity::class.java)
 
         mIntent.putExtra(
@@ -368,7 +264,7 @@ class MinefieldActivity : AppCompatActivity() {
         } else {
             var seconds = gameTimeSeconds - tv_minefield_seconds.text.toString().toInt()
             var minutes = gameTimeMinutes - tv_minefield_minutes.text.toString().toInt()
-            if (seconds<0) {
+            if (seconds < 0) {
                 seconds += 60
                 minutes--
             }
@@ -385,6 +281,7 @@ class MinefieldActivity : AppCompatActivity() {
         finish()
     }
 
+    /**-----------------------overriding standard methods------------------------*/
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         tv_minefield_field_width.text =

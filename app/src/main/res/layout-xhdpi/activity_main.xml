@@ -44,10 +44,23 @@
             android:background="@drawable/my_main_button"
             android:layout_margin="8dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/button_main_bluetooth_game_client"
+            android:layout_width="210dp"
             android:layout_height="wrap_content"
-            android:text="XHDPI" />
+            android:text="BT_GAME_CLIENT"
+            style="@style/StyleMenuButtonFormat"
+            android:background="@drawable/my_main_button"
+            android:layout_margin="8dp"/>
+
+        <Button
+            android:id="@+id/button_main_bluetooth_game_server"
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:text="BT_GAME_SERVER"
+            style="@style/StyleMenuButtonFormat"
+            android:background="@drawable/my_main_button"
+            android:layout_margin="8dp"/>
     </LinearLayout>
 
     <com.google.android.gms.ads.AdView

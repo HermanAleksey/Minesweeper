@@ -1,5 +1,6 @@
 package com.example.sapper.activity
 
+import android.bluetooth.BluetoothDevice
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -7,10 +8,13 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sapper.R
+import com.example.sapper.constant.BluetoothConstant
 import com.example.sapper.constant.Constant
+import com.example.sapper.entity.CompanyLevel
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
@@ -19,17 +23,18 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    companion object Companion {
+        lateinit var context: Context
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        val adView = AdView(this)
-//        adView.adSize = AdSize.BANNER
-//        adView.adUnitId = "ca-app-pub-3940256099942544/6300978111"
+        context = baseContext
 
-        MobileAds.initialize(
-            this
-        ) { }
+        /**------------------------------AdMob------------------------------------------*/
+        MobileAds.initialize(this) { }
 
         val mAdView = findViewById<AdView>(R.id.adView)
         val adRequest: AdRequest = AdRequest.Builder().build()
@@ -44,6 +49,20 @@ class MainActivity : AppCompatActivity() {
         button_main_custom_game.setOnClickListener {
             val intent = Intent(this, GameSettingsActivity::class.java)
             intent.putExtra(Constant().GAME_MODE, Constant().GAME_MODE_CREATIVE)
+            startActivity(intent)
+        }
+
+        button_main_bluetooth_game_server.setOnClickListener {
+            val intent = Intent(this, TestChatActivity::class.java)
+            val obj = CompanyLevel(1,10,10,16,10,0,false)
+            intent.putExtra("Role", "Server")
+            intent.putExtra("RoomSettings", obj)
+            startActivity(intent)
+        }
+
+        button_main_bluetooth_game_client.setOnClickListener {
+            val intent = Intent(this, TestChatActivity::class.java)
+            intent.putExtra("Role", "Client")
             startActivity(intent)
         }
 
@@ -71,6 +90,7 @@ class MainActivity : AppCompatActivity() {
         val positiveButton: Button = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
         positiveButton.setTextColor(context.resources.getColor(R.color.colorPrimaryDark))
     }
+
 
 //    fun clickAll(view: View) {
 //        val db: SQLiteDatabase = baseContext.openOrCreateDatabase("app.db", MODE_PRIVATE, null)

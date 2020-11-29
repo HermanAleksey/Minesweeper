@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import com.example.sapper.R
+import kotlinx.android.synthetic.main.activity_minefield.*
 
 class MinefieldAdapter {
 
@@ -98,7 +99,6 @@ class MinefieldAdapter {
             val layoutParams: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
-//                ,1.0f
             )
 
             linearLayoutMinefield.addView(linearLayoutString, layoutParams)
@@ -116,7 +116,6 @@ class MinefieldAdapter {
                 button.textSize = 0f
                 linearLayoutString.addView(button, param)
             }
-
         }
 
         return arrayButtonsField
