@@ -3,7 +3,6 @@ package com.example.sapper.activity
 import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -11,11 +10,10 @@ import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sapper.constant.Constant
 import com.example.sapper.R
+import com.example.sapper.activity.MinefieldActivity.activity.MinefieldActivity
 import com.example.sapper.constant.GameConstant
-import com.example.sapper.db.DAOCompanyLevel
 import com.example.sapper.entity.CompanyLevel
 import kotlinx.android.synthetic.main.activity_company_level.*
-import kotlinx.android.synthetic.main.activity_game_settings.*
 
 class CompanyLevelActivity : AppCompatActivity() {
 
@@ -84,7 +82,7 @@ class CompanyLevelActivity : AppCompatActivity() {
 
 
             val myIntent = Intent(this, MinefieldActivity::class.java)
-            myIntent.putExtra(Constant().GAME_MODE, Constant().GAME_MODE_COMPANY)
+            myIntent.putExtra(Constant().GAME_MODE, Constant().EXTRA_GAME_MODE_COMPANY)
 //            myIntent.putExtra(Constant().COMPANY_LEVEL, levelNumber)
             myIntent.putExtra(
                 GameConstant().HEIGHT_TAG,

@@ -10,12 +10,12 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sapper.constant.Constant
 import com.example.sapper.constant.GameConstant
 import com.example.sapper.R
+import com.example.sapper.activity.MinefieldActivity.activity.MinefieldActivity
 import com.example.sapper.dialog.DialogSettingMinesCount
 import com.example.sapper.dialog.DialogSettingsSize
 import kotlinx.android.synthetic.main.activity_game_settings.*
@@ -45,12 +45,12 @@ class GameSettingsActivity : AppCompatActivity(),
         }
         /*setting game mode note*/
         when (mode) {
-            Constant().GAME_MODE_CREATIVE -> {
+            Constant().EXTRA_GAME_MODE_CREATIVE -> {
                 title = getString(R.string.singleplayer)
                 ll_game_settings_use_same_field.visibility = View.GONE
                 ll_game_settings_exit.visibility = View.GONE
             }
-            Constant().GAME_MODE_BLUETOOTH -> {
+            Constant().EXTRA_GAME_MODE_BLUETOOTH -> {
                 title = getString(R.string.bluetooth)
             }
         }
@@ -79,7 +79,7 @@ class GameSettingsActivity : AppCompatActivity(),
         /*setting click listener for button Create */
         btn_game_settings_create_game.setOnClickListener {
             val myIntent = when (mode) {
-                Constant().GAME_MODE_BLUETOOTH -> {
+                Constant().EXTRA_GAME_MODE_BLUETOOTH -> {
                     //if bluetooth is turned off - asking to turn it on
                     val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
                     if (!bluetoothAdapter.isEnabled) {
@@ -127,9 +127,9 @@ class GameSettingsActivity : AppCompatActivity(),
                 cb_game_settings_first_click_mine.isChecked
             )
 
-            if (mode == Constant().GAME_MODE_BLUETOOTH) {
+            if (mode == Constant().EXTRA_GAME_MODE_BLUETOOTH) {
                 myIntent.putExtra(
-                    Constant().BLUETOOTH_ROLE,
+                    Constant().EXTRA_BLUETOOTH_ROLE,
                     Constant().ROLE_SERVER
                 )
                 myIntent.putExtra(

@@ -1,11 +1,10 @@
 package com.example.sapper.logic
 
 import android.os.CountDownTimer
-import android.os.SystemClock
 import android.widget.TextView
-import com.example.sapper.IIntent
+import com.example.sapper.activity.MinefieldActivity.IMinefieldActivity
 
-class TimeWorker(private val iIntent: IIntent) {
+class TimeWorker(private val interf: IMinefieldActivity) {
 
     fun translateToMilli(str: String): Long {
         val hours = str.substringBefore(":").toInt()
@@ -37,7 +36,7 @@ class TimeWorker(private val iIntent: IIntent) {
             }
 
             override fun onFinish() {
-                iIntent.intentToResultActivity(false)
+                interf.intentToResultActivity(false)
             }
         }
     }

@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter
 import com.example.sapper.constant.Constant
 import com.example.sapper.constant.GameConstant
 import com.example.sapper.R
+import com.example.sapper.activity.MinefieldActivity.activity.MinefieldActivity
 import kotlinx.android.synthetic.main.activity_waiting_room.*
 import kotlinx.android.synthetic.main.activity_game_settings.*
 import java.io.IOException
@@ -55,7 +56,7 @@ class WaitingRoomActivity : AppCompatActivity() {
             startActivityForResult(enableIntent, REQUEST_ENABLE_BLUETOOTH)
         }
 
-        role = intent.getStringExtra(Constant().BLUETOOTH_ROLE)!!
+        role = intent.getStringExtra(Constant().EXTRA_BLUETOOTH_ROLE)!!
         when (role) {
             Constant().ROLE_SERVER -> {
                 ll_client_waiting_room.visibility = View.GONE
@@ -75,9 +76,9 @@ class WaitingRoomActivity : AppCompatActivity() {
 
     private fun fillServerRoomInfoFromIntent() {
         val gameMode = when (intent.getStringExtra(Constant().GAME_MODE)) {
-            Constant().GAME_MODE_BLUETOOTH -> getString(R.string.gameModeBluetooth)
-            Constant().GAME_MODE_COMPANY -> getString(R.string.gameModeCompany)
-            Constant().GAME_MODE_CREATIVE -> getString(R.string.gameModeCasual)
+            Constant().EXTRA_GAME_MODE_BLUETOOTH -> getString(R.string.gameModeBluetooth)
+            Constant().EXTRA_GAME_MODE_COMPANY -> getString(R.string.gameModeCompany)
+            Constant().EXTRA_GAME_MODE_CREATIVE -> getString(R.string.gameModeCasual)
             else -> ""
         }
         val width = intent.getIntExtra(GameConstant().WIDTH_TAG, 0)
@@ -225,8 +226,8 @@ class WaitingRoomActivity : AppCompatActivity() {
                                 .substringBefore(";") == "true"
                     } else
                     if (tempMessage.startsWith("start game")){
-                        val minefieldIntent = Intent(this,MinefieldActivity::class.java)
-                        minefieldIntent.putExtra(Constant().GAME_MODE, Constant().GAME_MODE_BLUETOOTH)
+                        val minefieldIntent = Intent(this, MinefieldActivity::class.java)
+                        minefieldIntent.putExtra(Constant().GAME_MODE, Constant().EXTRA_GAME_MODE_BLUETOOTH)
                         minefieldIntent.putExtra(GameConstant().WIDTH_TAG,tv_host_room_field_width.text.toString().toInt())
                         minefieldIntent.putExtra(GameConstant().HEIGHT_TAG,tv_host_room_field_height.text.toString().toInt())
                         minefieldIntent.putExtra(GameConstant().MINES_COUNT_TAG,tv_host_room_mines_amount.text.toString().toInt())

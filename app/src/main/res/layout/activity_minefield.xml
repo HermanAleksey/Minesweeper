@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorMainBackground"
     android:orientation="vertical"
-    tools:context=".activity.MinefieldActivity">
+    tools:context=".activity.MinefieldActivity.activity.MinefieldActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

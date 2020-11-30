@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sapper.R
 import com.example.sapper.activity.MainActivity.Companion.context
+import com.example.sapper.constant.BluetoothConstant
 import com.example.sapper.entity.CompanyLevel
 import com.example.sapper.logic.MultiPlayerService
 import com.google.gson.Gson
@@ -20,43 +21,9 @@ import org.json.JSONArray
 import org.json.JSONException
 
 class TestChatActivity : AppCompatActivity() {
-
-    // Debugging
-    private val TAG = "myLogs"
-    private val DIALOG_CHOICE = 1
-    private val DIALOG_MINER_LOSS = 2
-    private val DIALOG_MINER_WON = 3
-    private val DIALOG_BLUETOOTH_MENU = 4
-
-    // Message types sent from the BluetoothChatService Handler
-    val MESSAGE_STATE_CHANGE = 1
-    val MESSAGE_READ = 2
-    val MESSAGE_WRITE = 3
-    val MESSAGE_DEVICE_NAME = 4
-    val MESSAGE_TOAST = 5
-    private val BOARD_POST = 6
-    val MESSAGE_SAPPER_LOSS = 7
-    val MESSAGE_SAPPER_WIN = 8
-
-    val SOCKET_SERVER = 4
-    val SOCKET_CLIENT = 5
-
     private var socketView = 0
-
-    // Key names received from the BluetoothChatService Handler
-    val DEVICE_NAME = "device_name"
-    val TOAST = "toast"
-
-    // Intent request codes
-    val REQUEST_CONNECT_DEVICE = 2
-    private val REQUEST_ENABLE_BT = 3
-
-
-    lateinit var cellFromBluetooth: Array<IntArray> //An array of field cells obtained by Bluetooth
-
     // Local Bluetooth adapter
     private var mBluetoothAdapter: BluetoothAdapter? = null
-
     // Member object for the chat services
     private var mChatService: MultiPlayerService? = null
 
@@ -71,7 +38,6 @@ class TestChatActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test_chat)
-
 
         GSONobject = gson.toJson(obj)
 
@@ -99,7 +65,7 @@ class TestChatActivity : AppCompatActivity() {
                 val serverIntent: Intent = Intent(context, DeviceListActivity::class.java)
                 startActivityForResult(
                     serverIntent,
-                    REQUEST_CONNECT_DEVICE
+                    BluetoothConstant.REQUEST_CONNECT_DEVICE
                 )
             }
         }
@@ -120,7 +86,7 @@ class TestChatActivity : AppCompatActivity() {
             // started already
             if (mChatService!!.state === MultiPlayerService.STATE_NONE) {
                 // Start the Bluetooth chat services
-                socketView = SOCKET_SERVER
+                socketView = BluetoothConstant.SOCKET_SERVER
                 mChatService!!.start()
             }
         }
@@ -129,12 +95,12 @@ class TestChatActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
-            REQUEST_CONNECT_DEVICE -> {               // When DeviceListActivity returns with a device to connect
+            BluetoothConstant.REQUEST_CONNECT_DEVICE -> {               // When DeviceListActivity returns with a device to connect
                 if (resultCode == RESULT_OK) {
                     connectDeviceFromMenu(data!!)
                 }
             }
-            REQUEST_ENABLE_BT -> {              // When the request to enable Bluetooth returns
+            BluetoothConstant.REQUEST_ENABLE_BT -> {              // When the request to enable Bluetooth returns
                 if (resultCode == RESULT_OK) {
                     // Bluetooth is now enabled, so set up a chat session
                     setupChat()
@@ -155,7 +121,7 @@ class TestChatActivity : AppCompatActivity() {
     }
 
     private fun ensureDiscoverable() {
-        Log.d(TAG, "ensure discoverable")
+        Log.d(BluetoothConstant.TAG, "ensure discoverable")
         if (mBluetoothAdapter!!.scanMode != BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
             val discoverableIntent = Intent(
                 BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE
@@ -172,12 +138,12 @@ class TestChatActivity : AppCompatActivity() {
         val address = data.extras!!.getString(
             DeviceListActivity.EXTRA_DEVICE_ADDRESS
         )
-        Log.e(TAG, "connectDeviceFromMenu: Address:${address}")
+        Log.e(BluetoothConstant.TAG, "connectDeviceFromMenu: Address:${address}")
         // Get the BluetoothDevice object
         try {
             val device: BluetoothDevice = mBluetoothAdapter!!.getRemoteDevice(address)
             // Attempt to connect to the device
-            socketView = SOCKET_CLIENT
+            socketView = BluetoothConstant.SOCKET_CLIENT
             mChatService!!.connect(device)
         } catch (e: Exception) {
             Toast.makeText(this, "Error connecting to selected device", Toast.LENGTH_SHORT).show()
@@ -185,7 +151,7 @@ class TestChatActivity : AppCompatActivity() {
     }
 
     private fun setupChat() {
-        Log.d(TAG, "setupChat()")
+        Log.d(BluetoothConstant.TAG, "setupChat()")
         // Initialize the BluetoothChatService to perform bluetooth connections
         mChatService = MultiPlayerService(this, mHandler)
     }
@@ -195,20 +161,20 @@ class TestChatActivity : AppCompatActivity() {
     object : Handler() {
         override fun handleMessage(msg: Message) {
             when (msg.what) {
-                BOARD_POST -> {
+                BluetoothConstant.BOARD_POST -> {
                 }
-                MESSAGE_SAPPER_LOSS -> sendMessages("Miner won")
-                MESSAGE_SAPPER_WIN -> sendMessages("Sapper won")
-                MESSAGE_STATE_CHANGE -> {
+                BluetoothConstant.MESSAGE_SAPPER_LOSS -> sendMessages("Miner won")
+                BluetoothConstant.MESSAGE_SAPPER_WIN -> sendMessages("Sapper won")
+                BluetoothConstant.MESSAGE_STATE_CHANGE -> {
                     Log.i(
-                        TAG,
+                        BluetoothConstant.TAG,
                         "MESSAGE_STATE_CHANGE: " + msg.arg1
                     )
                     when (msg.arg1) {
-                        MultiPlayerService.STATE_CONNECTED -> if (socketView == SOCKET_CLIENT) {
-                            showDialog(DIALOG_CHOICE)
+                        MultiPlayerService.STATE_CONNECTED -> if (socketView == BluetoothConstant.SOCKET_CLIENT) {
+                            showDialog(BluetoothConstant.DIALOG_CHOICE)
                             Log.d("myLogs", "I am SOCKET_CLIENT")
-                        } else if (socketView == SOCKET_SERVER) {
+                        } else if (socketView == BluetoothConstant.SOCKET_SERVER) {
                             Log.d("myLogs", "I am SOCKET_SERVER")
                         }
                         MultiPlayerService.STATE_CONNECTING -> {
@@ -219,9 +185,9 @@ class TestChatActivity : AppCompatActivity() {
                         }
                     }
                 }
-                MESSAGE_WRITE -> {
+                BluetoothConstant.MESSAGE_WRITE -> {
                 }
-                MESSAGE_READ -> {
+                BluetoothConstant.MESSAGE_READ -> {
                     //Read received JSON
                     val readBuf = msg.obj as ByteArray
                     // construct a string from the valid bytes in the buffer
@@ -272,10 +238,10 @@ class TestChatActivity : AppCompatActivity() {
 
                     }
                 }
-                MESSAGE_DEVICE_NAME -> {
+                BluetoothConstant.MESSAGE_DEVICE_NAME -> {
                     Toast.makeText(
                         applicationContext,
-                        "R.string.connectTo.toString()" + msg.data.getString(DEVICE_NAME),
+                        "R.string.connectTo.toString()" + msg.data.getString(BluetoothConstant.DEVICE_NAME),
                         Toast.LENGTH_SHORT
                     ).show()
                     /**--------------------------------------First message after connection -----------------------------------------------**/
@@ -289,9 +255,9 @@ class TestChatActivity : AppCompatActivity() {
                         }
                     }
                 }
-                MESSAGE_TOAST -> {
+                BluetoothConstant.MESSAGE_TOAST -> {
                     Toast.makeText(
-                        applicationContext, msg.data.getString(TOAST), Toast.LENGTH_SHORT
+                        applicationContext, msg.data.getString(BluetoothConstant.TOAST), Toast.LENGTH_SHORT
                     ).show()
                 }
             }

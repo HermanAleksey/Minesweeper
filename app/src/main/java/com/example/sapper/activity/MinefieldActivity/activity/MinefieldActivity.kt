@@ -1,33 +1,28 @@
-package com.example.sapper.activity
+package com.example.sapper.activity.MinefieldActivity.activity
 
 import HostField
 import Saper
 import UserField
 import android.content.Context
 import android.content.Intent
-import android.media.AudioAttributes
-import android.media.AudioManager
 import android.media.SoundPool
 import android.os.*
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.example.sapper.IIntent
-import com.example.sapper.constant.Constant
 import com.example.sapper.constant.GameConstant
 import com.example.sapper.logic.MinefieldAdapter
 import com.example.sapper.R
+import com.example.sapper.activity.GameResultsActivity
+import com.example.sapper.activity.MinefieldActivity.IMinefieldActivity
 import com.example.sapper.logic.SoundPoolWorker
 import com.example.sapper.logic.TimeWorker
-import kotlinx.android.synthetic.main.activity_company_level.*
 import kotlinx.android.synthetic.main.activity_minefield.*
 
 
-open class MinefieldActivity : AppCompatActivity(), IIntent {
-
+class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
     var hostField: HostField? = null
     var height: Int = 0
     var width: Int = 0
@@ -111,7 +106,7 @@ open class MinefieldActivity : AppCompatActivity(), IIntent {
         }
 
         /*filling view*/
-        placeValuesIntoViews()
+        fillViewElements()
 
         val linearLayoutMinefield =
             findViewById<LinearLayout>(R.id.linear_layout_minefield)
@@ -157,7 +152,7 @@ open class MinefieldActivity : AppCompatActivity(), IIntent {
         )
     }
 
-    private fun placeValuesIntoViews (){
+    override fun fillViewElements() {
         tv_minefield_field_width.text = "$width"
         tv_minefield_field_height.text = "$height"
         tv_minefield_minutes.text = if (gameTimeMinutes < 10) {
@@ -169,7 +164,7 @@ open class MinefieldActivity : AppCompatActivity(), IIntent {
         tv_minefield_mines.text = "$minesCount"
     }
 
-    private fun loadSounds() {
+    override fun loadSounds() {
         soundExplosion = soundPool.load(this, R.raw.explosion_8bit, 1)
         soundWin = soundPool.load(this, R.raw.win_01, 1)
         soundFlagDrop = soundPool.load(this, R.raw.flag_drop, 1)
@@ -178,7 +173,7 @@ open class MinefieldActivity : AppCompatActivity(), IIntent {
 
 
     /*define how each cell gonna react to click with flag/open selected*/
-    private fun setOnClickListenerForField(
+    override fun setOnClickListenerForField(
         arrayButtonsField: Array<Array<Button>>,
         userField: Array<Array<Char>>
     ) {
@@ -222,7 +217,7 @@ open class MinefieldActivity : AppCompatActivity(), IIntent {
         }
     }
 
-    private fun performEndEvents(result: Boolean) {
+    override fun performEndEvents(result: Boolean) {
         val sound = if (result) soundWin else soundExplosion
         soundPoolWorker.playSound(soundPool, sound)
         tv_minefield_seconds.postDelayed({

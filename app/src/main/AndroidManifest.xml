@@ -26,7 +26,7 @@
             android:parentActivityName=".activity.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.MinefieldActivity"
+            android:name=".activity.MinefieldActivity.activity.MinefieldActivity"
             android:parentActivityName=".activity.MainActivity"
             android:screenOrientation="portrait" />
         <activity

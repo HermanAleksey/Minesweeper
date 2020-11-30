@@ -1,6 +1,5 @@
 package com.example.sapper.activity
 
-import android.bluetooth.BluetoothDevice
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -8,11 +7,9 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sapper.R
-import com.example.sapper.constant.BluetoothConstant
 import com.example.sapper.constant.Constant
 import com.example.sapper.entity.CompanyLevel
 import com.google.android.gms.ads.AdRequest
@@ -48,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
         button_main_custom_game.setOnClickListener {
             val intent = Intent(this, GameSettingsActivity::class.java)
-            intent.putExtra(Constant().GAME_MODE, Constant().GAME_MODE_CREATIVE)
+            intent.putExtra(Constant().GAME_MODE, Constant().EXTRA_GAME_MODE_CREATIVE)
             startActivity(intent)
         }
 
