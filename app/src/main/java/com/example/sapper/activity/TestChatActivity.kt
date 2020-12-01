@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sapper.R
@@ -19,14 +20,18 @@ import com.example.sapper.constant.BluetoothConstant
 import com.example.sapper.constant.Constant
 import com.example.sapper.constant.GameConstant
 import com.example.sapper.entity.Room
+import com.example.sapper.logic.MinefieldAdapter
 import com.example.sapper.logic.MultiPlayerService
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.activity_minefield.*
 import kotlinx.android.synthetic.main.activity_test_chat.*
 
 class TestChatActivity : AppCompatActivity() {
     private var socketView = 0
+
     // Local Bluetooth adapter
     private var mBluetoothAdapter: BluetoothAdapter? = null
+
     // Member object for the chat services
     private var mChatService: MultiPlayerService? = null
 
@@ -36,6 +41,9 @@ class TestChatActivity : AppCompatActivity() {
     var role = ""
     private var GSONobject = ""
     private val gson = Gson()
+    var roomSettings: Room? = null
+
+    var arrayButtonsField: Array<Array<Button>>? = null
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -43,9 +51,9 @@ class TestChatActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (ll_bt_minefield_minefield_layout.visibility == View.VISIBLE) {
-            ll_bt_minefield_minefield_layout.visibility = View.GONE
-        } else ll_bt_minefield_minefield_layout.visibility = View.VISIBLE
+        if (ll_bt_minefield_minefield_screen.visibility == View.VISIBLE) {
+            ll_bt_minefield_minefield_screen.visibility = View.GONE
+        } else ll_bt_minefield_minefield_screen.visibility = View.VISIBLE
         return super.onOptionsItemSelected(item)
     }
 
@@ -66,8 +74,8 @@ class TestChatActivity : AppCompatActivity() {
 
         when (intent.getStringExtra(Constant().EXTRA_BLUETOOTH_ROLE)) {
             Constant().ROLE_SERVER -> {
-                val room = intent.getSerializableExtra(GameConstant().EXTRA_ROOM) as Room
-                GSONobject = gson.toJson(room)
+                roomSettings = intent.getSerializableExtra(GameConstant().EXTRA_ROOM) as Room
+                GSONobject = gson.toJson(roomSettings)
                 role = "Server"
                 // Ensure this device is discoverable by others
                 ensureDiscoverable()
@@ -206,21 +214,28 @@ class TestChatActivity : AppCompatActivity() {
                     // construct a string from the valid bytes in the buffer
                     /**-----------------------------------------------Message reading --------------------------------------------------------*/
                     val readMessage = String(readBuf, 0, msg.arg1)
-                    textViewAppend("""On BluetoothConstant.MESSAGE_READ
+                    textViewAppend(
+                        """On BluetoothConstant.MESSAGE_READ
                         current read buffer state is: 
                         $readBuf
                         
                         current read message state is: 
                         $readMessage
-                    """.trimMargin())
+                    """.trimMargin()
+                    )
                     when {
                         /**-----------------------------------Processing JSON with ROOM configs-----------------------------------------------*/
                         readMessage.startsWith('{') -> {
-                            val room = gson.fromJson(readMessage, Room::class.java)
+                            roomSettings = gson.fromJson(readMessage, Room::class.java)
                             textViewAppend("Client get and processing room info gson:")
-                            textViewAppend(room.toString())
+                            textViewAppend(roomSettings.toString())
+                            arrayButtonsField =
+                                MinefieldAdapter().createMinefield(
+                                    roomSettings!!.width, roomSettings!!.height,
+                                    ll_bt_minefield_minefield_layout, this@TestChatActivity
+                                )
 
-                            tv_bt_minefield_gson_accepted.text = room.toString()
+                            tv_bt_minefield_accepted_object.text = roomSettings.toString()
 
                             /**-----------------Request to start game -------------------*/
                             sendMessages("StartRequest")
@@ -228,9 +243,8 @@ class TestChatActivity : AppCompatActivity() {
                         }
                         /**------------------------Start request was accepted ON -------------------------*/
                         readMessage == "StartRequest" -> {
-                            textViewAppend("Server got start request")
                             sendMessages("AcceptStartRequest")
-                            textViewAppend("Server send accept request")
+                            textViewAppend("Server got start request & send accept request")
                         }
                         readMessage == "AcceptStartRequest" -> {
                             textViewAppend("Client got answer to start request")
@@ -273,22 +287,30 @@ class TestChatActivity : AppCompatActivity() {
                         }
                         "Server" -> {
                             textViewAppend("Server sending room info$i")
-                            i+=1
+                            i += 1
                             tv_bt_minefield_gson_sended.text = GSONobject
                             //Sending room info as GSON
                             sendMessages(GSONobject)
+
+                            arrayButtonsField =
+                                MinefieldAdapter().createMinefield(
+                                    roomSettings!!.width, roomSettings!!.height,
+                                    ll_bt_minefield_minefield_layout, this@TestChatActivity
+                                )
                         }
                     }
                 }
                 BluetoothConstant.MESSAGE_TOAST -> {
                     Toast.makeText(
-                        applicationContext, msg.data.getString(BluetoothConstant.TOAST), Toast.LENGTH_SHORT
+                        applicationContext,
+                        msg.data.getString(BluetoothConstant.TOAST),
+                        Toast.LENGTH_SHORT
                     ).show()
                 }
             }
         }
     }
-var i = 1
+    var i = 1
     fun textViewAppend(str: String) {
         string += "\n-----------------------------\n$str\n"
         textViewChat.text = string

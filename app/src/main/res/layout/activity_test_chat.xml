@@ -4,15 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.TestChatActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".activity.TestChatActivity">
 
     <LinearLayout
-        android:id="@+id/ll_bt_minefield_minefield_layout"
-        android:layout_width="match_parent"
+        android:id="@+id/ll_bt_minefield_minefield_screen"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/colorBlack">
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorMainBackground"
+            android:scrollbars="horizontal|vertical">
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ll_bt_minefield_minefield_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+            </HorizontalScrollView>
+        </ScrollView>
+
 
     </LinearLayout>
 
@@ -28,11 +49,11 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_bt_minefield_gson_accepted"
+                android:id="@+id/tv_bt_minefield_accepted_object"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="#f00"
-                android:hint="accepted GSON"
+                android:hint="accepted Obj"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

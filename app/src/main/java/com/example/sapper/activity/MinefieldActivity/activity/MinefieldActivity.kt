@@ -96,12 +96,10 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
 
         fillViewElements()
 
-        val linearLayoutMinefield =
-            findViewById<LinearLayout>(R.id.linear_layout_minefield)
         /*Visual minefield (from buttons)*/
         val arrayButtonsField =
             MinefieldAdapter().createMinefield(
-                width, height, linearLayoutMinefield, this
+                width, height, linear_layout_minefield, this
             )
 
         configureSeekBar(arrayButtonsField)
