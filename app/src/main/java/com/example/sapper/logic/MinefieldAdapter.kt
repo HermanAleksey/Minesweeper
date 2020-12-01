@@ -18,9 +18,6 @@ class MinefieldAdapter {
         for (x in minefield.indices) {
             for (y in minefield[x].indices) {
                 if (minefield[x][y].isDigit()) {
-//                    arrayButtonsField[x][y].setBackgroundResource(0)
-//                    arrayButtonsField[x][y].text = minefield[x][y].toString()
-//                    continue
                     when (minefield[x][y]){
                         '0' -> {
                             arrayButtonsField[x][y].text = "0"

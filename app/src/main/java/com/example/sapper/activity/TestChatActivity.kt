@@ -1,9 +1,13 @@
 package com.example.sapper.activity;
 
+import HostField
+import Saper
+import UserField
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
@@ -12,6 +16,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sapper.R
@@ -41,9 +46,11 @@ class TestChatActivity : AppCompatActivity() {
     var role = ""
     private var GSONobject = ""
     private val gson = Gson()
-    var roomSettings: Room? = null
 
-    var arrayButtonsField: Array<Array<Button>>? = null
+    lateinit var roomSettings: Room
+    lateinit var arrayButtonsField: Array<Array<Button>>
+    lateinit var hostField: HostField
+    lateinit var userField: UserField
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -90,6 +97,95 @@ class TestChatActivity : AppCompatActivity() {
                 )
             }
         }
+    }
+
+    private fun configureSeekBar(arrayButtonsField: Array<Array<Button>>) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            seek_bar_bt_minefield_cell_size.min = 30
+        }
+        seek_bar_bt_minefield_cell_size.max = 200
+        seek_bar_bt_minefield_cell_size.setOnSeekBarChangeListener(object :
+            SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                arrayButtonsField.forEach {
+                    it.forEach { btn ->
+                        val params = btn.layoutParams
+                        params.width = progress
+                        params.height = progress
+                        btn.layoutParams = params
+                    }
+                }
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+        })
+    }
+
+    private fun setOnClickListenerForField(
+        arrayButtonsField: Array<Array<Button>>,
+        userField: Array<Array<Char>>
+    ) {
+        for (y in arrayButtonsField.indices) {
+            for (x in arrayButtonsField[y].indices) {
+                arrayButtonsField[x][y].setOnClickListener {
+                    /*Opener*/
+                    if (!toggle_button_bt_minefield_flag.isChecked) {
+//                        soundPoolWorker.playSound(soundPool, soundTap)
+                        val keepGame = Saper().openCoordinate(x, y, hostField.content, userField)
+                        if (!keepGame) {
+                            performEndEvents(false)
+                        } else {
+                            /*если не проиграл - проверить, возможно теперь условия выполняются.*/
+                            /*т.к. openCoordinate возвращает false только если проиграл и не отличает
+                            * продолжение игры от победы*/
+                            if (Saper().checkWinCondition(hostField.content, userField)) {
+                                performEndEvents(true)
+                            }
+                        }
+                        MinefieldAdapter().setupMinefield(userField, arrayButtonsField)
+                    }
+                    /*FLAGer*/
+                    if (toggle_button_bt_minefield_flag.isChecked) {
+//                        soundPoolWorker.playSound(soundPool, soundFlagDrop)
+                        val win = Saper().useFlagOnSpot(x, y, hostField.content, userField)
+                        MinefieldAdapter().setupMinefield(userField, arrayButtonsField)
+                        if (win) {
+                            performEndEvents(true)
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+    private fun prepareFields () {
+        hostField = HostField(
+            roomSettings.width,
+            roomSettings.height,
+            roomSettings.minesCount
+        )
+        arrayButtonsField =
+            MinefieldAdapter().createMinefield(
+                roomSettings.width, roomSettings.height,
+                ll_bt_minefield_minefield_layout, this@TestChatActivity
+            )
+        configureSeekBar(arrayButtonsField)
+        userField = UserField(
+            roomSettings.width,
+            roomSettings.height,
+            roomSettings.minesCount
+        )
+        setOnClickListenerForField(
+            arrayButtonsField,
+            userField.content
+        )
+        MinefieldAdapter().setupMinefield(userField.content,arrayButtonsField)
+    }
+
+    private fun performEndEvents(boolean: Boolean) {
+
     }
 
     /**---------------------------------------------------------------------------------------------------------------------------------------*/
@@ -229,11 +325,8 @@ class TestChatActivity : AppCompatActivity() {
                             roomSettings = gson.fromJson(readMessage, Room::class.java)
                             textViewAppend("Client get and processing room info gson:")
                             textViewAppend(roomSettings.toString())
-                            arrayButtonsField =
-                                MinefieldAdapter().createMinefield(
-                                    roomSettings!!.width, roomSettings!!.height,
-                                    ll_bt_minefield_minefield_layout, this@TestChatActivity
-                                )
+
+                            prepareFields()
 
                             tv_bt_minefield_accepted_object.text = roomSettings.toString()
 
@@ -292,11 +385,7 @@ class TestChatActivity : AppCompatActivity() {
                             //Sending room info as GSON
                             sendMessages(GSONobject)
 
-                            arrayButtonsField =
-                                MinefieldAdapter().createMinefield(
-                                    roomSettings!!.width, roomSettings!!.height,
-                                    ll_bt_minefield_minefield_layout, this@TestChatActivity
-                                )
+                            prepareFields()
                         }
                     }
                 }
