@@ -9,12 +9,13 @@ import android.bluetooth.BluetoothDevice
 import android.content.Context
 import android.content.Intent
 import android.media.SoundPool
+import android.opengl.Visibility
 import android.os.*
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -36,14 +37,10 @@ import com.example.sapper.logic.TimeWorker
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_minefield.*
 import kotlinx.android.synthetic.main.activity_test_chat.*
+import kotlinx.android.synthetic.main.spinner_layout_game_settings.*
 
 class MineFieldBTActivity : AppCompatActivity(), IMinefieldActivity {
     var hostField: HostField? = null
-    var height: Int = 0
-    var width: Int = 0
-    var minesCount: Int = 0
-    var gameTimeMinutes: Int = 0
-    var gameTimeSeconds: Int = 0
 
     var gameTimerMilli: Long = 0
     private var countDownTimer: CountDownTimer? = null
@@ -89,18 +86,27 @@ class MineFieldBTActivity : AppCompatActivity(), IMinefieldActivity {
 
     /** ---------------------------- Bluetooth implementation --------------------------- **/
     private var socketView = 0
+
     // Local Bluetooth adapter
     private var mBluetoothAdapter: BluetoothAdapter? = null
+
     // Member object for the chat services
     private var mChatService: MultiPlayerService? = null
     private val gson = Gson()
     private var role = ""
     private lateinit var roomInfo: Room
+    private var GSONobject = ""
+
+    private var tagString = "---------Start---------\n"
+
     /**-----------------------------------------------------------------------------------**/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_minefield)
+        roomInfo = Room(10, 10, 16, 3, 0, false)
+        GSONobject = gson.toJson(roomInfo)
+
         /* --------------------Bluetooth--------------------- */
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
         if (mChatService == null) {
@@ -121,17 +127,21 @@ class MineFieldBTActivity : AppCompatActivity(), IMinefieldActivity {
             2) process Intent with minefield setting
              */
             Constant().ROLE_SERVER -> {
-                val room = intent.getSerializableExtra("RoomSettings") as CompanyLevel
-                role = "Server"
+                roomInfo = intent.getSerializableExtra(GameConstant().EXTRA_ROOM) as Room
+                role = Constant().ROLE_SERVER
                 // Ensure this device is discoverable by others
                 ensureDiscoverable()
+
+                /*filling view*/
+                fillViewElements()
             }
             /*If Client:
             1) Launch the DeviceListActivity to see devices and do scan
              */
             Constant().ROLE_CLIENT -> {
-                role = "Client"
-                val serverIntent: Intent = Intent(MainActivity.context, DeviceListActivity::class.java)
+                role = Constant().ROLE_CLIENT
+                val serverIntent =
+                    Intent(MainActivity.context, DeviceListActivity::class.java)
                 startActivityForResult(
                     serverIntent,
                     BluetoothConstant.REQUEST_CONNECT_DEVICE
@@ -139,18 +149,33 @@ class MineFieldBTActivity : AppCompatActivity(), IMinefieldActivity {
             }
         }
 
-        /*getting data about game depends on game mode*/
-        height = intent.getIntExtra(GameConstant().HEIGHT_TAG, 0)
-        width = intent.getIntExtra(GameConstant().WIDTH_TAG, 0)
-        minesCount = intent.getIntExtra(GameConstant().MINES_COUNT_TAG, 0)
-        gameTimeMinutes = intent.getIntExtra(GameConstant().GAME_TIME_MINUTES_TAG, 0)
-        gameTimeSeconds = intent.getIntExtra(GameConstant().GAME_TIME_SECONDS_TAG, 0)
-        val firstClickCanBeOnAMine =
-            intent.getBooleanExtra(GameConstant().FIRST_CLICK_MINE_TAG, false)
+//        startStopWatch()
+    }
 
+    private fun configureFields() {
+        /*Visual minefield (from buttons)*/
+        val arrayButtonsField =
+            MinefieldAdapter().createMinefield(
+                roomInfo.width, roomInfo.height, linear_layout_minefield, this
+            )
+        hostField = HostField(roomInfo.width, roomInfo.height, roomInfo.minesCount)
+        val userField = UserField(roomInfo.width, roomInfo.height, roomInfo.minesCount)
+
+        MinefieldAdapter().setupMinefield(userField.content, arrayButtonsField)
+
+        setOnClickListenerForField(
+            arrayButtonsField,
+            userField.content
+        )
+
+        /*SeekBar for controlling cells size*/
+        configureSeekBar(arrayButtonsField)
+    }
+
+    private fun startStopWatch() {
         /*stopwatch / timer starting*/
         timeWorker = TimeWorker(this)
-        gameTimerMilli = timeWorker.translateToMilli("$gameTimeMinutes:$gameTimeSeconds")
+        gameTimerMilli = timeWorker.translateToMilli("${roomInfo.minutes}:${roomInfo.seconds}")
         if (gameTimerMilli == 0L) {
             startTime = SystemClock.uptimeMillis()
             runnable.run()
@@ -160,19 +185,9 @@ class MineFieldBTActivity : AppCompatActivity(), IMinefieldActivity {
                 tv_minefield_seconds, gameTimerMilli
             ).start()
         }
+    }
 
-        /*filling view*/
-        fillViewElements()
-
-        val linearLayoutMinefield =
-            findViewById<LinearLayout>(R.id.linear_layout_minefield)
-        /*Visual minefield (from buttons)*/
-        val arrayButtonsField =
-            MinefieldAdapter().createMinefield(
-                width, height, linearLayoutMinefield, this
-            )
-
-        /*SeekBar for controlling cells size*/
+    private fun configureSeekBar(arrayButtonsField: Array<Array<Button>>) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             seek_bar_minefield_cell_size.min = 30
         }
@@ -193,31 +208,18 @@ class MineFieldBTActivity : AppCompatActivity(), IMinefieldActivity {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
-
-        /*generating field only if first click can be on mine*/
-        if (firstClickCanBeOnAMine) {
-            hostField = HostField(width, height, minesCount)
-        }
-        val userField = UserField(width, height, minesCount)
-
-        MinefieldAdapter().setupMinefield(userField.content, arrayButtonsField)
-
-        setOnClickListenerForField(
-            arrayButtonsField,
-            userField.content
-        )
     }
 
     override fun fillViewElements() {
-        tv_minefield_field_width.text = "$width"
-        tv_minefield_field_height.text = "$height"
-        tv_minefield_minutes.text = if (gameTimeMinutes < 10) {
-            "0$gameTimeMinutes"
-        } else "$gameTimeMinutes"
-        tv_minefield_seconds.text = if (gameTimeSeconds < 10) {
-            "0$gameTimeSeconds"
-        } else "$gameTimeSeconds"
-        tv_minefield_mines.text = "$minesCount"
+        tv_minefield_field_width.text = "${roomInfo.width}"
+        tv_minefield_field_height.text = "${roomInfo.height}"
+        tv_minefield_minutes.text = if (roomInfo.minutes < 10) {
+            "0${roomInfo.minutes}"
+        } else "${roomInfo.minutes}"
+        tv_minefield_seconds.text = if (roomInfo.seconds < 10) {
+            "0${roomInfo.seconds}"
+        } else "${roomInfo.seconds}"
+        tv_minefield_mines.text = "${roomInfo.minesCount}"
     }
 
     override fun loadSounds() {
@@ -226,7 +228,6 @@ class MineFieldBTActivity : AppCompatActivity(), IMinefieldActivity {
         soundFlagDrop = soundPool.load(this, R.raw.flag_drop, 1)
         soundTap = soundPool.load(this, R.raw.new_tap, 1)
     }
-
 
     /*define how each cell gonna react to click with flag/open selected*/
     override fun setOnClickListenerForField(
@@ -238,34 +239,34 @@ class MineFieldBTActivity : AppCompatActivity(), IMinefieldActivity {
                 arrayButtonsField[x][y].setOnClickListener {
                     /*Opener*/
                     if (!togglebutton_minefield_flag.isChecked) {
-                        if (hostField == null) {
-                            hostField = HostField(width, height, minesCount, x, y)
-                        }
+//                        if (hostField == null) {
+//                            hostField = HostField(width, height, minesCount, x, y)
+//                        }
                         soundPoolWorker.playSound(soundPool, soundTap)
 
                         val keepGame = Saper().openCoordinate(x, y, hostField!!.content, userField)
                         if (!keepGame) {
-                            performEndEvents(false)
+                            notifyLose()
                         } else {
                             /*если не проиграл - проверить, возможно теперь условия выполняются.*/
                             /*т.к. openCoordinate возвращает false только если проиграл и не отличает
                             * продолжение игры от победы*/
                             if (Saper().checkWinCondition(hostField!!.content, userField)) {
-                                performEndEvents(true)
+                                notifyWin()
                             }
                         }
                         MinefieldAdapter().setupMinefield(userField, arrayButtonsField)
                     }
                     /*FLAG*/
                     if (togglebutton_minefield_flag.isChecked) {
-                        if (hostField == null) {
-                            hostField = HostField(width, height, minesCount, x, y)
-                        }
+//                        if (hostField == null) {
+//                            hostField = HostField(width, height, minesCount, x, y)
+//                        }
                         soundPoolWorker.playSound(soundPool, soundFlagDrop)
                         val win = Saper().useFlagOnSpot(x, y, hostField!!.content, userField)
                         MinefieldAdapter().setupMinefield(userField, arrayButtonsField)
                         if (win) {
-                            performEndEvents(true)
+                            notifyWin()
                         }
                     }
                 }
@@ -313,8 +314,8 @@ class MineFieldBTActivity : AppCompatActivity(), IMinefieldActivity {
                 tv_minefield_seconds.text.toString().toInt()
             )
         } else {
-            var seconds = gameTimeSeconds - tv_minefield_seconds.text.toString().toInt()
-            var minutes = gameTimeMinutes - tv_minefield_minutes.text.toString().toInt()
+            var seconds = roomInfo.seconds - tv_minefield_seconds.text.toString().toInt()
+            var minutes = roomInfo.seconds - tv_minefield_minutes.text.toString().toInt()
             if (seconds < 0) {
                 seconds += 60
                 minutes--
@@ -339,7 +340,7 @@ class MineFieldBTActivity : AppCompatActivity(), IMinefieldActivity {
      *
      * @param message A string of text to send.
      */
-    private fun sendMessages(message: String) {
+    private fun sendSocketMessages(message: String) {
         // Check that we're actually connected before trying anything
         if (mChatService!!.state !== MultiPlayerService.STATE_CONNECTED) {
             Toast.makeText(this, "R.string.not_connected", Toast.LENGTH_SHORT).show()
@@ -418,6 +419,11 @@ class MineFieldBTActivity : AppCompatActivity(), IMinefieldActivity {
         }
     }
 
+    fun textViewAppend(str: String) {
+        tagString += "\n-----------------------------\n$str"
+
+    }
+
     // The Handler that gets information back from the BluetoothChatService
     private val mHandler: Handler = @SuppressLint("HandlerLeak")
     object : Handler() {
@@ -425,8 +431,119 @@ class MineFieldBTActivity : AppCompatActivity(), IMinefieldActivity {
             when (msg.what) {
                 BluetoothConstant.BOARD_POST -> {
                 }
-                BluetoothConstant.MESSAGE_SAPPER_LOSS -> sendMessages("Miner won")
-                BluetoothConstant.MESSAGE_SAPPER_WIN -> sendMessages("Sapper won")
+                BluetoothConstant.MESSAGE_SAPPER_LOSS -> sendSocketMessages("Miner won")
+                BluetoothConstant.MESSAGE_SAPPER_WIN -> sendSocketMessages("Sapper won")
+                BluetoothConstant.MESSAGE_STATE_CHANGE -> {
+                    Log.i(
+                        BluetoothConstant.TAG,
+                        "MESSAGE_STATE_CHANGE: " + msg.arg1
+                    )
+                    when (msg.arg1) {
+
+                        MultiPlayerService.STATE_CONNECTED -> if (socketView == BluetoothConstant.SOCKET_CLIENT) {
+                            showDialog(BluetoothConstant.DIALOG_CHOICE)
+                            Log.d("myLogs", "I am SOCKET_CLIENT")
+                        } else if (socketView == BluetoothConstant.SOCKET_SERVER) {
+                            Log.d("myLogs", "I am SOCKET_SERVER")
+                        }
+                        MultiPlayerService.STATE_CONNECTING -> {
+                        }
+                        MultiPlayerService.STATE_LISTEN -> {
+                        }
+                        MultiPlayerService.STATE_NONE -> {
+                        }
+                    }
+                }
+                BluetoothConstant.MESSAGE_WRITE -> {
+                }
+                BluetoothConstant.MESSAGE_READ -> {
+                    //Read received JSON
+                    val readBuf = msg.obj as ByteArray
+                    // construct a string from the valid bytes in the buffer
+                    /**-----------------------------------------------Message reading --------------------------------------------------------*/
+                    val readMessage = String(readBuf, 0, msg.arg1)
+                    tagString += "\n----------new----------\n$readMessage"
+                    when {
+                        /**-----------------------------------Processing JSON with ROOM configs-----------------------------------------------*/
+                        readMessage.startsWith('{') -> {
+                            roomInfo = gson.fromJson(readMessage, Room::class.java)
+                            textViewAppend(roomInfo.toString() + "after startsWith('{')")
+//                            configureFields()
+//
+//                            /*filling view*/
+//                            fillViewElements()
+                            /**-----------------Request to start game -------------------*/
+                            sendSocketMessages("StartRequest")
+                            textViewAppend("Sending @StartRequest@ after startsWith('{')")
+                        }
+                        /**---------------Start request was accepted ON ----------------*/
+                        readMessage == "StartRequest" -> {
+                            sendSocketMessages("AcceptStartRequest")
+                            textViewAppend("Sending @AcceptStartRequest@ after StartRequest")
+                        }
+                        readMessage == "AcceptStartRequest" -> {
+                            textViewAppend("Vgot after AcceptStartRequest")
+                        }
+                        /**-----------Если пришло сообщение "Lose" ------------------*/
+                        //тогда настоящий пользователь автоматически победил
+                        readMessage == "Lose" -> {
+                            Toast.makeText(
+                                this@MineFieldBTActivity,
+                                "Gratz, u won",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        /**-----------Если пришло сообщение "Win" ------------------*/
+                        //тогда настоящий пользователь автоматически победил
+                        readMessage == "Win" -> {
+                            Toast.makeText(
+                                this@MineFieldBTActivity,
+                                "sorry, u lost",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                    }
+                }
+                BluetoothConstant.MESSAGE_DEVICE_NAME -> {
+                    Toast.makeText(
+                        applicationContext,
+                        "R.string.connectTo.toString()" + msg.data.getString(BluetoothConstant.DEVICE_NAME),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    /**--------------First message after connection --------------**/
+                    when (role) {
+                        "Client" -> {
+                        }
+                        "Server" -> {
+                            Log.e("TAG", "Server sending room info ")
+                            //Sending room info as GSON
+                            textViewAppend(gson.toJson(roomInfo)+" sended after @Server@ accepted client")
+                            sendSocketMessages(gson.toJson(roomInfo))
+                            // Generating room depends on sameField factor
+                            configureFields()
+                        }
+                    }
+                }
+                BluetoothConstant.MESSAGE_TOAST -> {
+                    Toast.makeText(
+                        applicationContext,
+                        msg.data.getString(BluetoothConstant.TOAST),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    }
+
+    /*private val mHandler: Handler = @SuppressLint("HandlerLeak")
+    object : Handler() {
+        override fun handleMessage(msg: Message) {
+            when (msg.what) {
+                BluetoothConstant.BOARD_POST -> {
+                }
+                BluetoothConstant.MESSAGE_SAPPER_LOSS -> sendSocketMessages("Miner won")
+                BluetoothConstant.MESSAGE_SAPPER_WIN -> sendSocketMessages("Sapper won")
                 BluetoothConstant.MESSAGE_STATE_CHANGE -> {
                     Log.i(
                         BluetoothConstant.TAG,
@@ -455,8 +572,8 @@ class MineFieldBTActivity : AppCompatActivity(), IMinefieldActivity {
                     // construct a string from the valid bytes in the buffer
                     /**-----------------------------------------------Message reading --------------------------------------------------------*/
                     val readMessage = String(readBuf, 0, msg.arg1)
-                    string += "\n----------new----------\n$readMessage"
-                    textViewChat.text = string
+                    tagString += "\n----------new----------\n$readMessage"
+                    textViewChat.text = tagString
                     when {
                         /**-----------------------------------Processing JSON with ROOM configs-----------------------------------------------*/
                         readMessage.startsWith('{') -> {
@@ -465,13 +582,13 @@ class MineFieldBTActivity : AppCompatActivity(), IMinefieldActivity {
                             textViewAppend(room.toString())
 
                             /**-----------------Request to start game -------------------*/
-                            sendMessages("StartRequest")
+                            sendSocketMessages("StartRequest")
                             textViewAppend("Client sande startRequest")
                         }
-                        /**---------------Start request was accepted ON ----------------*/
+                        /**------------------------Start request was accepted ON -------------------------*/
                         readMessage == "StartRequest" -> {
                             textViewAppend("Server got start request")
-                            sendMessages("AcceptStartRequest")
+                            sendSocketMessages("AcceptStartRequest")
                             textViewAppend("Server send accept request")
                         }
                         readMessage == "AcceptStartRequest" -> {
@@ -481,7 +598,7 @@ class MineFieldBTActivity : AppCompatActivity(), IMinefieldActivity {
                         //тогда настоящий пользователь автоматически победил
                         readMessage == "Lose" -> {
                             Toast.makeText(
-                                this@TestChatActivity,
+                                this@MineFieldBTActivity,
                                 "Gratz, u won",
                                 Toast.LENGTH_SHORT
                             ).show()
@@ -491,7 +608,7 @@ class MineFieldBTActivity : AppCompatActivity(), IMinefieldActivity {
                         //тогда настоящий пользователь автоматически победил
                         readMessage == "Win" -> {
                             Toast.makeText(
-                                this@TestChatActivity,
+                                this@MineFieldBTActivity,
                                 "sorry, u lost",
                                 Toast.LENGTH_SHORT
                             ).show()
@@ -506,14 +623,15 @@ class MineFieldBTActivity : AppCompatActivity(), IMinefieldActivity {
                         "R.string.connectTo.toString()" + msg.data.getString(BluetoothConstant.DEVICE_NAME),
                         Toast.LENGTH_SHORT
                     ).show()
-                    /**--------------First message after connection --------------**/
+                    /**--------------------------------------First message after connection -----------------------------------------------**/
                     when (role) {
                         "Client" -> {
                         }
                         "Server" -> {
                             textViewAppend("Server sending room info")
+                            textViewAppend("gson: ")
                             //Sending room info as GSON
-                            sendMessages(GSONobject)
+                            sendSocketMessages(GSONobject)
                         }
                     }
                 }
@@ -524,9 +642,18 @@ class MineFieldBTActivity : AppCompatActivity(), IMinefieldActivity {
                 }
             }
         }
+    }*/
+
+    private fun notifyWin() {
+        sendSocketMessages("Win")
+    }
+
+    private fun notifyLose() {
+        sendSocketMessages("Lose")
     }
 
     /**-------------------------------------------------------overriding standard methods--------------------------------------------------------*/
+    @Synchronized
     override fun onResume() {
         super.onResume()
         // Performing this check in onResume() covers the case in which BT was
@@ -544,34 +671,34 @@ class MineFieldBTActivity : AppCompatActivity(), IMinefieldActivity {
         }
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        tv_minefield_field_width.text =
-            savedInstanceState.getInt(GameConstant().WIDTH_TAG).toString()
-        tv_minefield_field_height.text =
-            savedInstanceState.getInt(GameConstant().HEIGHT_TAG).toString()
-        tv_minefield_mines.text =
-            savedInstanceState.getInt(GameConstant().MINES_COUNT_TAG).toString()
+//    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+//        super.onRestoreInstanceState(savedInstanceState)
+//        tv_minefield_field_width.text =
+//            savedInstanceState.getInt(GameConstant().WIDTH_TAG).toString()
+//        tv_minefield_field_height.text =
+//            savedInstanceState.getInt(GameConstant().HEIGHT_TAG).toString()
+//        tv_minefield_mines.text =
+//            savedInstanceState.getInt(GameConstant().MINES_COUNT_TAG).toString()
+//
+//        //BT implementation
+//
+//    }
 
-        //BT implementation
-
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt(
-            GameConstant().WIDTH_TAG,
-            tv_minefield_field_width.text.toString().toInt()
-        )
-        outState.putInt(
-            GameConstant().HEIGHT_TAG,
-            tv_minefield_field_height.text.toString().toInt()
-        )
-        outState.putInt(
-            GameConstant().MINES_COUNT_TAG,
-            tv_minefield_mines.text.toString().toInt()
-        )
-    }
+//    override fun onSaveInstanceState(outState: Bundle) {
+//        super.onSaveInstanceState(outState)
+//        outState.putInt(
+//            GameConstant().WIDTH_TAG,
+//            tv_minefield_field_width.text.toString().toInt()
+//        )
+//        outState.putInt(
+//            GameConstant().HEIGHT_TAG,
+//            tv_minefield_field_height.text.toString().toInt()
+//        )
+//        outState.putInt(
+//            GameConstant().MINES_COUNT_TAG,
+//            tv_minefield_mines.text.toString().toInt()
+//        )
+//    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)

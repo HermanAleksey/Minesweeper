@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon_launcher_mine_100px"
@@ -27,6 +29,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MinefieldActivity.activity.MinefieldActivity"
+            android:parentActivityName=".activity.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MinefieldActivity.activity.MineFieldBTActivity"
             android:parentActivityName=".activity.MainActivity"
             android:screenOrientation="portrait" />
         <activity

@@ -10,8 +10,11 @@ import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sapper.R
+import com.example.sapper.activity.MinefieldActivity.activity.MineFieldBTActivity
 import com.example.sapper.constant.Constant
+import com.example.sapper.constant.GameConstant
 import com.example.sapper.entity.CompanyLevel
+import com.example.sapper.entity.Room
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
@@ -45,21 +48,21 @@ class MainActivity : AppCompatActivity() {
 
         button_main_custom_game.setOnClickListener {
             val intent = Intent(this, GameSettingsActivity::class.java)
-            intent.putExtra(Constant().GAME_MODE, Constant().EXTRA_GAME_MODE_CREATIVE)
+            intent.putExtra(Constant().EXTRA_GAME_MODE, Constant().EXTRA_GAME_MODE_CREATIVE)
             startActivity(intent)
         }
 
         button_main_bluetooth_game_server.setOnClickListener {
             val intent = Intent(this, TestChatActivity::class.java)
-            val obj = CompanyLevel(1,10,10,16,10,0,false)
-            intent.putExtra("Role", "Server")
-            intent.putExtra("RoomSettings", obj)
+            val obj = Room(16, 16, 32, 3, 0, false)
+            intent.putExtra(Constant().EXTRA_BLUETOOTH_ROLE, Constant().ROLE_SERVER)
+            intent.putExtra(GameConstant().EXTRA_ROOM, obj)
             startActivity(intent)
         }
 
         button_main_bluetooth_game_client.setOnClickListener {
             val intent = Intent(this, TestChatActivity::class.java)
-            intent.putExtra("Role", "Client")
+            intent.putExtra(Constant().EXTRA_BLUETOOTH_ROLE, Constant().ROLE_CLIENT)
             startActivity(intent)
         }
 

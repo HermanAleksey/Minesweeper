@@ -8,17 +8,20 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sapper.R
 import com.example.sapper.activity.MainActivity.Companion.context
 import com.example.sapper.constant.BluetoothConstant
-import com.example.sapper.entity.CompanyLevel
+import com.example.sapper.constant.Constant
+import com.example.sapper.constant.GameConstant
+import com.example.sapper.entity.Room
 import com.example.sapper.logic.MultiPlayerService
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_test_chat.*
-import org.json.JSONArray
-import org.json.JSONException
 
 class TestChatActivity : AppCompatActivity() {
     private var socketView = 0
@@ -30,16 +33,25 @@ class TestChatActivity : AppCompatActivity() {
     /**   -------------------------new constants -------------------------- upon*/
 
     var string: String = "-------------S T A R T-------------\n"
-    var obj = CompanyLevel(1, 10, 10, 16, 10, 0, false)
     var role = ""
     private var GSONobject = ""
     private val gson = Gson()
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (ll_bt_minefield_minefield_layout.visibility == View.VISIBLE) {
+            ll_bt_minefield_minefield_layout.visibility = View.GONE
+        } else ll_bt_minefield_minefield_layout.visibility = View.VISIBLE
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test_chat)
-
-        GSONobject = gson.toJson(obj)
 
         // Get local Bluetooth adapter
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
@@ -52,17 +64,18 @@ class TestChatActivity : AppCompatActivity() {
             setupChat()
         }
 
-        when (intent.getStringExtra("Role")) {
-            "Server" -> {
-                val room = intent.getSerializableExtra("RoomSettings") as CompanyLevel
+        when (intent.getStringExtra(Constant().EXTRA_BLUETOOTH_ROLE)) {
+            Constant().ROLE_SERVER -> {
+                val room = intent.getSerializableExtra(GameConstant().EXTRA_ROOM) as Room
+                GSONobject = gson.toJson(room)
                 role = "Server"
                 // Ensure this device is discoverable by others
                 ensureDiscoverable()
             }
-            "Client" -> {
+            Constant().ROLE_CLIENT -> {
                 // Launch the DeviceListActivity to see devices and do scan
                 role = "Client"
-                val serverIntent: Intent = Intent(context, DeviceListActivity::class.java)
+                val serverIntent = Intent(context, DeviceListActivity::class.java)
                 startActivityForResult(
                     serverIntent,
                     BluetoothConstant.REQUEST_CONNECT_DEVICE
@@ -73,7 +86,7 @@ class TestChatActivity : AppCompatActivity() {
 
     /**---------------------------------------------------------------------------------------------------------------------------------------*/
 
-//    @Synchronized
+    @Synchronized
     override fun onResume() {
         super.onResume()
         Log.d("myLogs", "MultiplayerActivity onResume")
@@ -193,14 +206,21 @@ class TestChatActivity : AppCompatActivity() {
                     // construct a string from the valid bytes in the buffer
                     /**-----------------------------------------------Message reading --------------------------------------------------------*/
                     val readMessage = String(readBuf, 0, msg.arg1)
-                    string += "\n----------new----------\n$readMessage"
-                    textViewChat.text = string
+                    textViewAppend("""On BluetoothConstant.MESSAGE_READ
+                        current read buffer state is: 
+                        $readBuf
+                        
+                        current read message state is: 
+                        $readMessage
+                    """.trimMargin())
                     when {
                         /**-----------------------------------Processing JSON with ROOM configs-----------------------------------------------*/
                         readMessage.startsWith('{') -> {
-                            val room = gson.fromJson(readMessage, CompanyLevel::class.java)
+                            val room = gson.fromJson(readMessage, Room::class.java)
                             textViewAppend("Client get and processing room info gson:")
                             textViewAppend(room.toString())
+
+                            tv_bt_minefield_gson_accepted.text = room.toString()
 
                             /**-----------------Request to start game -------------------*/
                             sendMessages("StartRequest")
@@ -235,6 +255,9 @@ class TestChatActivity : AppCompatActivity() {
                             ).show()
                             textViewAppend("\n\n\nI LOSE!")
                         }
+                        else -> {
+                            textViewAppend("Incoming message:\n\"$readMessage\"\ncan't be processed")
+                        }
 
                     }
                 }
@@ -249,7 +272,9 @@ class TestChatActivity : AppCompatActivity() {
                         "Client" -> {
                         }
                         "Server" -> {
-                            textViewAppend("Server sending room info")
+                            textViewAppend("Server sending room info$i")
+                            i+=1
+                            tv_bt_minefield_gson_sended.text = GSONobject
                             //Sending room info as GSON
                             sendMessages(GSONobject)
                         }
@@ -263,9 +288,9 @@ class TestChatActivity : AppCompatActivity() {
             }
         }
     }
-
+var i = 1
     fun textViewAppend(str: String) {
-        string += "\n$str\n"
+        string += "\n-----------------------------\n$str\n"
         textViewChat.text = string
     }
 

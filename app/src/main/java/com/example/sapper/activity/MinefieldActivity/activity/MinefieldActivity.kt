@@ -92,6 +92,35 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
         val firstClickCanBeOnAMine =
             intent.getBooleanExtra(GameConstant().FIRST_CLICK_MINE_TAG, false)
 
+        startStopWatch()
+
+        fillViewElements()
+
+        val linearLayoutMinefield =
+            findViewById<LinearLayout>(R.id.linear_layout_minefield)
+        /*Visual minefield (from buttons)*/
+        val arrayButtonsField =
+            MinefieldAdapter().createMinefield(
+                width, height, linearLayoutMinefield, this
+            )
+
+        configureSeekBar(arrayButtonsField)
+
+        /*generating field only if first click can be on mine*/
+        if (firstClickCanBeOnAMine) {
+            hostField = HostField(width, height, minesCount)
+        }
+        val userField = UserField(width, height, minesCount)
+
+        MinefieldAdapter().setupMinefield(userField.content, arrayButtonsField)
+
+        setOnClickListenerForField(
+            arrayButtonsField,
+            userField.content
+        )
+    }
+
+    private fun startStopWatch() {
         /*stopwatch / timer starting*/
         timeWorker = TimeWorker(this)
         gameTimerMilli = timeWorker.translateToMilli("$gameTimeMinutes:$gameTimeSeconds")
@@ -104,19 +133,9 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
                 tv_minefield_seconds, gameTimerMilli
             ).start()
         }
+    }
 
-        /*filling view*/
-        fillViewElements()
-
-        val linearLayoutMinefield =
-            findViewById<LinearLayout>(R.id.linear_layout_minefield)
-        /*Visual minefield (from buttons)*/
-        val arrayButtonsField =
-            MinefieldAdapter().createMinefield(
-                width, height, linearLayoutMinefield, this
-            )
-
-        /*SeekBar for controlling cells size*/
+    private fun configureSeekBar(arrayButtonsField: Array<Array<Button>>) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             seek_bar_minefield_cell_size.min = 30
         }
@@ -137,19 +156,6 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
-
-        /*generating field only if first click can be on mine*/
-        if (firstClickCanBeOnAMine) {
-            hostField = HostField(width, height, minesCount)
-        }
-        val userField = UserField(width, height, minesCount)
-
-        MinefieldAdapter().setupMinefield(userField.content, arrayButtonsField)
-
-        setOnClickListenerForField(
-            arrayButtonsField,
-            userField.content
-        )
     }
 
     override fun fillViewElements() {

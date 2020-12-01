@@ -75,7 +75,7 @@ class WaitingRoomActivity : AppCompatActivity() {
     }
 
     private fun fillServerRoomInfoFromIntent() {
-        val gameMode = when (intent.getStringExtra(Constant().GAME_MODE)) {
+        val gameMode = when (intent.getStringExtra(Constant().EXTRA_GAME_MODE)) {
             Constant().EXTRA_GAME_MODE_BLUETOOTH -> getString(R.string.gameModeBluetooth)
             Constant().EXTRA_GAME_MODE_COMPANY -> getString(R.string.gameModeCompany)
             Constant().EXTRA_GAME_MODE_CREATIVE -> getString(R.string.gameModeCasual)
@@ -227,7 +227,7 @@ class WaitingRoomActivity : AppCompatActivity() {
                     } else
                     if (tempMessage.startsWith("start game")){
                         val minefieldIntent = Intent(this, MinefieldActivity::class.java)
-                        minefieldIntent.putExtra(Constant().GAME_MODE, Constant().EXTRA_GAME_MODE_BLUETOOTH)
+                        minefieldIntent.putExtra(Constant().EXTRA_GAME_MODE, Constant().EXTRA_GAME_MODE_BLUETOOTH)
                         minefieldIntent.putExtra(GameConstant().WIDTH_TAG,tv_host_room_field_width.text.toString().toInt())
                         minefieldIntent.putExtra(GameConstant().HEIGHT_TAG,tv_host_room_field_height.text.toString().toInt())
                         minefieldIntent.putExtra(GameConstant().MINES_COUNT_TAG,tv_host_room_mines_amount.text.toString().toInt())

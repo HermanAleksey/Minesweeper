@@ -37,11 +37,11 @@ class GameSettingsActivity : AppCompatActivity(),
 
 
         val mode = if (savedInstanceState == null) {
-            intent.getStringExtra(Constant().GAME_MODE)
+            intent.getStringExtra(Constant().EXTRA_GAME_MODE)
         } else {
 //            tv_game_settings_game_time_selected.text =
 //                savedInstanceState.getString(GameConstant().GAME_TIME_TAG, "00:00")
-            savedInstanceState.getString(Constant().GAME_MODE)
+            savedInstanceState.getString(Constant().EXTRA_GAME_MODE)
         }
         /*setting game mode note*/
         when (mode) {
@@ -95,7 +95,7 @@ class GameSettingsActivity : AppCompatActivity(),
             }
 
             myIntent.putExtra(
-                Constant().GAME_MODE,
+                Constant().EXTRA_GAME_MODE,
                 mode
             )
             myIntent.putExtra(
@@ -149,7 +149,7 @@ class GameSettingsActivity : AppCompatActivity(),
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(
-            Constant().GAME_MODE,
+            Constant().EXTRA_GAME_MODE,
             title.toString()
         )
     }

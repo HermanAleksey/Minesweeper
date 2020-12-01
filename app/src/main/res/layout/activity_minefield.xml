@@ -179,42 +179,18 @@
             android:orientation="vertical">
 
             <TextView
+                style="@style/StyleMenuButtonFormat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingVertical="5dp"
-                style="@style/StyleMenuButtonFormat"
-                android:textSize="20sp"
-                android:text="@string/chooseCellSize" />
+                android:text="@string/chooseCellSize"
+                android:textSize="20sp" />
 
             <SeekBar
                 android:id="@+id/seek_bar_minefield_cell_size"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:gravity="center">-->
-
-<!--                <Button-->
-<!--                    android:id="@+id/btn_minefield_reduce_size"-->
-<!--                    android:layout_width="30dp"-->
-<!--                    android:layout_height="30dp"-->
-<!--                    android:background="@drawable/ic_minus_on_circle" />-->
-
-<!--                <Spinner-->
-<!--                    android:id="@+id/spin_minefield_cell_size"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="match_parent" />-->
-
-<!--                <Button-->
-<!--                    android:id="@+id/btn_minefield_increase_size"-->
-<!--                    android:layout_width="30dp"-->
-<!--                    android:layout_height="30dp"-->
-<!--                    android:background="@drawable/ic_plus_on_circle" />-->
-
-<!--            </LinearLayout>-->
 
         </LinearLayout>
 
@@ -230,3 +206,4 @@
     </LinearLayout>
 
 </LinearLayout>
+

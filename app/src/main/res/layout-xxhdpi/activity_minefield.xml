@@ -193,30 +193,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:gravity="center">-->
-
-<!--                <Button-->
-<!--                    android:id="@+id/btn_minefield_reduce_size"-->
-<!--                    android:layout_width="30dp"-->
-<!--                    android:layout_height="30dp"-->
-<!--                    android:background="@drawable/ic_minus_on_circle" />-->
-
-<!--                <Spinner-->
-<!--                    android:id="@+id/spin_minefield_cell_size"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="50dp" />-->
-
-<!--                <Button-->
-<!--                    android:id="@+id/btn_minefield_increase_size"-->
-<!--                    android:layout_width="30dp"-->
-<!--                    android:layout_height="30dp"-->
-<!--                    android:background="@drawable/ic_plus_on_circle" />-->
-
-<!--            </LinearLayout>-->
-
         </LinearLayout>
 
         <ToggleButton

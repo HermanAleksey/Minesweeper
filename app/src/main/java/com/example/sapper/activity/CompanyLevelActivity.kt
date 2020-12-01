@@ -82,7 +82,7 @@ class CompanyLevelActivity : AppCompatActivity() {
 
 
             val myIntent = Intent(this, MinefieldActivity::class.java)
-            myIntent.putExtra(Constant().GAME_MODE, Constant().EXTRA_GAME_MODE_COMPANY)
+            myIntent.putExtra(Constant().EXTRA_GAME_MODE, Constant().EXTRA_GAME_MODE_COMPANY)
 //            myIntent.putExtra(Constant().COMPANY_LEVEL, levelNumber)
             myIntent.putExtra(
                 GameConstant().HEIGHT_TAG,

@@ -11,6 +11,7 @@ class GameConstant {
     val CLOSE_AFTER_GAME_TAG: String = "com.example.sapper.GameSettings.CloseAfterGame"
     val FIRST_CLICK_MINE_TAG: String = "com.example.sapper.GameSettings.FirstClickMine"
     val USE_SAME_FIELD_TAG: String = "com.example.sapper.GameSettings.useSameField"
+    val EXTRA_ROOM: String = "com.example.sapper.GameSettings.extraRoom"
 
     val GAME_RESULT: String = "com.example.sapper.GameSettings.gameResult"
     val GAME_RESULT_WIN: String = "com.example.sapper.GameSettings.gameResultWin"
