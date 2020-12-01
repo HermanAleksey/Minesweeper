@@ -7,6 +7,7 @@ import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.Intent
+import android.media.SoundPool
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -27,6 +28,7 @@ import com.example.sapper.constant.GameConstant
 import com.example.sapper.entity.Room
 import com.example.sapper.logic.MinefieldAdapter
 import com.example.sapper.logic.MultiPlayerService
+import com.example.sapper.logic.SoundPoolWorker
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_minefield.*
 import kotlinx.android.synthetic.main.activity_test_chat.*
@@ -52,6 +54,15 @@ class TestChatActivity : AppCompatActivity() {
     lateinit var hostField: HostField
     lateinit var userField: UserField
 
+    /** ---------------------------------SOUND POOL IMPL -----------------------------------**/
+    private lateinit var soundPoolWorker: SoundPoolWorker
+
+    private lateinit var soundPool: SoundPool
+    private var soundExplosion: Int = 0
+    private var soundWin: Int = 0
+    private var soundFlagDrop: Int = 0
+    private var soundTap: Int = 0
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
@@ -74,10 +85,15 @@ class TestChatActivity : AppCompatActivity() {
         buttonBTVisibility.setOnClickListener { sendMessages(GSONobject) }
         buttonSend.setOnClickListener { sendMessages(editTextTextPersonName.text.toString()) }
 
-        // Otherwise, setup the chat session
+        // setup the chat session
         if (mChatService == null) {
             setupChat()
         }
+
+        //configure sound pool
+        soundPoolWorker = SoundPoolWorker()
+        soundPool = soundPoolWorker.getSoundPool()
+        loadSounds()
 
         when (intent.getStringExtra(Constant().EXTRA_BLUETOOTH_ROLE)) {
             Constant().ROLE_SERVER -> {
@@ -131,7 +147,7 @@ class TestChatActivity : AppCompatActivity() {
                 arrayButtonsField[x][y].setOnClickListener {
                     /*Opener*/
                     if (!toggle_button_bt_minefield_flag.isChecked) {
-//                        soundPoolWorker.playSound(soundPool, soundTap)
+                        soundPoolWorker.playSound(soundPool, soundTap)
                         val keepGame = Saper().openCoordinate(x, y, hostField.content, userField)
                         if (!keepGame) {
                             performEndEvents(false)
@@ -147,7 +163,7 @@ class TestChatActivity : AppCompatActivity() {
                     }
                     /*FLAGer*/
                     if (toggle_button_bt_minefield_flag.isChecked) {
-//                        soundPoolWorker.playSound(soundPool, soundFlagDrop)
+                        soundPoolWorker.playSound(soundPool, soundFlagDrop)
                         val win = Saper().useFlagOnSpot(x, y, hostField.content, userField)
                         MinefieldAdapter().setupMinefield(userField, arrayButtonsField)
                         if (win) {
@@ -160,7 +176,7 @@ class TestChatActivity : AppCompatActivity() {
         }
     }
 
-    private fun prepareFields () {
+    private fun prepareFields() {
         hostField = HostField(
             roomSettings.width,
             roomSettings.height,
@@ -181,11 +197,27 @@ class TestChatActivity : AppCompatActivity() {
             arrayButtonsField,
             userField.content
         )
-        MinefieldAdapter().setupMinefield(userField.content,arrayButtonsField)
+        MinefieldAdapter().setupMinefield(userField.content, arrayButtonsField)
     }
 
-    private fun performEndEvents(boolean: Boolean) {
+    private fun performEndEvents(result: Boolean) {
+        val sound = if (result) soundWin else soundExplosion
+        soundPoolWorker.playSound(soundPool, sound)
+        tv_minefield_seconds.postDelayed({
+//                intentToResultActivity(result)
+//                if (countDownTimer != null) {
+//                    countDownTimer!!.cancel()
+//                }
+            sendMessages(if (result) "Lose" else "Win")
+        }, 500)
+    }
 
+
+    private fun loadSounds() {
+        soundExplosion = soundPool.load(this, R.raw.explosion_8bit, 1)
+        soundWin = soundPool.load(this, R.raw.win_01, 1)
+        soundFlagDrop = soundPool.load(this, R.raw.flag_drop, 1)
+        soundTap = soundPool.load(this, R.raw.new_tap, 1)
     }
 
     /**---------------------------------------------------------------------------------------------------------------------------------------*/
