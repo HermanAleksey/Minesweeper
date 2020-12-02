@@ -1,4 +1,4 @@
-package com.example.sapper.activity;
+package com.example.sapper.activity.MinefieldActivity.activity;
 
 import HostField
 import Saper
@@ -8,10 +8,7 @@ import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.Intent
 import android.media.SoundPool
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import android.os.Message
+import android.os.*
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -21,7 +18,11 @@ import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sapper.R
+import com.example.sapper.activity.DeviceListActivity
+import com.example.sapper.activity.GameResultsActivity
+import com.example.sapper.activity.MainActivity
 import com.example.sapper.activity.MainActivity.Companion.context
+import com.example.sapper.activity.MinefieldActivity.IMinefieldActivity
 import com.example.sapper.constant.BluetoothConstant
 import com.example.sapper.constant.Constant
 import com.example.sapper.constant.GameConstant
@@ -29,11 +30,12 @@ import com.example.sapper.entity.Room
 import com.example.sapper.logic.MinefieldAdapter
 import com.example.sapper.logic.MultiPlayerService
 import com.example.sapper.logic.SoundPoolWorker
+import com.example.sapper.logic.TimeWorker
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_minefield.*
-import kotlinx.android.synthetic.main.activity_test_chat.*
+import kotlinx.android.synthetic.main.activity_minefield_bt.*
 
-class TestChatActivity : AppCompatActivity() {
+class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
     private var socketView = 0
 
     // Local Bluetooth adapter
@@ -63,6 +65,32 @@ class TestChatActivity : AppCompatActivity() {
     private var soundFlagDrop: Int = 0
     private var soundTap: Int = 0
 
+    /**---------------------------------TIMER + STOP WATCH ---------------------------------**/
+    private lateinit var timeWorker: TimeWorker
+    private var countDownTimer: CountDownTimer? = null
+    private lateinit var handler: Handler
+
+    private var gameTimerMilli: Long = 0
+//    private var startTime: Long = 0
+    lateinit var stopWatchRunnable: Runnable
+
+
+    private fun startStopWatch() {
+        /*stopwatch / timer starting*/
+        gameTimerMilli = timeWorker.translateToMilli("${roomSettings.minutes}:${roomSettings.seconds}")
+        if (gameTimerMilli == 0L) {
+            val startTime = SystemClock.uptimeMillis()
+            stopWatchRunnable = timeWorker.getStopWatchRunnable(startTime)
+            stopWatchRunnable.run()
+        } else {
+            timeWorker.getCountDownTimer(
+                tv_bt_minefield_minutes,
+                tv_bt_minefield_seconds,
+                gameTimerMilli
+            ).start()
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
@@ -77,7 +105,10 @@ class TestChatActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_test_chat)
+        setContentView(R.layout.activity_minefield_bt)
+        //timer
+        handler = Handler()
+        timeWorker = TimeWorker(this, handler)
 
         // Get local Bluetooth adapter
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
@@ -100,8 +131,16 @@ class TestChatActivity : AppCompatActivity() {
                 roomSettings = intent.getSerializableExtra(GameConstant().EXTRA_ROOM) as Room
                 GSONobject = gson.toJson(roomSettings)
                 role = "Server"
+
                 // Ensure this device is discoverable by others
                 ensureDiscoverable()
+                fillViewsWithValues(
+                    roomSettings.width,
+                    roomSettings.height,
+                    roomSettings.minutes,
+                    roomSettings.seconds,
+                    roomSettings.minutes
+                )
             }
             Constant().ROLE_CLIENT -> {
                 // Launch the DeviceListActivity to see devices and do scan
@@ -136,6 +175,7 @@ class TestChatActivity : AppCompatActivity() {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
+        seek_bar_bt_minefield_cell_size.setProgress(80)
     }
 
     private fun setOnClickListenerForField(
@@ -170,7 +210,6 @@ class TestChatActivity : AppCompatActivity() {
                             performEndEvents(true)
                         }
                     }
-
                 }
             }
         }
@@ -185,7 +224,7 @@ class TestChatActivity : AppCompatActivity() {
         arrayButtonsField =
             MinefieldAdapter().createMinefield(
                 roomSettings.width, roomSettings.height,
-                ll_bt_minefield_minefield_layout, this@TestChatActivity
+                ll_bt_minefield_minefield_layout, this@MinefieldBTActivity
             )
         configureSeekBar(arrayButtonsField)
         userField = UserField(
@@ -198,17 +237,41 @@ class TestChatActivity : AppCompatActivity() {
             userField.content
         )
         MinefieldAdapter().setupMinefield(userField.content, arrayButtonsField)
+
+        fillViewsWithValues(
+            roomSettings.width,
+            roomSettings.height,
+            roomSettings.minutes,
+            roomSettings.seconds,
+            roomSettings.minutes
+        )
+
+        startStopWatch()
+    }
+
+    private fun fillViewsWithValues(
+        width: Int, height: Int, min: Int,
+        sec: Int, mines: Int
+    ) {
+        tv_bt_minefield_field_width.text = width.toString()
+        tv_bt_minefield_field_height.text = height.toString()
+        tv_bt_minefield_minutes.text = if (min < 10) {
+            "0$min"
+        } else "$min"
+        tv_bt_minefield_seconds.text = if (sec < 10) {
+            "0$sec"
+        } else "$sec"
+        tv_bt_minefield_mines.text = mines.toString()
     }
 
     private fun performEndEvents(result: Boolean) {
         val sound = if (result) soundWin else soundExplosion
         soundPoolWorker.playSound(soundPool, sound)
-        tv_minefield_seconds.postDelayed({
-//                intentToResultActivity(result)
-//                if (countDownTimer != null) {
-//                    countDownTimer!!.cancel()
-//                }
+        ll_bt_minefield_minefield_layout.postDelayed({
+                intentToResultActivity(result)
+            timeWorker.stopCountDownTimer(countDownTimer)
             sendMessages(if (result) "Lose" else "Win")
+            disconnectBluetooth()
         }, 500)
     }
 
@@ -220,7 +283,66 @@ class TestChatActivity : AppCompatActivity() {
         soundTap = soundPool.load(this, R.raw.new_tap, 1)
     }
 
+    override fun intentToResultActivity(result: Boolean) {
+        val mIntent = Intent(this, GameResultsActivity::class.java)
+
+        mIntent.putExtra(
+            GameConstant().GAME_RESULT,
+            result
+        )
+        mIntent.putExtra(
+            GameConstant().WIDTH_TAG,
+            tv_bt_minefield_field_width.text.toString().toInt()
+        )
+        mIntent.putExtra(
+            GameConstant().HEIGHT_TAG,
+            tv_bt_minefield_field_height.text.toString().toInt()
+        )
+        mIntent.putExtra(
+            GameConstant().MINES_COUNT_TAG,
+            tv_bt_minefield_mines.text.toString().toInt()
+        )
+        if (gameTimerMilli == 0L) {
+            mIntent.putExtra(
+                GameConstant().GAME_TIME_MINUTES_TAG,
+                tv_bt_minefield_minutes.text.toString().toInt()
+            )
+            mIntent.putExtra(
+                GameConstant().GAME_TIME_SECONDS_TAG,
+                tv_bt_minefield_seconds.text.toString().toInt()
+            )
+        } else {
+            var seconds = roomSettings.seconds - tv_bt_minefield_seconds.text.toString().toInt()
+            var minutes = roomSettings.minutes - tv_bt_minefield_minutes.text.toString().toInt()
+            if (seconds < 0) {
+                seconds += 60
+                minutes--
+            }
+            mIntent.putExtra(
+                GameConstant().GAME_TIME_SECONDS_TAG,
+                seconds
+            )
+            mIntent.putExtra(
+                GameConstant().GAME_TIME_MINUTES_TAG,
+                minutes
+            )
+        }
+        startActivity(mIntent)
+        finish()
+    }
+
+    override fun textViewMinutesSetText(str: String) {
+        tv_bt_minefield_minutes.text = str
+    }
+
+    override fun textViewSecondsSetText(str: String) {
+        tv_bt_minefield_seconds.text = str
+    }
+
     /**---------------------------------------------------------------------------------------------------------------------------------------*/
+    private fun disconnectBluetooth() {
+        if (mChatService != null) mChatService!!.stop()
+    }
 
     @Synchronized
     override fun onResume() {
@@ -256,7 +378,7 @@ class TestChatActivity : AppCompatActivity() {
                 } else {
                     // User did not enable Bluetooth or an error occurred
                     Toast.makeText(
-                        MainActivity.context, "R.string.bt_not_enabled_leaving",
+                        context, R.string.btNotEnable,
                         Toast.LENGTH_SHORT
                     ).show()
 
@@ -312,13 +434,7 @@ class TestChatActivity : AppCompatActivity() {
             when (msg.what) {
                 BluetoothConstant.BOARD_POST -> {
                 }
-                BluetoothConstant.MESSAGE_SAPPER_LOSS -> sendMessages("Miner won")
-                BluetoothConstant.MESSAGE_SAPPER_WIN -> sendMessages("Sapper won")
                 BluetoothConstant.MESSAGE_STATE_CHANGE -> {
-                    Log.i(
-                        BluetoothConstant.TAG,
-                        "MESSAGE_STATE_CHANGE: " + msg.arg1
-                    )
                     when (msg.arg1) {
                         MultiPlayerService.STATE_CONNECTED -> if (socketView == BluetoothConstant.SOCKET_CLIENT) {
                             showDialog(BluetoothConstant.DIALOG_CHOICE)
@@ -375,24 +491,24 @@ class TestChatActivity : AppCompatActivity() {
                             textViewAppend("Client got answer to start request")
                         }
                         /**-----------Если пришло сообщение "Lose" ------------------*/
-                        //тогда настоящий пользователь автоматически победил
                         readMessage == "Lose" -> {
                             Toast.makeText(
-                                this@TestChatActivity,
-                                "Gratz, u won",
+                                this@MinefieldBTActivity,
+                                R.string.opponentWon,
                                 Toast.LENGTH_SHORT
                             ).show()
-                            textViewAppend("\n\n\nI WON!")
+                            disconnectBluetooth()
+                            performEndEvents(false)
                         }
                         /**-----------Если пришло сообщение "Win" ------------------*/
-                        //тогда настоящий пользователь автоматически победил
                         readMessage == "Win" -> {
                             Toast.makeText(
-                                this@TestChatActivity,
-                                "sorry, u lost",
+                                this@MinefieldBTActivity,
+                                R.string.opponentExploded,
                                 Toast.LENGTH_SHORT
                             ).show()
-                            textViewAppend("\n\n\nI LOSE!")
+                            disconnectBluetooth()
+                            performEndEvents(true)
                         }
                         else -> {
                             textViewAppend("Incoming message:\n\"$readMessage\"\ncan't be processed")
@@ -403,7 +519,7 @@ class TestChatActivity : AppCompatActivity() {
                 BluetoothConstant.MESSAGE_DEVICE_NAME -> {
                     Toast.makeText(
                         applicationContext,
-                        "R.string.connectTo.toString()" + msg.data.getString(BluetoothConstant.DEVICE_NAME),
+                        R.string.connectedDevice.toString() + msg.data.getString(BluetoothConstant.DEVICE_NAME),
                         Toast.LENGTH_SHORT
                     ).show()
                     /**--------------------------------------First message after connection -----------------------------------------------**/
@@ -411,8 +527,7 @@ class TestChatActivity : AppCompatActivity() {
                         "Client" -> {
                         }
                         "Server" -> {
-                            textViewAppend("Server sending room info$i")
-                            i += 1
+                            textViewAppend("Server sending room info")
                             tv_bt_minefield_gson_sended.text = GSONobject
                             //Sending room info as GSON
                             sendMessages(GSONobject)
@@ -431,7 +546,7 @@ class TestChatActivity : AppCompatActivity() {
             }
         }
     }
-    var i = 1
+
     fun textViewAppend(str: String) {
         string += "\n-----------------------------\n$str\n"
         textViewChat.text = string
@@ -445,7 +560,7 @@ class TestChatActivity : AppCompatActivity() {
     private fun sendMessages(message: String) {
         // Check that we're actually connected before trying anything
         if (mChatService!!.state !== MultiPlayerService.STATE_CONNECTED) {
-            Toast.makeText(this, "R.string.not_connected", Toast.LENGTH_SHORT).show()
+            textViewAppend("Not connected to any device. Can't send msg")
             return
         }
 
@@ -462,7 +577,16 @@ class TestChatActivity : AppCompatActivity() {
         super.onDestroy()
         // Stop the Bluetooth chat services
         if (mChatService != null) mChatService!!.stop()
-        Log.d("myLogs", "MultiplayerActivity onDestroy")
+        timeWorker.stopCountDownTimer(countDownTimer)
+        soundPool.release()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if (mChatService != null) mChatService!!.stop()
+        timeWorker.stopCountDownTimer(countDownTimer)
+        soundPool.release()
+        finish()
     }
 
     /**---------------------------------------------------------------------------------------------------------------------------------------*/

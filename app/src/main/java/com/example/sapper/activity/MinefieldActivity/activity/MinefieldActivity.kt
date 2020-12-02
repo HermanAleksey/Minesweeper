@@ -20,6 +20,7 @@ import com.example.sapper.activity.MinefieldActivity.IMinefieldActivity
 import com.example.sapper.logic.SoundPoolWorker
 import com.example.sapper.logic.TimeWorker
 import kotlinx.android.synthetic.main.activity_minefield.*
+import kotlinx.android.synthetic.main.activity_minefield_bt.*
 
 
 class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
@@ -35,35 +36,9 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
 
     lateinit var handler: Handler
 
-    var millisecondTime: Long = 0
-    var startTime: Long = 0
-    var timeBuff: Long = 0
-    var updateTime: Long = 0
-    var seconds: Int = 0
-    var minutes: Int = 0
-    var milliSeconds: Int = 0
-    private var runnable: Runnable = object : Runnable {
-        override fun run() {
-            millisecondTime = SystemClock.uptimeMillis() - startTime
-            updateTime = timeBuff + millisecondTime
-            seconds = (updateTime / 1000).toInt()
-            minutes = seconds / 60
-            seconds %= 60
-            milliSeconds = (updateTime % 1000).toInt()
-            tv_minefield_seconds.text = "${
-                if (seconds < 10) {
-                    "0$seconds"
-                } else seconds
-            }"
-            tv_minefield_minutes.text = "${
-                if (minutes < 10) {
-                    "0$minutes"
-                } else minutes
-            }"
-            handler.postDelayed(this, 0)
-        }
-    }
+//    private var startTime: Long = 0
     private lateinit var timeWorker: TimeWorker
+    private lateinit var stopWatchRunnable: Runnable
     private lateinit var soundPoolWorker: SoundPoolWorker
 
     private lateinit var soundPool: SoundPool
@@ -82,6 +57,7 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
 
         /*For timer*/
         handler = Handler()
+        timeWorker = TimeWorker(this, handler)
 
         /*getting data about game depends on game mode*/
         height = intent.getIntExtra(GameConstant().HEIGHT_TAG, 0)
@@ -120,11 +96,11 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
 
     private fun startStopWatch() {
         /*stopwatch / timer starting*/
-        timeWorker = TimeWorker(this)
         gameTimerMilli = timeWorker.translateToMilli("$gameTimeMinutes:$gameTimeSeconds")
         if (gameTimerMilli == 0L) {
-            startTime = SystemClock.uptimeMillis()
-            runnable.run()
+            val startTime = SystemClock.uptimeMillis()
+            stopWatchRunnable = timeWorker.getStopWatchRunnable(startTime)
+            stopWatchRunnable.run()
         } else {
             timeWorker.getCountDownTimer(
                 tv_minefield_minutes,
@@ -156,7 +132,7 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
         })
     }
 
-    override fun fillViewElements() {
+    private fun fillViewElements() {
         tv_minefield_field_width.text = "$width"
         tv_minefield_field_height.text = "$height"
         tv_minefield_minutes.text = if (gameTimeMinutes < 10) {
@@ -168,7 +144,7 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
         tv_minefield_mines.text = "$minesCount"
     }
 
-    override fun loadSounds() {
+    private fun loadSounds() {
         soundExplosion = soundPool.load(this, R.raw.explosion_8bit, 1)
         soundWin = soundPool.load(this, R.raw.win_01, 1)
         soundFlagDrop = soundPool.load(this, R.raw.flag_drop, 1)
@@ -177,7 +153,7 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
 
 
     /*define how each cell gonna react to click with flag/open selected*/
-    override fun setOnClickListenerForField(
+    private fun setOnClickListenerForField(
         arrayButtonsField: Array<Array<Button>>,
         userField: Array<Array<Char>>
     ) {
@@ -221,14 +197,12 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
         }
     }
 
-    override fun performEndEvents(result: Boolean) {
+    private fun performEndEvents(result: Boolean) {
         val sound = if (result) soundWin else soundExplosion
         soundPoolWorker.playSound(soundPool, sound)
         tv_minefield_seconds.postDelayed({
             intentToResultActivity(result)
-            if (countDownTimer != null) {
-                countDownTimer!!.cancel()
-            }
+            timeWorker.stopCountDownTimer(countDownTimer)
         }, 500)
     }
 
@@ -278,6 +252,14 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
         }
         startActivity(mIntent)
         finish()
+    }
+
+    override fun textViewMinutesSetText(str: String) {
+        tv_minefield_minutes.text = str
+    }
+
+    override fun textViewSecondsSetText(str: String) {
+        tv_minefield_seconds.text = str
     }
 
     /**-----------------------overriding standard methods------------------------*/
@@ -331,17 +313,13 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
     }
 
     override fun onBackPressed() {
-        if (countDownTimer != null) {
-            countDownTimer!!.cancel()
-        }
+        timeWorker.stopCountDownTimer(countDownTimer)
         soundPool.release()
         finish()
     }
 
     override fun onDestroy() {
-        if (countDownTimer != null) {
-            countDownTimer!!.cancel()
-        }
+        timeWorker.stopCountDownTimer(countDownTimer)
         soundPool.release()
         super.onDestroy()
     }

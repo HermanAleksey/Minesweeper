@@ -92,4 +92,11 @@
 
     <string name="mines_count_cant_be_greater_that_square">The number of mines cannot exceed the area of the field</string>
 
+    <string name="opponentExploded">Opponent exploded, u won</string>
+    <string name="opponentWon">Opponent won earlier, u lost</string>
+    <string name="connectedDevice">Connected device name: </string>
+    <string name="diveConnectionWasLost">Device connection was lost</string>
+    <string name="unableToConnectDevice">Unable to connect device</string>
+    <string name="btNotEnable">Error turning on Bluetooth</string>
+
 </resources>

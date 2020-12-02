@@ -1,5 +1,6 @@
 package com.example.sapper.logic;
 
+import android.app.Application;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
@@ -10,6 +11,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.example.sapper.R;
 import com.example.sapper.constant.BluetoothConstant;
 
 import java.io.IOException;
@@ -240,7 +242,7 @@ public class MultiPlayerService {
         // Send a failure message back to the Activity
         Message msg = mHandler.obtainMessage(BluetoothConstant.MESSAGE_TOAST);
         Bundle bundle = new Bundle();
-        bundle.putString(BluetoothConstant.TOAST, "Unable to connect device");
+        bundle.putString(BluetoothConstant.TOAST, String.valueOf(R.string.unableToConnectDevice));
         msg.setData(bundle);
         mHandler.sendMessage(msg);
 
@@ -255,7 +257,7 @@ public class MultiPlayerService {
         // Send a failure message back to the Activity
         Message msg = mHandler.obtainMessage(BluetoothConstant.MESSAGE_TOAST);
         Bundle bundle = new Bundle();
-        bundle.putString(BluetoothConstant.TOAST, "Device connection was lost");
+        bundle.putString(BluetoothConstant.TOAST, String.valueOf(R.string.diveConnectionWasLost));
         msg.setData(bundle);
         mHandler.sendMessage(msg);
 
@@ -463,8 +465,9 @@ public class MultiPlayerService {
                 } catch (IOException e) {
                     Log.e(TAG, "disconnected", e);
                     connectionLost();
+                    MultiPlayerService.this.stop();
                     // Start the service over to restart listening mode
-                    this.start();
+//                    this.start();
                     break;
                 }
             }

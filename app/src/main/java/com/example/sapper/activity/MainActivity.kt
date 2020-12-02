@@ -1,5 +1,6 @@
 package com.example.sapper.activity
 
+import android.bluetooth.BluetoothAdapter
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -10,10 +11,10 @@ import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sapper.R
-import com.example.sapper.activity.MinefieldActivity.activity.MineFieldBTActivity
+import com.example.sapper.activity.MinefieldActivity.activity.MinefieldBTActivity
+import com.example.sapper.constant.BluetoothConstant
 import com.example.sapper.constant.Constant
 import com.example.sapper.constant.GameConstant
-import com.example.sapper.entity.CompanyLevel
 import com.example.sapper.entity.Room
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
@@ -27,10 +28,13 @@ class MainActivity : AppCompatActivity() {
         lateinit var context: Context
     }
 
+    private var mBluetoothAdapter: BluetoothAdapter? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
         context = baseContext
 
         /**------------------------------AdMob------------------------------------------*/
@@ -52,20 +56,39 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+
         button_main_bluetooth_game_server.setOnClickListener {
-            val intent = Intent(this, TestChatActivity::class.java)
-            val obj = Room(16, 16, 32, 3, 0, false)
-            intent.putExtra(Constant().EXTRA_BLUETOOTH_ROLE, Constant().ROLE_SERVER)
-            intent.putExtra(GameConstant().EXTRA_ROOM, obj)
-            startActivity(intent)
+            if (!mBluetoothAdapter!!.isEnabled) {
+                requestEnableBluetooth()
+            } else {
+                val intent = Intent(this, MinefieldBTActivity::class.java)
+                val obj = Room(4, 4, 2, 3, 0, false)
+                intent.putExtra(Constant().EXTRA_BLUETOOTH_ROLE, Constant().ROLE_SERVER)
+                intent.putExtra(GameConstant().EXTRA_ROOM, obj)
+                startActivity(intent)
+            }
         }
 
         button_main_bluetooth_game_client.setOnClickListener {
-            val intent = Intent(this, TestChatActivity::class.java)
-            intent.putExtra(Constant().EXTRA_BLUETOOTH_ROLE, Constant().ROLE_CLIENT)
-            startActivity(intent)
+            if (!mBluetoothAdapter!!.isEnabled) {
+                requestEnableBluetooth()
+            } else {
+                val intent = Intent(this, MinefieldBTActivity::class.java)
+                intent.putExtra(Constant().EXTRA_BLUETOOTH_ROLE, Constant().ROLE_CLIENT)
+                startActivity(intent)
+            }
         }
 
+    }
+
+    private fun requestEnableBluetooth() {
+        val enableIntent = Intent(
+            BluetoothAdapter.ACTION_REQUEST_ENABLE
+        )
+        startActivityForResult(
+            enableIntent,
+            BluetoothConstant.REQUEST_ENABLE_BT
+        )
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
