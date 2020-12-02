@@ -45,6 +45,34 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:text="@string/game_mode" />
+
+            <TextView
+                style="@style/StyleGameResultGameDescriptionXXHDPI"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text=" " />
+
+            <TextView
+                android:id="@+id/tv_game_result_game_mode"
+                style="@style/StyleGameResultGameDescriptionXXHDPI"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                style="@style/StyleGameResultGameDescriptionXXHDPI"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="@string/minefieldSize" />
 
             <TextView
@@ -59,8 +87,7 @@
                 style="@style/StyleGameResultGameDescriptionXXHDPI"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="8" />
+                android:layout_gravity="center" />
 
             <TextView
                 style="@style/StyleGameResultGameDescriptionXXHDPI"
@@ -74,8 +101,7 @@
                 style="@style/StyleGameResultGameDescriptionXXHDPI"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="8" />
+                android:layout_gravity="center" />
         </LinearLayout>
 
         <LinearLayout
@@ -102,8 +128,7 @@
                 style="@style/StyleGameResultGameDescriptionXXHDPI"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="8" />
+                android:layout_gravity="center" />
         </LinearLayout>
 
         <LinearLayout
@@ -137,8 +162,7 @@
                 style="@style/StyleGameResultGameDescriptionXXHDPI"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="10" />
+                android:layout_gravity="center" />
 
             <TextView
                 style="@style/StyleGameResultGameDescriptionXXHDPI"
@@ -152,8 +176,7 @@
                 style="@style/StyleGameResultGameDescriptionXXHDPI"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="8" />
+                android:layout_gravity="center" />
 
         </LinearLayout>
     </LinearLayout>

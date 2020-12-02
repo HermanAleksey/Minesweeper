@@ -69,6 +69,7 @@
     <string name="gameModeBluetooth">Bluetooth game</string>
     <string name="gameModeCasual">Casual game</string>
     <string name="gameModeCompany">Company game</string>
+    <string name="none">None</string>
 
     <!--Result game activity-->
     <string name="win">Win!</string>

@@ -17,6 +17,11 @@ import com.example.sapper.logic.MinefieldAdapter
 import com.example.sapper.R
 import com.example.sapper.activity.GameResultsActivity
 import com.example.sapper.activity.MinefieldActivity.IMinefieldActivity
+import com.example.sapper.constant.Constant
+import com.example.sapper.entity.CasualGame
+import com.example.sapper.entity.CompanyGame
+import com.example.sapper.entity.Field
+import com.example.sapper.entity.Game
 import com.example.sapper.logic.SoundPoolWorker
 import com.example.sapper.logic.TimeWorker
 import kotlinx.android.synthetic.main.activity_minefield.*
@@ -24,18 +29,17 @@ import kotlinx.android.synthetic.main.activity_minefield.*
 
 class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
     var hostField: HostField? = null
-    var height: Int = 0
-    var width: Int = 0
-    var minesCount: Int = 0
-    var gameTimeMinutes: Int = 0
-    var gameTimeSeconds: Int = 0
 
-    var gameTimerMilli: Long = 0
+    private lateinit var game: CasualGame
+    private var gameId: Int = 0
+    private lateinit var mode: String
+
+    private var gameTimerMilli: Long = 0
     private var countDownTimer: CountDownTimer? = null
 
     lateinit var handler: Handler
 
-//    private var startTime: Long = 0
+    //    private var startTime: Long = 0
     private lateinit var timeWorker: TimeWorker
     private lateinit var stopWatchRunnable: Runnable
     private lateinit var soundPoolWorker: SoundPoolWorker
@@ -59,13 +63,17 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
         timeWorker = TimeWorker(this, handler)
 
         /*getting data about game depends on game mode*/
-        height = intent.getIntExtra(GameConstant().EXTRA_HEIGHT, 0)
-        width = intent.getIntExtra(GameConstant().EXTRA_WIDTH, 0)
-        minesCount = intent.getIntExtra(GameConstant().EXTRA_MINES_COUNT, 0)
-        gameTimeMinutes = intent.getIntExtra(GameConstant().EXTRA_GAME_TIME_MINUTES, 0)
-        gameTimeSeconds = intent.getIntExtra(GameConstant().EXTRA_GAME_TIME_SECONDS, 0)
-        val firstClickCanBeOnAMine =
-            intent.getBooleanExtra(GameConstant().EXTRA_FIRST_CLICK_MINE, false)
+        mode = intent.getStringExtra(Constant().EXTRA_GAME_MODE)
+        when (mode) {
+            Constant().EXTRA_GAME_MODE_COMPANY -> {
+                val a = intent.getSerializableExtra(GameConstant().EXTRA_GAME_OBJECT) as CompanyGame
+                game = a.toCasualGame()
+                gameId = a.id
+            }
+            Constant().EXTRA_GAME_MODE_CREATIVE -> {
+                game = intent.getSerializableExtra(GameConstant().EXTRA_GAME_OBJECT) as CasualGame
+            }
+        }
 
         startStopWatch()
 
@@ -74,16 +82,16 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
         /*Visual minefield (from buttons)*/
         val arrayButtonsField =
             MinefieldAdapter().createMinefield(
-                width, height, linear_layout_minefield, this
+                game.field.width, game.field.height, linear_layout_minefield, this
             )
 
         configureSeekBar(arrayButtonsField)
 
         /*generating field only if first click can be on mine*/
-        if (firstClickCanBeOnAMine) {
-            hostField = HostField(width, height, minesCount)
+        if (game.firstClickMine) {
+            hostField = HostField(game.field.width, game.field.height, game.field.minesCount)
         }
-        val userField = UserField(width, height, minesCount)
+        val userField = UserField(game.field.width, game.field.height, game.field.minesCount)
 
         MinefieldAdapter().setupMinefield(userField.content, arrayButtonsField)
 
@@ -95,7 +103,7 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
 
     private fun startStopWatch() {
         /*stopwatch / timer starting*/
-        gameTimerMilli = timeWorker.translateToMilli("$gameTimeMinutes:$gameTimeSeconds")
+        gameTimerMilli = timeWorker.translateToMilli("${game.minutes}:${game.seconds}")
         if (gameTimerMilli == 0L) {
             val startTime = SystemClock.uptimeMillis()
             stopWatchRunnable = timeWorker.getStopWatchRunnable(startTime)
@@ -132,15 +140,15 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
     }
 
     private fun fillViewElements() {
-        tv_minefield_field_width.text = "$width"
-        tv_minefield_field_height.text = "$height"
-        tv_minefield_minutes.text = if (gameTimeMinutes < 10) {
-            "0$gameTimeMinutes"
-        } else "$gameTimeMinutes"
-        tv_minefield_seconds.text = if (gameTimeSeconds < 10) {
-            "0$gameTimeSeconds"
-        } else "$gameTimeSeconds"
-        tv_minefield_mines.text = "$minesCount"
+        tv_minefield_field_width.text = "${game.field.width}"
+        tv_minefield_field_height.text = "${game.field.height}"
+        tv_minefield_minutes.text = if (game.minutes < 10) {
+            "0${game.minutes}"
+        } else "${game.minutes}"
+        tv_minefield_seconds.text = if (game.seconds < 10) {
+            "0${game.seconds}"
+        } else "${game.seconds}"
+        tv_minefield_mines.text = "${game.field.minesCount}"
     }
 
     private fun loadSounds() {
@@ -162,7 +170,13 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
                     /*Opener*/
                     if (!togglebutton_minefield_flag.isChecked) {
                         if (hostField == null) {
-                            hostField = HostField(width, height, minesCount, x, y)
+                            hostField = HostField(
+                                game.field.width,
+                                game.field.height,
+                                game.field.minesCount,
+                                x,
+                                y
+                            )
                         }
                         soundPoolWorker.playSound(soundPool, soundTap)
 
@@ -182,7 +196,13 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
                     /*FLAG*/
                     if (togglebutton_minefield_flag.isChecked) {
                         if (hostField == null) {
-                            hostField = HostField(width, height, minesCount, x, y)
+                            hostField = HostField(
+                                game.field.width,
+                                game.field.height,
+                                game.field.minesCount,
+                                x,
+                                y
+                            )
                         }
                         soundPoolWorker.playSound(soundPool, soundFlagDrop)
                         val win = Saper().useFlagOnSpot(x, y, hostField!!.content, userField)
@@ -209,46 +229,36 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
         val mIntent = Intent(this, GameResultsActivity::class.java)
 
         mIntent.putExtra(
+            Constant().EXTRA_GAME_MODE,
+            mode
+        )
+        mIntent.putExtra(
             GameConstant().GAME_RESULT,
             result
         )
-        mIntent.putExtra(
-            GameConstant().EXTRA_WIDTH,
-            tv_minefield_field_width.text.toString().toInt()
-        )
-        mIntent.putExtra(
-            GameConstant().EXTRA_HEIGHT,
-            tv_minefield_field_height.text.toString().toInt()
-        )
-        mIntent.putExtra(
-            GameConstant().EXTRA_MINES_COUNT,
-            tv_minefield_mines.text.toString().toInt()
-        )
+        val width = tv_minefield_field_width.text.toString().toInt()
+        val height = tv_minefield_field_height.text.toString().toInt()
+        val minesCount = tv_minefield_mines.text.toString().toInt()
+        var timeMin: Int
+        var timeSec: Int
+
         if (gameTimerMilli == 0L) {
-            mIntent.putExtra(
-                GameConstant().EXTRA_GAME_TIME_MINUTES,
-                tv_minefield_minutes.text.toString().toInt()
-            )
-            mIntent.putExtra(
-                GameConstant().EXTRA_GAME_TIME_SECONDS,
-                tv_minefield_seconds.text.toString().toInt()
-            )
+            timeMin = tv_minefield_minutes.text.toString().toInt()
+            timeSec = tv_minefield_minutes.text.toString().toInt()
         } else {
-            var seconds = gameTimeSeconds - tv_minefield_seconds.text.toString().toInt()
-            var minutes = gameTimeMinutes - tv_minefield_minutes.text.toString().toInt()
-            if (seconds < 0) {
-                seconds += 60
-                minutes--
+            timeMin = game.minutes - tv_minefield_minutes.text.toString().toInt()
+            timeSec = game.seconds - tv_minefield_seconds.text.toString().toInt()
+            if (timeSec < 0) {
+                timeSec += 60
+                timeMin -= 1
             }
-            mIntent.putExtra(
-                GameConstant().EXTRA_GAME_TIME_SECONDS,
-                seconds
-            )
-            mIntent.putExtra(
-                GameConstant().EXTRA_GAME_TIME_MINUTES,
-                minutes
-            )
         }
+
+        val game = Game(Field(width, height, minesCount), timeMin, timeSec)
+
+        mIntent.putExtra(GameConstant().EXTRA_GAME_OBJECT, game)
+        mIntent.putExtra(GameConstant().EXTRA_GAME_ID, gameId)
+
         startActivity(mIntent)
         finish()
     }

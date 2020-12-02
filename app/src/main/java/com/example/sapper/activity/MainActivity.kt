@@ -14,8 +14,6 @@ import com.example.sapper.R
 import com.example.sapper.activity.MinefieldActivity.activity.MinefieldBTActivity
 import com.example.sapper.constant.BluetoothConstant
 import com.example.sapper.constant.Constant
-import com.example.sapper.constant.GameConstant
-import com.example.sapper.entity.Room
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds

@@ -8,4 +8,9 @@ class CompanyGame(
     minutes: Int,
     seconds: Int,
     var completed: Boolean
-): Game(field, minutes, seconds), Serializable
+) : Game(field, minutes, seconds), Serializable {
+
+    fun toCasualGame(): CasualGame {
+        return CasualGame(this.field, this.minutes, this.seconds, false)
+    }
+}

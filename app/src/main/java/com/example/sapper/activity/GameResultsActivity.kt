@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NavUtils
 import com.example.sapper.constant.GameConstant
 import com.example.sapper.R
+import com.example.sapper.constant.Constant
+import com.example.sapper.entity.Game
 import kotlinx.android.synthetic.main.activity_game_results.*
 
 
@@ -19,16 +21,25 @@ class GameResultsActivity : AppCompatActivity() {
             resources.getString(R.string.win)
         } else resources.getString(R.string.lose)
 
-        tv_game_result_height.text =
-            intent.getIntExtra(GameConstant().EXTRA_HEIGHT,0).toString()
-        tv_game_result_width.text =
-            intent.getIntExtra(GameConstant().EXTRA_WIDTH,0).toString()
-        tv_game_result_mines_count.text =
-            intent.getIntExtra(GameConstant().EXTRA_MINES_COUNT,0).toString()
-        tv_game_result_minutes.text =
-            intent.getIntExtra(GameConstant().EXTRA_GAME_TIME_MINUTES,0).toString()
-        tv_game_result_seconds.text =
-            intent.getIntExtra(GameConstant().EXTRA_GAME_TIME_SECONDS,0).toString()
+        val gameMode = when (intent.getStringExtra(Constant().EXTRA_GAME_MODE)) {
+            Constant().EXTRA_GAME_MODE_CREATIVE -> resources.getString(R.string.gameModeCasual)
+            Constant().EXTRA_GAME_MODE_COMPANY -> {
+                val levelId = intent.getIntExtra(GameConstant().EXTRA_GAME_ID, 0)
+                val db = baseContext.openOrCreateDatabase("app.db", MODE_PRIVATE, null)
+                //TODO(" ИЗМЕНЕНИЕ СОСТОЯНИЯ "ПРОЙДЕНО" В БАЗЕ ДАННЫХ")
+                resources.getString(R.string.gameModeCompany)
+            }
+            Constant().EXTRA_GAME_MODE_BLUETOOTH -> resources.getString(R.string.gameModeBluetooth)
+            else -> "None"
+        }
+        val game = intent.getSerializableExtra(GameConstant().EXTRA_GAME_OBJECT) as Game
+
+        tv_game_result_game_mode.text = gameMode
+        tv_game_result_height.text = game.field.height.toString()
+        tv_game_result_width.text = game.field.width.toString()
+        tv_game_result_mines_count.text = game.field.minesCount.toString()
+        tv_game_result_minutes.text = game.minutes.toString()
+        tv_game_result_seconds.text = game.seconds.toString()
     }
 
     override fun onBackPressed() {

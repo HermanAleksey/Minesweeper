@@ -18,4 +18,5 @@ class GameConstant {
     val GAME_RESULT_DEFEAT: String = "com.example.sapper.GameSettings.gameResultLose"
 
     val EXTRA_GAME_OBJECT: String = "com.example.sapper.GameSettings.extraGameObject"
+    val EXTRA_GAME_ID: String = "com.example.sapper.GameSettings.extraGameId"
 }

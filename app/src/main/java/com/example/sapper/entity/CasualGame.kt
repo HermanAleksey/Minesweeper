@@ -6,5 +6,5 @@ class CasualGame(
     field: Field,
     minutes: Int,
     seconds: Int,
-    val firstClickMine: Boolean
+    val firstClickMine: Boolean = false
 ) : Game(field, minutes, seconds), Serializable

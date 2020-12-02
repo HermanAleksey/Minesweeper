@@ -68,6 +68,7 @@
     <string name="gameModeBluetooth">Bluetooth игра</string>
     <string name="gameModeCasual">Своя игра</string>
     <string name="gameModeCompany">Кампания</string>
+    <string name="none">None</string>
 
     <!--Result game activity-->
     <string name="win">Победа!</string>
@@ -90,4 +91,22 @@
     <string name="field_size">Размер поля:</string>
 
     <string name="mines_count_cant_be_greater_that_square">Количество мин не может превышать площадь поля</string>
+
+    <string name="opponentExploded">Оппонент подорвался, вы победили</string>
+    <string name="opponentWon">Оппонент закончил быстрее, вы проиграли</string>
+    <string name="connectedDevice">Имя подключенного игрока: </string>
+    <string name="diveConnectionWasLost">Соединение с устройством потеряно</string>
+    <string name="unableToConnectDevice">Невозможно подключить устройство</string>
+    <string name="btNotAvailable">Ошибка при включени Bluetooth</string>
+
+    //DeviceListActivity
+    <string name="pairedDevices">Сопряженные устройства</string>
+    <string name="scan">Поиск</string>
+    <string name="otherDevices">Другие устройства</string>
+    <string name="bluetoothTurnedOn">Bluetooth включен</string>
+    <string name="bluetoothTurnedOff">Bluetooth выключен</string>
+    <string name="notPaired">Не сопряжены</string>
+    <string name="scanning">Сканирование</string>
+    <string name="selectDevice">Выбрать устройство</string>
+    <string name="noneFound">Устройст найдено не было</string>
 </resources>

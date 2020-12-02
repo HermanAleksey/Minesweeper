@@ -12,7 +12,8 @@ import com.example.sapper.constant.Constant
 import com.example.sapper.R
 import com.example.sapper.activity.MinefieldActivity.activity.MinefieldActivity
 import com.example.sapper.constant.GameConstant
-import com.example.sapper.entity.CompanyLevel
+import com.example.sapper.entity.CompanyGame
+import com.example.sapper.entity.Field
 import kotlinx.android.synthetic.main.activity_company_level.*
 
 class CompanyLevelActivity : AppCompatActivity() {
@@ -24,6 +25,7 @@ class CompanyLevelActivity : AppCompatActivity() {
 
         db = baseContext.openOrCreateDatabase("app.db", MODE_PRIVATE, null)
 //        val numberOfLevels = DAOCompanyLevel(db).getTheNumberOfRecords()
+        /**----------------------------GENERATING NUM OF LEVELS--------------------------**/
         val numberOfLevels = 46
         var numberOfLines = numberOfLevels / 4
         val numOfElemsOnLastLine = numberOfLevels % 4
@@ -31,7 +33,7 @@ class CompanyLevelActivity : AppCompatActivity() {
 
         val metrics = resources.displayMetrics
         var height = 100
-        when (metrics.densityDpi){
+        when (metrics.densityDpi) {
             480 -> height = 120
         }
         val layoutParams: ViewGroup.LayoutParams = LinearLayout.LayoutParams(
@@ -54,7 +56,7 @@ class CompanyLevelActivity : AppCompatActivity() {
             linearLayout.id = linearLayout.hashCode()
             ll_scrlv_company_level_activity_levels.addView(linearLayout, layoutParams)
 
-            if (i == numberOfLines-1) {
+            if (i == numberOfLines - 1) {
                 for (j in 0 until numOfElemsOnLastLine) {
                     val button = Button(this)
                     button.text = "${i * 4 + 1 + j}"
@@ -78,35 +80,16 @@ class CompanyLevelActivity : AppCompatActivity() {
             it as Button
             /*by level number picking all values from DB*/
             val levelNumber = it.text
-            val companyLevel = CompanyLevel(1, 4, 4, 1, 1, 1, true)
-
+            val companyLevel = CompanyGame(1, Field(4, 4, 2), 2, 0, false)
 
             val myIntent = Intent(this, MinefieldActivity::class.java)
-            myIntent.putExtra(Constant().EXTRA_GAME_MODE, Constant().EXTRA_GAME_MODE_COMPANY)
-//            myIntent.putExtra(Constant().COMPANY_LEVEL, levelNumber)
             myIntent.putExtra(
-                GameConstant().EXTRA_HEIGHT,
-                companyLevel.height
+                Constant().EXTRA_GAME_MODE,
+                Constant().EXTRA_GAME_MODE_COMPANY
             )
             myIntent.putExtra(
-                GameConstant().EXTRA_WIDTH,
-                companyLevel.width
-            )
-            myIntent.putExtra(
-                GameConstant().EXTRA_MINES_COUNT,
-                companyLevel.minesCount
-            )
-            myIntent.putExtra(
-                GameConstant().EXTRA_GAME_TIME_MINUTES,
-                companyLevel.minutes
-            )
-            myIntent.putExtra(
-                GameConstant().EXTRA_GAME_TIME_SECONDS,
-                companyLevel.seconds
-            )
-            myIntent.putExtra(
-                GameConstant().EXTRA_FIRST_CLICK_MINE,
-                false
+                GameConstant().EXTRA_GAME_OBJECT,
+                companyLevel
             )
             startActivity(myIntent)
         }

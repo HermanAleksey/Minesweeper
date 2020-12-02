@@ -233,7 +233,7 @@ class WaitingRoomActivity : AppCompatActivity() {
                         minefieldIntent.putExtra(GameConstant().EXTRA_MINES_COUNT,tv_host_room_mines_amount.text.toString().toInt())
                         minefieldIntent.putExtra(GameConstant().EXTRA_GAME_TIME,tv_host_room_time_limit.text.toString())
                         minefieldIntent.putExtra(GameConstant().EXTRA_USE_SAME_FIELD,cb_host_room_use_same_field.isChecked)
-                        minefieldIntent.putExtra(GameConstant().EXTRA_CLOSE_AFTER_GAME,cb_game_settings_exit.isChecked)
+//                        minefieldIntent.putExtra(GameConstant().EXTRA_CLOSE_AFTER_GAME,cb_game_settings_exit.isChecked)
 //                        minefieldIntent.putExtra(GameConstant().FIRST_CLICK_MINE_TAG,cb_game_settings_first_click_mine.isChecked)
                         startActivity(minefieldIntent)
                     }

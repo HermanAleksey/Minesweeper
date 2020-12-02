@@ -26,7 +26,9 @@ import com.example.sapper.activity.MinefieldActivity.IMinefieldActivity
 import com.example.sapper.constant.BluetoothConstant
 import com.example.sapper.constant.Constant
 import com.example.sapper.constant.GameConstant
-import com.example.sapper.entity.Room
+import com.example.sapper.entity.BluetoothGame
+import com.example.sapper.entity.Field
+import com.example.sapper.entity.Game
 import com.example.sapper.logic.MinefieldAdapter
 import com.example.sapper.logic.MultiPlayerService
 import com.example.sapper.logic.SoundPoolWorker
@@ -51,7 +53,7 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
     private var GSONobject = ""
     private val gson = Gson()
 
-    lateinit var roomSettings: Room
+    lateinit var roomSettings: BluetoothGame
     lateinit var arrayButtonsField: Array<Array<Button>>
     lateinit var hostField: HostField
     lateinit var userField: UserField
@@ -128,15 +130,15 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
 
         when (intent.getStringExtra(Constant().EXTRA_BLUETOOTH_ROLE)) {
             Constant().ROLE_SERVER -> {
-                roomSettings = intent.getSerializableExtra(GameConstant().EXTRA_ROOM) as Room
+                roomSettings = intent.getSerializableExtra(GameConstant().EXTRA_ROOM) as BluetoothGame
                 GSONobject = gson.toJson(roomSettings)
                 role = "Server"
 
                 // Ensure this device is discoverable by others
                 ensureDiscoverable()
                 fillViewsWithValues(
-                    roomSettings.width,
-                    roomSettings.height,
+                    roomSettings.field.width,
+                    roomSettings.field.height,
                     roomSettings.minutes,
                     roomSettings.seconds,
                     roomSettings.minutes
@@ -217,20 +219,20 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
 
     private fun prepareFields() {
         hostField = HostField(
-            roomSettings.width,
-            roomSettings.height,
-            roomSettings.minesCount
+            roomSettings.field.width,
+            roomSettings.field.height,
+            roomSettings.field.minesCount
         )
         arrayButtonsField =
             MinefieldAdapter().createMinefield(
-                roomSettings.width, roomSettings.height,
+                roomSettings.field.width, roomSettings.field.height,
                 ll_bt_minefield_minefield_layout, this@MinefieldBTActivity
             )
         configureSeekBar(arrayButtonsField)
         userField = UserField(
-            roomSettings.width,
-            roomSettings.height,
-            roomSettings.minesCount
+            roomSettings.field.width,
+            roomSettings.field.height,
+            roomSettings.field.minesCount
         )
         setOnClickListenerForField(
             arrayButtonsField,
@@ -239,8 +241,8 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
         MinefieldAdapter().setupMinefield(userField.content, arrayButtonsField)
 
         fillViewsWithValues(
-            roomSettings.width,
-            roomSettings.height,
+            roomSettings.field.width,
+            roomSettings.field.height,
             roomSettings.minutes,
             roomSettings.seconds,
             roomSettings.minutes
@@ -287,46 +289,35 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
         val mIntent = Intent(this, GameResultsActivity::class.java)
 
         mIntent.putExtra(
+            Constant().EXTRA_GAME_MODE,
+            Constant().EXTRA_GAME_MODE_BLUETOOTH
+        )
+        mIntent.putExtra(
             GameConstant().GAME_RESULT,
             result
         )
-        mIntent.putExtra(
-            GameConstant().EXTRA_WIDTH,
-            tv_bt_minefield_field_width.text.toString().toInt()
-        )
-        mIntent.putExtra(
-            GameConstant().EXTRA_HEIGHT,
-            tv_bt_minefield_field_height.text.toString().toInt()
-        )
-        mIntent.putExtra(
-            GameConstant().EXTRA_MINES_COUNT,
-            tv_bt_minefield_mines.text.toString().toInt()
-        )
+        val width = tv_minefield_field_width.text.toString().toInt()
+        val height = tv_minefield_field_height.text.toString().toInt()
+        val minesCount = tv_minefield_mines.text.toString().toInt()
+        var timeMin: Int
+        var timeSec: Int
+
         if (gameTimerMilli == 0L) {
-            mIntent.putExtra(
-                GameConstant().EXTRA_GAME_TIME_MINUTES,
-                tv_bt_minefield_minutes.text.toString().toInt()
-            )
-            mIntent.putExtra(
-                GameConstant().EXTRA_GAME_TIME_SECONDS,
-                tv_bt_minefield_seconds.text.toString().toInt()
-            )
+            timeMin = tv_minefield_minutes.text.toString().toInt()
+            timeSec = tv_minefield_minutes.text.toString().toInt()
         } else {
-            var seconds = roomSettings.seconds - tv_bt_minefield_seconds.text.toString().toInt()
-            var minutes = roomSettings.minutes - tv_bt_minefield_minutes.text.toString().toInt()
-            if (seconds < 0) {
-                seconds += 60
-                minutes--
+            timeMin = roomSettings.minutes - tv_minefield_minutes.text.toString().toInt()
+            timeSec = roomSettings.seconds - tv_minefield_seconds.text.toString().toInt()
+            if (timeSec < 0) {
+                timeSec += 60
+                timeMin -= 1
             }
-            mIntent.putExtra(
-                GameConstant().EXTRA_GAME_TIME_SECONDS,
-                seconds
-            )
-            mIntent.putExtra(
-                GameConstant().EXTRA_GAME_TIME_MINUTES,
-                minutes
-            )
         }
+
+        val game = Game(Field(width, height, minesCount), timeMin, timeSec)
+
+        mIntent.putExtra(GameConstant().EXTRA_GAME_OBJECT, game)
+
         startActivity(mIntent)
         finish()
     }
@@ -470,7 +461,7 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
                     when {
                         /**-----------------------------------Processing JSON with ROOM configs-----------------------------------------------*/
                         readMessage.startsWith('{') -> {
-                            roomSettings = gson.fromJson(readMessage, Room::class.java)
+                            roomSettings = gson.fromJson(readMessage, BluetoothGame::class.java)
                             textViewAppend("Client get and processing room info gson:")
                             textViewAppend(roomSettings.toString())
 

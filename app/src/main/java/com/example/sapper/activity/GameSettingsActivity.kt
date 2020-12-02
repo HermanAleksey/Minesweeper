@@ -79,7 +79,7 @@ class GameSettingsActivity : AppCompatActivity(),
                 Constant().EXTRA_GAME_MODE_BLUETOOTH -> {
                     //if bluetooth is turned off - asking to turn it on
                     bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-                    if (!bluetoothAdapter!!.isEnabled) {
+                    if (!bluetoothAdapter.isEnabled) {
                         requestEnableBluetooth()
                         return@setOnClickListener
                     } else Intent(this, MinefieldBTActivity::class.java)
