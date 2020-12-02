@@ -138,6 +138,7 @@
                 android:background="@drawable/small_line_1" />
 
             <LinearLayout
+                android:id="@+id/ll_game_settings_first_click_mine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -165,37 +166,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:background="@drawable/small_line_1" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_game_settings_exit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
-
-                    <TextView
-                        style="@style/StyleSettingsTextXHDPI"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="@string/leaveAfterMatch" />
-
-                    <CheckBox
-                        android:id="@+id/cb_game_settings_exit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:button="@drawable/my_checkbox"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:background="@drawable/small_line_1" />
-
             </LinearLayout>
 
             <LinearLayout

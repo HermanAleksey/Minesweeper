@@ -61,10 +61,9 @@ class MainActivity : AppCompatActivity() {
             if (!mBluetoothAdapter!!.isEnabled) {
                 requestEnableBluetooth()
             } else {
-                val intent = Intent(this, MinefieldBTActivity::class.java)
-                val obj = Room(4, 4, 2, 3, 0, false)
+                val intent = Intent(this, GameSettingsActivity::class.java)
+                intent.putExtra(Constant().EXTRA_GAME_MODE, Constant().EXTRA_GAME_MODE_BLUETOOTH)
                 intent.putExtra(Constant().EXTRA_BLUETOOTH_ROLE, Constant().ROLE_SERVER)
-                intent.putExtra(GameConstant().EXTRA_ROOM, obj)
                 startActivity(intent)
             }
         }

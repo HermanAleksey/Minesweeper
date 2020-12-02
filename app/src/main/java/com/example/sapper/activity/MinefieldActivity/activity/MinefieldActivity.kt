@@ -20,7 +20,6 @@ import com.example.sapper.activity.MinefieldActivity.IMinefieldActivity
 import com.example.sapper.logic.SoundPoolWorker
 import com.example.sapper.logic.TimeWorker
 import kotlinx.android.synthetic.main.activity_minefield.*
-import kotlinx.android.synthetic.main.activity_minefield_bt.*
 
 
 class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
@@ -60,13 +59,13 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
         timeWorker = TimeWorker(this, handler)
 
         /*getting data about game depends on game mode*/
-        height = intent.getIntExtra(GameConstant().HEIGHT_TAG, 0)
-        width = intent.getIntExtra(GameConstant().WIDTH_TAG, 0)
-        minesCount = intent.getIntExtra(GameConstant().MINES_COUNT_TAG, 0)
-        gameTimeMinutes = intent.getIntExtra(GameConstant().GAME_TIME_MINUTES_TAG, 0)
-        gameTimeSeconds = intent.getIntExtra(GameConstant().GAME_TIME_SECONDS_TAG, 0)
+        height = intent.getIntExtra(GameConstant().EXTRA_HEIGHT, 0)
+        width = intent.getIntExtra(GameConstant().EXTRA_WIDTH, 0)
+        minesCount = intent.getIntExtra(GameConstant().EXTRA_MINES_COUNT, 0)
+        gameTimeMinutes = intent.getIntExtra(GameConstant().EXTRA_GAME_TIME_MINUTES, 0)
+        gameTimeSeconds = intent.getIntExtra(GameConstant().EXTRA_GAME_TIME_SECONDS, 0)
         val firstClickCanBeOnAMine =
-            intent.getBooleanExtra(GameConstant().FIRST_CLICK_MINE_TAG, false)
+            intent.getBooleanExtra(GameConstant().EXTRA_FIRST_CLICK_MINE, false)
 
         startStopWatch()
 
@@ -214,24 +213,24 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
             result
         )
         mIntent.putExtra(
-            GameConstant().WIDTH_TAG,
+            GameConstant().EXTRA_WIDTH,
             tv_minefield_field_width.text.toString().toInt()
         )
         mIntent.putExtra(
-            GameConstant().HEIGHT_TAG,
+            GameConstant().EXTRA_HEIGHT,
             tv_minefield_field_height.text.toString().toInt()
         )
         mIntent.putExtra(
-            GameConstant().MINES_COUNT_TAG,
+            GameConstant().EXTRA_MINES_COUNT,
             tv_minefield_mines.text.toString().toInt()
         )
         if (gameTimerMilli == 0L) {
             mIntent.putExtra(
-                GameConstant().GAME_TIME_MINUTES_TAG,
+                GameConstant().EXTRA_GAME_TIME_MINUTES,
                 tv_minefield_minutes.text.toString().toInt()
             )
             mIntent.putExtra(
-                GameConstant().GAME_TIME_SECONDS_TAG,
+                GameConstant().EXTRA_GAME_TIME_SECONDS,
                 tv_minefield_seconds.text.toString().toInt()
             )
         } else {
@@ -242,11 +241,11 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
                 minutes--
             }
             mIntent.putExtra(
-                GameConstant().GAME_TIME_SECONDS_TAG,
+                GameConstant().EXTRA_GAME_TIME_SECONDS,
                 seconds
             )
             mIntent.putExtra(
-                GameConstant().GAME_TIME_MINUTES_TAG,
+                GameConstant().EXTRA_GAME_TIME_MINUTES,
                 minutes
             )
         }
@@ -266,25 +265,25 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         tv_minefield_field_width.text =
-            savedInstanceState.getInt(GameConstant().WIDTH_TAG).toString()
+            savedInstanceState.getInt(GameConstant().EXTRA_WIDTH).toString()
         tv_minefield_field_height.text =
-            savedInstanceState.getInt(GameConstant().HEIGHT_TAG).toString()
+            savedInstanceState.getInt(GameConstant().EXTRA_HEIGHT).toString()
         tv_minefield_mines.text =
-            savedInstanceState.getInt(GameConstant().MINES_COUNT_TAG).toString()
+            savedInstanceState.getInt(GameConstant().EXTRA_MINES_COUNT).toString()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt(
-            GameConstant().WIDTH_TAG,
+            GameConstant().EXTRA_WIDTH,
             tv_minefield_field_width.text.toString().toInt()
         )
         outState.putInt(
-            GameConstant().HEIGHT_TAG,
+            GameConstant().EXTRA_HEIGHT,
             tv_minefield_field_height.text.toString().toInt()
         )
         outState.putInt(
-            GameConstant().MINES_COUNT_TAG,
+            GameConstant().EXTRA_MINES_COUNT,
             tv_minefield_mines.text.toString().toInt()
         )
     }

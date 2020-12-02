@@ -16,8 +16,11 @@ import com.example.sapper.constant.Constant
 import com.example.sapper.constant.GameConstant
 import com.example.sapper.R
 import com.example.sapper.activity.MinefieldActivity.activity.MinefieldActivity
+import com.example.sapper.activity.MinefieldActivity.activity.MinefieldBTActivity
+import com.example.sapper.constant.BluetoothConstant
 import com.example.sapper.dialog.DialogSettingMinesCount
 import com.example.sapper.dialog.DialogSettingsSize
+import com.example.sapper.entity.*
 import kotlinx.android.synthetic.main.activity_game_settings.*
 import kotlinx.android.synthetic.main.activity_minefield.*
 
@@ -25,6 +28,8 @@ import kotlinx.android.synthetic.main.activity_minefield.*
 class GameSettingsActivity : AppCompatActivity(),
     DialogSettingsSize.DialogSettingsSizeListener,
     DialogSettingMinesCount.DialogSettingMinesCountListener {
+
+    lateinit var bluetoothAdapter: BluetoothAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,8 +44,6 @@ class GameSettingsActivity : AppCompatActivity(),
         val mode = if (savedInstanceState == null) {
             intent.getStringExtra(Constant().EXTRA_GAME_MODE)
         } else {
-//            tv_game_settings_game_time_selected.text =
-//                savedInstanceState.getString(GameConstant().GAME_TIME_TAG, "00:00")
             savedInstanceState.getString(Constant().EXTRA_GAME_MODE)
         }
         /*setting game mode note*/
@@ -48,21 +51,15 @@ class GameSettingsActivity : AppCompatActivity(),
             Constant().EXTRA_GAME_MODE_CREATIVE -> {
                 title = getString(R.string.singleplayer)
                 ll_game_settings_use_same_field.visibility = View.GONE
-                ll_game_settings_exit.visibility = View.GONE
             }
             Constant().EXTRA_GAME_MODE_BLUETOOTH -> {
                 title = getString(R.string.bluetooth)
+                ll_game_settings_use_same_field.visibility = View.GONE
             }
         }
 
         configureFieldSizeSpinner()
         configureMinesCountSpinner()
-//        spin_game_settings_field_size.setOnClickListener {
-//            configureFieldSizeSpinner()
-//        }
-//        spin_game_settings_mines_count.setOnClickListener {
-//            configureMinesCountSpinner()
-//        }
 
         /*can't be selected and FirstClickNotMine and UseSameField*/
         cb_game_settings_first_click_mine.setOnClickListener {
@@ -81,69 +78,58 @@ class GameSettingsActivity : AppCompatActivity(),
             val myIntent = when (mode) {
                 Constant().EXTRA_GAME_MODE_BLUETOOTH -> {
                     //if bluetooth is turned off - asking to turn it on
-                    val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-                    if (!bluetoothAdapter.isEnabled) {
-                        val enableIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-                        startActivityForResult(enableIntent, Constant().REQUEST_ENABLE_BLUETOOTH)
+                    bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+                    if (!bluetoothAdapter!!.isEnabled) {
+                        requestEnableBluetooth()
                         return@setOnClickListener
-                    }
-                    Intent(this, WaitingRoomActivity::class.java)
+                    } else Intent(this, MinefieldBTActivity::class.java)
                 }
-                else -> {
+                Constant().EXTRA_GAME_MODE_CREATIVE -> {
                     Intent(this, MinefieldActivity::class.java)
                 }
+                else -> Intent(this, MainActivity::class.java)
             }
 
             myIntent.putExtra(
                 Constant().EXTRA_GAME_MODE,
                 mode
             )
-            myIntent.putExtra(
-                GameConstant().HEIGHT_TAG,
-                spin_game_settings_field_size.selectedItem
-                    .toString().substringBeforeLast('*').toInt()
-            )
-            myIntent.putExtra(
-                GameConstant().WIDTH_TAG,
-                spin_game_settings_field_size.selectedItem
-                    .toString().substringAfterLast('*').toInt()
-            )
-            myIntent.putExtra(
-                GameConstant().MINES_COUNT_TAG,
-                spin_game_settings_mines_count.selectedItem
-                    .toString().toInt()
-            )
 
-            myIntent.putExtra(
-                GameConstant().GAME_TIME_MINUTES_TAG,
-                np_game_settings_minutes.value
-            )
-            myIntent.putExtra(
-                GameConstant().GAME_TIME_SECONDS_TAG,
-                np_game_settings_seconds.value
-            )
-            myIntent.putExtra(
-                GameConstant().FIRST_CLICK_MINE_TAG,
-                cb_game_settings_first_click_mine.isChecked
-            )
+            val width = spin_game_settings_field_size.selectedItem
+                .toString().substringAfterLast('*').toInt()
+            val height = spin_game_settings_field_size.selectedItem
+                .toString().substringBeforeLast('*').toInt()
+            val minesCount = spin_game_settings_mines_count.selectedItem
+                .toString().toInt()
+            val timeMin = np_game_settings_minutes.value
+            val timeSec = np_game_settings_seconds.value
+            val firstClickMine = cb_game_settings_first_click_mine.isChecked
+            val sameField = cb_game_settings_use_same_field.isChecked
 
-            if (mode == Constant().EXTRA_GAME_MODE_BLUETOOTH) {
-                myIntent.putExtra(
-                    Constant().EXTRA_BLUETOOTH_ROLE,
-                    Constant().ROLE_SERVER
-                )
-                myIntent.putExtra(
-                    GameConstant().USE_SAME_FIELD_TAG,
-                    cb_game_settings_use_same_field.isChecked
-                )
-                myIntent.putExtra(
-                    GameConstant().CLOSE_AFTER_GAME_TAG,
-                    cb_game_settings_exit.isChecked
-                )
+            val game: Game? = when(mode){
+                Constant().EXTRA_GAME_MODE_CREATIVE -> {
+                    CasualGame(Field(width,height,minesCount), timeMin,timeSec, firstClickMine)
+                }
+                Constant().EXTRA_GAME_MODE_BLUETOOTH -> {
+                    BluetoothGame(Field(width,height,minesCount), timeMin,timeSec, sameField)
+                }
+                else -> null
             }
+            myIntent.putExtra(GameConstant().EXTRA_GAME_OBJECT, game)
+
             startActivity(myIntent)
             finish()
         }
+    }
+
+    private fun requestEnableBluetooth() {
+        val enableIntent = Intent(
+            BluetoothAdapter.ACTION_REQUEST_ENABLE
+        )
+        startActivityForResult(
+            enableIntent,
+            BluetoothConstant.REQUEST_ENABLE_BT
+        )
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -154,7 +140,7 @@ class GameSettingsActivity : AppCompatActivity(),
         )
     }
 
-    private fun configureFieldSizeSpinner (){
+    private fun configureFieldSizeSpinner() {
         val adapterGameSettingsSizeSelection: ArrayAdapter<String> = ArrayAdapter(
             this, R.layout.spinner_layout_game_settings,
             R.id.textview_spinner_layout_text, resources.getStringArray(R.array.fieldSizes)

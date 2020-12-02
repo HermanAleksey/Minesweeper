@@ -97,6 +97,17 @@
     <string name="connectedDevice">Connected device name: </string>
     <string name="diveConnectionWasLost">Device connection was lost</string>
     <string name="unableToConnectDevice">Unable to connect device</string>
-    <string name="btNotEnable">Error turning on Bluetooth</string>
+    <string name="btNotAvailable">Error turning on Bluetooth</string>
+
+    //DeviceListActivity
+    <string name="pairedDevices">Paired devices</string>
+    <string name="scan">Scan</string>
+    <string name="otherDevices">Other devices</string>
+    <string name="bluetoothTurnedOn">Bluetooth turned off</string>
+    <string name="bluetoothTurnedOff">Bluetooth turned on</string>
+    <string name="notPaired">Not paired</string>
+    <string name="scanning">Scanning</string>
+    <string name="selectDevice">Select device</string>
+    <string name="noneFound">None devices was found</string>
 
 </resources>

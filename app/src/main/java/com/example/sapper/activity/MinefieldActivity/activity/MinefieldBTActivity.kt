@@ -291,24 +291,24 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
             result
         )
         mIntent.putExtra(
-            GameConstant().WIDTH_TAG,
+            GameConstant().EXTRA_WIDTH,
             tv_bt_minefield_field_width.text.toString().toInt()
         )
         mIntent.putExtra(
-            GameConstant().HEIGHT_TAG,
+            GameConstant().EXTRA_HEIGHT,
             tv_bt_minefield_field_height.text.toString().toInt()
         )
         mIntent.putExtra(
-            GameConstant().MINES_COUNT_TAG,
+            GameConstant().EXTRA_MINES_COUNT,
             tv_bt_minefield_mines.text.toString().toInt()
         )
         if (gameTimerMilli == 0L) {
             mIntent.putExtra(
-                GameConstant().GAME_TIME_MINUTES_TAG,
+                GameConstant().EXTRA_GAME_TIME_MINUTES,
                 tv_bt_minefield_minutes.text.toString().toInt()
             )
             mIntent.putExtra(
-                GameConstant().GAME_TIME_SECONDS_TAG,
+                GameConstant().EXTRA_GAME_TIME_SECONDS,
                 tv_bt_minefield_seconds.text.toString().toInt()
             )
         } else {
@@ -319,11 +319,11 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
                 minutes--
             }
             mIntent.putExtra(
-                GameConstant().GAME_TIME_SECONDS_TAG,
+                GameConstant().EXTRA_GAME_TIME_SECONDS,
                 seconds
             )
             mIntent.putExtra(
-                GameConstant().GAME_TIME_MINUTES_TAG,
+                GameConstant().EXTRA_GAME_TIME_MINUTES,
                 minutes
             )
         }
@@ -378,7 +378,7 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
                 } else {
                     // User did not enable Bluetooth or an error occurred
                     Toast.makeText(
-                        context, R.string.btNotEnable,
+                        context, R.string.btNotAvailable,
                         Toast.LENGTH_SHORT
                     ).show()
 

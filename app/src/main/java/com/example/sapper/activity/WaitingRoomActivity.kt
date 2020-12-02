@@ -81,13 +81,13 @@ class WaitingRoomActivity : AppCompatActivity() {
             Constant().EXTRA_GAME_MODE_CREATIVE -> getString(R.string.gameModeCasual)
             else -> ""
         }
-        val width = intent.getIntExtra(GameConstant().WIDTH_TAG, 0)
-        val height = intent.getIntExtra(GameConstant().HEIGHT_TAG, 0)
-        val minesCount = intent.getIntExtra(GameConstant().MINES_COUNT_TAG, 0)
-        val gameTime = intent.getStringExtra(GameConstant().GAME_TIME_TAG)
-        val firstClickMine = intent.getBooleanExtra(GameConstant().FIRST_CLICK_MINE_TAG, false)
-        val exitOnLose = intent.getBooleanExtra(GameConstant().CLOSE_AFTER_GAME_TAG, false)
-        val useSameField = intent.getBooleanExtra(GameConstant().USE_SAME_FIELD_TAG, false)
+        val width = intent.getIntExtra(GameConstant().EXTRA_WIDTH, 0)
+        val height = intent.getIntExtra(GameConstant().EXTRA_HEIGHT, 0)
+        val minesCount = intent.getIntExtra(GameConstant().EXTRA_MINES_COUNT, 0)
+        val gameTime = intent.getStringExtra(GameConstant().EXTRA_GAME_TIME)
+        val firstClickMine = intent.getBooleanExtra(GameConstant().EXTRA_FIRST_CLICK_MINE, false)
+        val exitOnLose = intent.getBooleanExtra(GameConstant().EXTRA_CLOSE_AFTER_GAME, false)
+        val useSameField = intent.getBooleanExtra(GameConstant().EXTRA_USE_SAME_FIELD, false)
 
         tv_host_room_game_mode.text = gameMode
         tv_host_room_field_height.text = height.toString()
@@ -228,12 +228,12 @@ class WaitingRoomActivity : AppCompatActivity() {
                     if (tempMessage.startsWith("start game")){
                         val minefieldIntent = Intent(this, MinefieldActivity::class.java)
                         minefieldIntent.putExtra(Constant().EXTRA_GAME_MODE, Constant().EXTRA_GAME_MODE_BLUETOOTH)
-                        minefieldIntent.putExtra(GameConstant().WIDTH_TAG,tv_host_room_field_width.text.toString().toInt())
-                        minefieldIntent.putExtra(GameConstant().HEIGHT_TAG,tv_host_room_field_height.text.toString().toInt())
-                        minefieldIntent.putExtra(GameConstant().MINES_COUNT_TAG,tv_host_room_mines_amount.text.toString().toInt())
-                        minefieldIntent.putExtra(GameConstant().GAME_TIME_TAG,tv_host_room_time_limit.text.toString())
-                        minefieldIntent.putExtra(GameConstant().USE_SAME_FIELD_TAG,cb_host_room_use_same_field.isChecked)
-                        minefieldIntent.putExtra(GameConstant().CLOSE_AFTER_GAME_TAG,cb_game_settings_exit.isChecked)
+                        minefieldIntent.putExtra(GameConstant().EXTRA_WIDTH,tv_host_room_field_width.text.toString().toInt())
+                        minefieldIntent.putExtra(GameConstant().EXTRA_HEIGHT,tv_host_room_field_height.text.toString().toInt())
+                        minefieldIntent.putExtra(GameConstant().EXTRA_MINES_COUNT,tv_host_room_mines_amount.text.toString().toInt())
+                        minefieldIntent.putExtra(GameConstant().EXTRA_GAME_TIME,tv_host_room_time_limit.text.toString())
+                        minefieldIntent.putExtra(GameConstant().EXTRA_USE_SAME_FIELD,cb_host_room_use_same_field.isChecked)
+                        minefieldIntent.putExtra(GameConstant().EXTRA_CLOSE_AFTER_GAME,cb_game_settings_exit.isChecked)
 //                        minefieldIntent.putExtra(GameConstant().FIRST_CLICK_MINE_TAG,cb_game_settings_first_click_mine.isChecked)
                         startActivity(minefieldIntent)
                     }

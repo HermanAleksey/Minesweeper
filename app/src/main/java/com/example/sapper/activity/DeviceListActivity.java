@@ -22,6 +22,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sapper.R;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -60,22 +62,22 @@ public class DeviceListActivity extends Activity implements View.OnClickListener
         buttonLayoutParam.gravity = Gravity.CENTER_HORIZONTAL;
 
         tvPairedDevices = new TextView(this);
-        tvPairedDevices.setText("R.string.title_paired_devices");
+        tvPairedDevices.setText(R.string.pairedDevices);
         linLayout.addView(tvPairedDevices);
 
         lvPairedDevices = new ListView(this);
         linLayout.addView(lvPairedDevices);
 
         btnScan = new Button(this);
-        btnScan.setText("R.string.button_scan");
+        btnScan.setText(R.string.scan);
 
         linLayout.addView(btnScan, buttonLayoutParam);
         btnScan.setOnClickListener(this);
 
-        mNewDevicesArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+        mNewDevicesArrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1);
 
         tvNewDevices = new TextView(this);
-        tvNewDevices.setText("R.string.title_other_devices");
+        tvNewDevices.setText(R.string.otherDevices);
         tvNewDevices.setVisibility(View.INVISIBLE);
         linLayout.addView(tvNewDevices);
 
@@ -114,7 +116,7 @@ public class DeviceListActivity extends Activity implements View.OnClickListener
             lvPairedDevices.setOnItemClickListener(deviceNamesClickListener);
         } else {
             // Device has not Bluetooth-module
-            Toast.makeText(this, "R.string.bluetoothNotAvailable", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.btNotAvailable, Toast.LENGTH_LONG).show();
             Intent intent = new Intent();
             intent.putExtra("cntPlayers", 1);
             setResult(Activity.RESULT_OK, intent);
@@ -160,11 +162,11 @@ public class DeviceListActivity extends Activity implements View.OnClickListener
 
         if (requestCode == REQUEST_ENABLE_BT) {
             if (resultCode == RESULT_OK) {
-                Toast.makeText(context, "R.string.bluetoothOn", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, R.string.bluetoothTurnedOn, Toast.LENGTH_LONG).show();
                 lvPairedDevices.setAdapter(findPairedDevices());
             } else {
                 /* User refused to turn on BlueTooth*/
-                Toast.makeText(context, "R.string.cancelled", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, R.string.bluetoothTurnedOff, Toast.LENGTH_LONG).show();
                 Intent intent = new Intent();
                 intent.putExtra("cntPlayers", 1);
                 setResult(Activity.RESULT_OK, intent);
@@ -189,7 +191,7 @@ public class DeviceListActivity extends Activity implements View.OnClickListener
         } else {
             Log.d("myLogs", "If list of paired devices is empty");
             // If list of paired devices is empty
-            tvPairedDevices.setText("R.string.notPaired");
+            tvPairedDevices.setText(R.string.notPaired);
         }
         mArrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, deviceNames);
         return mArrayAdapter;
@@ -220,7 +222,7 @@ public class DeviceListActivity extends Activity implements View.OnClickListener
         v.setVisibility(View.GONE);
         // Indicate scanning in the title
         setProgressBarIndeterminateVisibility(true);
-        setTitle("R.string.scanning");
+        setTitle(R.string.scanning);
 
         tvNewDevices.setVisibility(View.VISIBLE);
         lvNewDevices.setVisibility(View.VISIBLE);
@@ -254,10 +256,10 @@ public class DeviceListActivity extends Activity implements View.OnClickListener
             } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED
                     .equals(action)) {
                 setProgressBarIndeterminateVisibility(false);
-                setTitle("R.string.select_device");
+                setTitle(R.string.selectDevice);
                 if (mNewDevicesArrayAdapter.getCount() == 0) {
-                    String noDevices = "R.string.none_found"; /*getResources().getText(
-                            R.string.none_found).toString();*/
+                    String noDevices =  getResources().getText(
+                            R.string.noneFound).toString();
                     mNewDevicesArrayAdapter.add(noDevices);
                 }
             }

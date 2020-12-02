@@ -85,27 +85,27 @@ class CompanyLevelActivity : AppCompatActivity() {
             myIntent.putExtra(Constant().EXTRA_GAME_MODE, Constant().EXTRA_GAME_MODE_COMPANY)
 //            myIntent.putExtra(Constant().COMPANY_LEVEL, levelNumber)
             myIntent.putExtra(
-                GameConstant().HEIGHT_TAG,
+                GameConstant().EXTRA_HEIGHT,
                 companyLevel.height
             )
             myIntent.putExtra(
-                GameConstant().WIDTH_TAG,
+                GameConstant().EXTRA_WIDTH,
                 companyLevel.width
             )
             myIntent.putExtra(
-                GameConstant().MINES_COUNT_TAG,
+                GameConstant().EXTRA_MINES_COUNT,
                 companyLevel.minesCount
             )
             myIntent.putExtra(
-                GameConstant().GAME_TIME_MINUTES_TAG,
+                GameConstant().EXTRA_GAME_TIME_MINUTES,
                 companyLevel.minutes
             )
             myIntent.putExtra(
-                GameConstant().GAME_TIME_SECONDS_TAG,
+                GameConstant().EXTRA_GAME_TIME_SECONDS,
                 companyLevel.seconds
             )
             myIntent.putExtra(
-                GameConstant().FIRST_CLICK_MINE_TAG,
+                GameConstant().EXTRA_FIRST_CLICK_MINE,
                 false
             )
             startActivity(myIntent)

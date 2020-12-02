@@ -14,10 +14,12 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MinefieldActivity.activity.MinefieldBTActivity"></activity>
+        <activity
+            android:name=".activity.MinefieldActivity.activity.MinefieldBTActivity"
+            android:parentActivityName=".activity.MainActivity" />
         <activity
             android:name=".activity.GameResultsActivity"
-            android:parentActivityName=".activity.MainActivity" /> 
+            android:parentActivityName=".activity.MainActivity" />
         <activity android:name=".activity.WaitingRoomActivity" />
         <activity
             android:name=".activity.GameSettingsActivity"
@@ -32,10 +34,6 @@
             android:parentActivityName=".activity.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.MinefieldActivity.activity.MineFieldBTActivity"
-            android:parentActivityName=".activity.MainActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -44,7 +42,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.DeviceListActivity" />
+        <activity
+            android:name=".activity.DeviceListActivity"
+            android:parentActivityName=".activity.MainActivity" />
 
         <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
         <meta-data

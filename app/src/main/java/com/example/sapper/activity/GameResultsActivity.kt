@@ -20,15 +20,15 @@ class GameResultsActivity : AppCompatActivity() {
         } else resources.getString(R.string.lose)
 
         tv_game_result_height.text =
-            intent.getIntExtra(GameConstant().HEIGHT_TAG,0).toString()
+            intent.getIntExtra(GameConstant().EXTRA_HEIGHT,0).toString()
         tv_game_result_width.text =
-            intent.getIntExtra(GameConstant().WIDTH_TAG,0).toString()
+            intent.getIntExtra(GameConstant().EXTRA_WIDTH,0).toString()
         tv_game_result_mines_count.text =
-            intent.getIntExtra(GameConstant().MINES_COUNT_TAG,0).toString()
+            intent.getIntExtra(GameConstant().EXTRA_MINES_COUNT,0).toString()
         tv_game_result_minutes.text =
-            intent.getIntExtra(GameConstant().GAME_TIME_MINUTES_TAG,0).toString()
+            intent.getIntExtra(GameConstant().EXTRA_GAME_TIME_MINUTES,0).toString()
         tv_game_result_seconds.text =
-            intent.getIntExtra(GameConstant().GAME_TIME_SECONDS_TAG,0).toString()
+            intent.getIntExtra(GameConstant().EXTRA_GAME_TIME_SECONDS,0).toString()
     }
 
     override fun onBackPressed() {
