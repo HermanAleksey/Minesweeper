@@ -1,8 +1,8 @@
 package com.example.sapper.activity.MinefieldActivity.activity;
 
-import HostField
-import Saper
-import UserField
+import com.bsuir.saper.HostField
+import com.bsuir.saper.Saper
+import com.bsuir.saper.UserField
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice

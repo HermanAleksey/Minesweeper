@@ -8,14 +8,18 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-//import androidx.room.Room
+import androidx.room.Room
 import com.example.sapper.R
 import com.example.sapper.activity.MinefieldActivity.activity.MinefieldBTActivity
 import com.example.sapper.constant.BluetoothConstant
 import com.example.sapper.constant.Constant
-//import com.example.sapper.db.AppDatabase
+import com.example.sapper.db.AppDatabase
+import com.example.sapper.entity.CompanyGame
+import com.example.sapper.entity.CompanyGameDB
+import com.example.sapper.entity.Field
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
@@ -34,18 +38,27 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        /** DB **/
-//        val db = Room.databaseBuilder(
-//            applicationContext,
-//            AppDatabase::class.java, "database-name"
-//        ).build()
-//        db.companyGameDao().insert(CompanyGame(1, Field(4,4,2),10,0,false))
-//        db.companyGameDao().insert(CompanyGame(2, Field(6,6,3),10,0,false))
-//        db.companyGameDao().insert(CompanyGame(3, Field(8,8,5),10,0,false))
-//        db.companyGameDao().insert(CompanyGame(4, Field(10,10,12),10,0,false))
-//        val a = db.companyGameDao().getAll()
-//        Log.e("TAG", "onCreate: $a")
-
+        /** filling DB **/
+        /*
+        val db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java, "database-name"
+        ).build()
+        var a:List<CompanyGameDB>
+        Thread {
+            val dao = db.getCompanyGameDao()
+            dao.deleteAll()
+            dao.insert(CompanyGameDB(1, 4, 4, 2, 10, 0, false))
+            dao.insert(CompanyGameDB(2, 6, 6, 3, 10, 0, false))
+            dao.insert(CompanyGameDB(3, 8, 8, 5, 10, 0, false))
+            dao.insert(CompanyGameDB(4, 10, 10, 12, 10, 0, false))
+            a = dao.getAll()
+            Log.e("TAG", "onCreate: $a")
+            runOnUiThread(Runnable {
+                Toast.makeText(this, "" + a[0], Toast.LENGTH_SHORT).show()
+            })
+        }.start()
+        */
         /**-----------------------------**/
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
