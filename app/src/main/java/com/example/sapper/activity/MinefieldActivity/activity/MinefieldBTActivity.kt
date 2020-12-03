@@ -73,13 +73,15 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
     private lateinit var handler: Handler
 
     private var gameTimerMilli: Long = 0
-//    private var startTime: Long = 0
+
+    //    private var startTime: Long = 0
     lateinit var stopWatchRunnable: Runnable
 
 
     private fun startStopWatch() {
         /*stopwatch / timer starting*/
-        gameTimerMilli = timeWorker.translateToMilli("${roomSettings.minutes}:${roomSettings.seconds}")
+        gameTimerMilli =
+            timeWorker.translateToMilli("${roomSettings.minutes}:${roomSettings.seconds}")
         if (gameTimerMilli == 0L) {
             val startTime = SystemClock.uptimeMillis()
             stopWatchRunnable = timeWorker.getStopWatchRunnable(startTime)
@@ -130,7 +132,8 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
 
         when (intent.getStringExtra(Constant().EXTRA_BLUETOOTH_ROLE)) {
             Constant().ROLE_SERVER -> {
-                roomSettings = intent.getSerializableExtra(GameConstant().EXTRA_ROOM) as BluetoothGame
+                roomSettings =
+                    intent.getSerializableExtra(GameConstant().EXTRA_GAME_OBJECT) as BluetoothGame
                 GSONobject = gson.toJson(roomSettings)
                 role = "Server"
 
@@ -139,9 +142,9 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
                 fillViewsWithValues(
                     roomSettings.field.width,
                     roomSettings.field.height,
+                    roomSettings.field.minesCount,
                     roomSettings.minutes,
-                    roomSettings.seconds,
-                    roomSettings.minutes
+                    roomSettings.seconds
                 )
             }
             Constant().ROLE_CLIENT -> {
@@ -243,17 +246,18 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
         fillViewsWithValues(
             roomSettings.field.width,
             roomSettings.field.height,
+            roomSettings.field.minesCount,
             roomSettings.minutes,
-            roomSettings.seconds,
-            roomSettings.minutes
+            roomSettings.seconds
         )
 
         startStopWatch()
     }
 
     private fun fillViewsWithValues(
-        width: Int, height: Int, min: Int,
-        sec: Int, mines: Int
+        width: Int, height: Int,
+        minesCount: Int, min: Int,
+        sec: Int
     ) {
         tv_bt_minefield_field_width.text = width.toString()
         tv_bt_minefield_field_height.text = height.toString()
@@ -263,14 +267,14 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
         tv_bt_minefield_seconds.text = if (sec < 10) {
             "0$sec"
         } else "$sec"
-        tv_bt_minefield_mines.text = mines.toString()
+        tv_bt_minefield_mines.text = minesCount.toString()
     }
 
     private fun performEndEvents(result: Boolean) {
         val sound = if (result) soundWin else soundExplosion
         soundPoolWorker.playSound(soundPool, sound)
         ll_bt_minefield_minefield_layout.postDelayed({
-                intentToResultActivity(result)
+            intentToResultActivity(result)
             timeWorker.stopCountDownTimer(countDownTimer)
             sendMessages(if (result) "Lose" else "Win")
             disconnectBluetooth()
@@ -296,18 +300,18 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
             GameConstant().GAME_RESULT,
             result
         )
-        val width = tv_minefield_field_width.text.toString().toInt()
-        val height = tv_minefield_field_height.text.toString().toInt()
-        val minesCount = tv_minefield_mines.text.toString().toInt()
+        val width = tv_bt_minefield_field_width.text.toString().toInt()
+        val height = tv_bt_minefield_field_height.text.toString().toInt()
+        val minesCount = tv_bt_minefield_mines.text.toString().toInt()
         var timeMin: Int
         var timeSec: Int
 
         if (gameTimerMilli == 0L) {
-            timeMin = tv_minefield_minutes.text.toString().toInt()
-            timeSec = tv_minefield_minutes.text.toString().toInt()
+            timeMin = tv_bt_minefield_minutes.text.toString().toInt()
+            timeSec = tv_bt_minefield_seconds.text.toString().toInt()
         } else {
-            timeMin = roomSettings.minutes - tv_minefield_minutes.text.toString().toInt()
-            timeSec = roomSettings.seconds - tv_minefield_seconds.text.toString().toInt()
+            timeMin = roomSettings.minutes - tv_bt_minefield_minutes.text.toString().toInt()
+            timeSec = roomSettings.seconds - tv_bt_minefield_seconds.text.toString().toInt()
             if (timeSec < 0) {
                 timeSec += 60
                 timeMin -= 1
@@ -369,7 +373,7 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
                 } else {
                     // User did not enable Bluetooth or an error occurred
                     Toast.makeText(
-                        context, R.string.btNotAvailable,
+                        context, resources.getString(R.string.btNotAvailable),
                         Toast.LENGTH_SHORT
                     ).show()
 
@@ -485,7 +489,7 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
                         readMessage == "Lose" -> {
                             Toast.makeText(
                                 this@MinefieldBTActivity,
-                                R.string.opponentWon,
+                                resources.getString(R.string.opponentWon),
                                 Toast.LENGTH_SHORT
                             ).show()
                             disconnectBluetooth()
@@ -495,7 +499,7 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
                         readMessage == "Win" -> {
                             Toast.makeText(
                                 this@MinefieldBTActivity,
-                                R.string.opponentExploded,
+                                resources.getString(R.string.opponentExploded),
                                 Toast.LENGTH_SHORT
                             ).show()
                             disconnectBluetooth()
@@ -510,7 +514,9 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
                 BluetoothConstant.MESSAGE_DEVICE_NAME -> {
                     Toast.makeText(
                         applicationContext,
-                        R.string.connectedDevice.toString() + msg.data.getString(BluetoothConstant.DEVICE_NAME),
+                        resources.getString(R.string.connectedDevice) + msg.data.getString(
+                            BluetoothConstant.DEVICE_NAME
+                        ),
                         Toast.LENGTH_SHORT
                     ).show()
                     /**--------------------------------------First message after connection -----------------------------------------------**/

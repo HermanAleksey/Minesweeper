@@ -24,9 +24,9 @@ class GameResultsActivity : AppCompatActivity() {
         val gameMode = when (intent.getStringExtra(Constant().EXTRA_GAME_MODE)) {
             Constant().EXTRA_GAME_MODE_CREATIVE -> resources.getString(R.string.gameModeCasual)
             Constant().EXTRA_GAME_MODE_COMPANY -> {
-                val levelId = intent.getIntExtra(GameConstant().EXTRA_GAME_ID, 0)
-                val db = baseContext.openOrCreateDatabase("app.db", MODE_PRIVATE, null)
-                //TODO(" ИЗМЕНЕНИЕ СОСТОЯНИЯ "ПРОЙДЕНО" В БАЗЕ ДАННЫХ")
+//                val levelId = intent.getIntExtra(GameConstant().EXTRA_GAME_ID, 0)
+//                val db = baseContext.openOrCreateDatabase("app.db", MODE_PRIVATE, null)
+//                //TODO(" ИЗМЕНЕНИЕ СОСТОЯНИЯ "ПРОЙДЕНО" В БАЗЕ ДАННЫХ")
                 resources.getString(R.string.gameModeCompany)
             }
             Constant().EXTRA_GAME_MODE_BLUETOOTH -> resources.getString(R.string.gameModeBluetooth)

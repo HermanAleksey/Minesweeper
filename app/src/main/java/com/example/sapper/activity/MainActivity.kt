@@ -10,10 +10,12 @@ import android.view.MenuItem
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+//import androidx.room.Room
 import com.example.sapper.R
 import com.example.sapper.activity.MinefieldActivity.activity.MinefieldBTActivity
 import com.example.sapper.constant.BluetoothConstant
 import com.example.sapper.constant.Constant
+//import com.example.sapper.db.AppDatabase
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
@@ -31,6 +33,20 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        /** DB **/
+//        val db = Room.databaseBuilder(
+//            applicationContext,
+//            AppDatabase::class.java, "database-name"
+//        ).build()
+//        db.companyGameDao().insert(CompanyGame(1, Field(4,4,2),10,0,false))
+//        db.companyGameDao().insert(CompanyGame(2, Field(6,6,3),10,0,false))
+//        db.companyGameDao().insert(CompanyGame(3, Field(8,8,5),10,0,false))
+//        db.companyGameDao().insert(CompanyGame(4, Field(10,10,12),10,0,false))
+//        val a = db.companyGameDao().getAll()
+//        Log.e("TAG", "onCreate: $a")
+
+        /**-----------------------------**/
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
         context = baseContext

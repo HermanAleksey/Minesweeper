@@ -30,6 +30,7 @@ class GameSettingsActivity : AppCompatActivity(),
     DialogSettingMinesCount.DialogSettingMinesCountListener {
 
     lateinit var bluetoothAdapter: BluetoothAdapter
+    private var mode: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +42,7 @@ class GameSettingsActivity : AppCompatActivity(),
         np_game_settings_seconds.maxValue = 59
 
 
-        val mode = if (savedInstanceState == null) {
+        mode = if (savedInstanceState == null) {
             intent.getStringExtra(Constant().EXTRA_GAME_MODE)
         } else {
             savedInstanceState.getString(Constant().EXTRA_GAME_MODE)
@@ -54,7 +55,7 @@ class GameSettingsActivity : AppCompatActivity(),
             }
             Constant().EXTRA_GAME_MODE_BLUETOOTH -> {
                 title = getString(R.string.bluetooth)
-                ll_game_settings_use_same_field.visibility = View.GONE
+                ll_game_settings_first_click_mine.visibility = View.GONE
             }
         }
 
@@ -74,52 +75,55 @@ class GameSettingsActivity : AppCompatActivity(),
         }
 
         /*setting click listener for button Create */
-        btn_game_settings_create_game.setOnClickListener {
-            val myIntent = when (mode) {
-                Constant().EXTRA_GAME_MODE_BLUETOOTH -> {
-                    //if bluetooth is turned off - asking to turn it on
-                    bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-                    if (!bluetoothAdapter.isEnabled) {
-                        requestEnableBluetooth()
-                        return@setOnClickListener
-                    } else Intent(this, MinefieldBTActivity::class.java)
-                }
-                Constant().EXTRA_GAME_MODE_CREATIVE -> {
-                    Intent(this, MinefieldActivity::class.java)
-                }
-                else -> Intent(this, MainActivity::class.java)
+        btn_game_settings_create_game.setOnClickListener(createGameClickListener)
+    }
+
+    private val createGameClickListener = View.OnClickListener{
+        val myIntent = when (mode) {
+            Constant().EXTRA_GAME_MODE_BLUETOOTH -> {
+                //if bluetooth is turned off - asking to turn it on
+                bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+                if (!bluetoothAdapter.isEnabled) {
+                    requestEnableBluetooth()
+                    return@OnClickListener
+                } else Intent(this, MinefieldBTActivity::class.java)
             }
-
-            myIntent.putExtra(
-                Constant().EXTRA_GAME_MODE,
-                mode
-            )
-
-            val width = spin_game_settings_field_size.selectedItem
-                .toString().substringAfterLast('*').toInt()
-            val height = spin_game_settings_field_size.selectedItem
-                .toString().substringBeforeLast('*').toInt()
-            val minesCount = spin_game_settings_mines_count.selectedItem
-                .toString().toInt()
-            val timeMin = np_game_settings_minutes.value
-            val timeSec = np_game_settings_seconds.value
-            val firstClickMine = cb_game_settings_first_click_mine.isChecked
-            val sameField = cb_game_settings_use_same_field.isChecked
-
-            val game: Game? = when(mode){
-                Constant().EXTRA_GAME_MODE_CREATIVE -> {
-                    CasualGame(Field(width,height,minesCount), timeMin,timeSec, firstClickMine)
-                }
-                Constant().EXTRA_GAME_MODE_BLUETOOTH -> {
-                    BluetoothGame(Field(width,height,minesCount), timeMin,timeSec, sameField)
-                }
-                else -> null
+            Constant().EXTRA_GAME_MODE_CREATIVE -> {
+                Intent(this, MinefieldActivity::class.java)
             }
-            myIntent.putExtra(GameConstant().EXTRA_GAME_OBJECT, game)
-
-            startActivity(myIntent)
-            finish()
+            else -> Intent(this, MainActivity::class.java)
         }
+
+        myIntent.putExtra(
+            Constant().EXTRA_GAME_MODE,
+            mode
+        )
+
+        val width = spin_game_settings_field_size.selectedItem
+            .toString().substringAfterLast('*').toInt()
+        val height = spin_game_settings_field_size.selectedItem
+            .toString().substringBeforeLast('*').toInt()
+        val minesCount = spin_game_settings_mines_count.selectedItem
+            .toString().toInt()
+        val timeMin = np_game_settings_minutes.value
+        val timeSec = np_game_settings_seconds.value
+        val firstClickMine = cb_game_settings_first_click_mine.isChecked
+        val sameField = cb_game_settings_use_same_field.isChecked
+
+        var game: Game? = null
+        when(mode){
+            Constant().EXTRA_GAME_MODE_CREATIVE -> {
+                game = CasualGame(Field(width,height,minesCount), timeMin,timeSec, firstClickMine)
+            }
+            Constant().EXTRA_GAME_MODE_BLUETOOTH -> {
+                game = BluetoothGame(Field(width,height,minesCount), timeMin,timeSec, sameField)
+                myIntent.putExtra(Constant().EXTRA_BLUETOOTH_ROLE, Constant().ROLE_SERVER)
+            }
+        }
+        myIntent.putExtra(GameConstant().EXTRA_GAME_OBJECT, game)
+
+        startActivity(myIntent)
+        finish()
     }
 
     private fun requestEnableBluetooth() {

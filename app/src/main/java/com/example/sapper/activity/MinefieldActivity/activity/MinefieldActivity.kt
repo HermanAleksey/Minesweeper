@@ -244,7 +244,7 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
 
         if (gameTimerMilli == 0L) {
             timeMin = tv_minefield_minutes.text.toString().toInt()
-            timeSec = tv_minefield_minutes.text.toString().toInt()
+            timeSec = tv_minefield_seconds.text.toString().toInt()
         } else {
             timeMin = game.minutes - tv_minefield_minutes.text.toString().toInt()
             timeSec = game.seconds - tv_minefield_seconds.text.toString().toInt()
