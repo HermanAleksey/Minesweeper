@@ -38,27 +38,42 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        /** filling DB **/
-        /*
-        val db = Room.databaseBuilder(
-            applicationContext,
-            AppDatabase::class.java, "database-name"
-        ).build()
-        var a:List<CompanyGameDB>
-        Thread {
-            val dao = db.getCompanyGameDao()
-            dao.deleteAll()
-            dao.insert(CompanyGameDB(1, 4, 4, 2, 10, 0, false))
-            dao.insert(CompanyGameDB(2, 6, 6, 3, 10, 0, false))
-            dao.insert(CompanyGameDB(3, 8, 8, 5, 10, 0, false))
-            dao.insert(CompanyGameDB(4, 10, 10, 12, 10, 0, false))
-            a = dao.getAll()
-            Log.e("TAG", "onCreate: $a")
-            runOnUiThread(Runnable {
-                Toast.makeText(this, "" + a[0], Toast.LENGTH_SHORT).show()
-            })
-        }.start()
-        */
+        /** filling DB with values**/
+        /*object : Thread() {
+            override fun run() {
+                super.run()
+                val db = Room.databaseBuilder(
+                    applicationContext,
+                    AppDatabase::class.java, "database-name"
+                ).build()
+                val dao = db.getCompanyGameDao()
+                dao.deleteAll()
+                dao.insert(CompanyGameDB(1, 4, 4, 2, 10, 0, false))
+                dao.insert(CompanyGameDB(2, 4, 4, 3, 10, 0, false))
+                dao.insert(CompanyGameDB(3, 4, 4, 4, 10, 0, false))
+
+                dao.insert(CompanyGameDB(4, 6, 6, 4, 10, 0, false))
+                dao.insert(CompanyGameDB(5, 6, 6, 6, 10, 0, false))
+                dao.insert(CompanyGameDB(6, 6, 6, 10, 10, 0, false))
+                dao.insert(CompanyGameDB(7, 6, 6, 12, 10, 0, false))
+
+                dao.insert(CompanyGameDB(8, 8, 8, 10, 10, 0, false))
+                dao.insert(CompanyGameDB(9, 8, 8, 14, 10, 0, false))
+                dao.insert(CompanyGameDB(10, 8, 8, 16, 10, 0, false))
+                dao.insert(CompanyGameDB(11, 8, 8, 18, 10, 0, false))
+                dao.insert(CompanyGameDB(12, 8, 8, 20, 10, 0, false))
+
+                dao.insert(CompanyGameDB(13, 10, 10, 20, 10, 0, false))
+                dao.insert(CompanyGameDB(14, 10, 10, 24, 10, 0, false))
+                dao.insert(CompanyGameDB(15, 10, 10, 30, 10, 0, false))
+                dao.insert(CompanyGameDB(16, 10, 10, 30, 6, 0, false))
+                dao.insert(CompanyGameDB(17, 10, 10, 32, 6, 0, false))
+                dao.insert(CompanyGameDB(18, 10, 10, 34, 6, 0, false))
+                dao.insert(CompanyGameDB(19, 10, 10, 36, 6, 0, false))
+                dao.insert(CompanyGameDB(20, 10, 10, 40, 6, 0, false))
+                dao.insert(CompanyGameDB(21, 10, 10, 40, 4, 0, false))
+            }
+        }.start()*/
         /**-----------------------------**/
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()

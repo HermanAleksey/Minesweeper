@@ -1,17 +1,21 @@
 package com.example.sapper.activity
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NavUtils
+import androidx.room.Room
 import com.example.sapper.constant.GameConstant
 import com.example.sapper.R
 import com.example.sapper.constant.Constant
+import com.example.sapper.db.AppDatabase
 import com.example.sapper.entity.Game
 import kotlinx.android.synthetic.main.activity_game_results.*
 
 
 class GameResultsActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_results)
@@ -24,9 +28,21 @@ class GameResultsActivity : AppCompatActivity() {
         val gameMode = when (intent.getStringExtra(Constant().EXTRA_GAME_MODE)) {
             Constant().EXTRA_GAME_MODE_CREATIVE -> resources.getString(R.string.gameModeCasual)
             Constant().EXTRA_GAME_MODE_COMPANY -> {
-//                val levelId = intent.getIntExtra(GameConstant().EXTRA_GAME_ID, 0)
-//                val db = baseContext.openOrCreateDatabase("app.db", MODE_PRIVATE, null)
-//                //TODO(" ИЗМЕНЕНИЕ СОСТОЯНИЯ "ПРОЙДЕНО" В БАЗЕ ДАННЫХ")
+                //if level was passed (completed) - update DB
+                if (result) {
+                    object: Thread() {
+                        override fun run() {
+                            super.run()
+                            val db = Room.databaseBuilder(
+                                applicationContext,
+                                AppDatabase::class.java, "database-name"
+                            ).build()
+                            val dao = db.getCompanyGameDao()
+                            val completedLevel = intent.getIntExtra(GameConstant().EXTRA_GAME_ID,1)
+                            dao.setCompleted(completedLevel)
+                        }
+                    }.start()
+                }
                 resources.getString(R.string.gameModeCompany)
             }
             Constant().EXTRA_GAME_MODE_BLUETOOTH -> resources.getString(R.string.gameModeBluetooth)

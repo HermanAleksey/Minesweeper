@@ -3,32 +3,51 @@ package com.example.sapper.activity
 import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.room.Room
 import com.example.sapper.constant.Constant
 import com.example.sapper.R
 import com.example.sapper.activity.MinefieldActivity.activity.MinefieldActivity
 import com.example.sapper.constant.GameConstant
+import com.example.sapper.db.AppDatabase
 import com.example.sapper.entity.CompanyGame
 import com.example.sapper.entity.Field
 import kotlinx.android.synthetic.main.activity_company_level.*
 
 class CompanyLevelActivity : AppCompatActivity() {
 
-    private lateinit var db: SQLiteDatabase
+    private val buttonsArray = mutableListOf<Button>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_company_level)
 
-        db = baseContext.openOrCreateDatabase("app.db", MODE_PRIVATE, null)
-//        val numberOfLevels = DAOCompanyLevel(db).getTheNumberOfRecords()
         /**----------------------------GENERATING NUM OF LEVELS--------------------------**/
-        val numberOfLevels = 46
-        var numberOfLines = numberOfLevels / 4
-        val numOfElemsOnLastLine = numberOfLevels % 4
+
+        object : Thread() {
+            override fun run() {
+                super.run()
+                val db = Room.databaseBuilder(
+                    applicationContext,
+                    AppDatabase::class.java, "database-name"
+                ).build()
+                val dao = db.getCompanyGameDao()
+                val numberOfLevels = dao.getCount()
+                Log.e("TAG", "run: numberOfLevels:$numberOfLevels")
+                runOnUiThread { generateLevelButtons(numberOfLevels) }
+            }
+        }.start()
+    }
+
+    private fun generateLevelButtons(num: Int) {
+        var numberOfLines = num / 4
+        val numOfElemsOnLastLine = num % 4
         if (numOfElemsOnLastLine != 0) numberOfLines++
 
         val metrics = resources.displayMetrics
@@ -45,8 +64,6 @@ class CompanyLevelActivity : AppCompatActivity() {
             ViewGroup.LayoutParams.MATCH_PARENT,
             1.0.toFloat()
         )
-
-        val buttonsArray = ArrayList<Button>()
 
         /*generation of level buttons*/
         for (i in 0 until numberOfLines) {
@@ -73,33 +90,54 @@ class CompanyLevelActivity : AppCompatActivity() {
                     buttonsArray.add(button)
                 }
             }
+            Log.e("TAG", "generateLevelButtons: ${buttonsArray.size}")
         }
 
-        /*onClickListener*/
-        val onLevelButtonClickListener = View.OnClickListener {
-            it as Button
-            /*by level number picking all values from DB*/
-            val levelNumber = it.text
-            val companyLevel = CompanyGame(1, Field(4, 4, 2), 2, 0, false)
+        setupOnClickListeners()
+    }
 
-            val myIntent = Intent(this, MinefieldActivity::class.java)
-            myIntent.putExtra(
-                Constant().EXTRA_GAME_MODE,
-                Constant().EXTRA_GAME_MODE_COMPANY
-            )
-            myIntent.putExtra(
-                GameConstant().EXTRA_GAME_OBJECT,
-                companyLevel
-            )
-            startActivity(myIntent)
+    private fun setupOnClickListeners() {
+        buttonsArray.forEach {
+            it.setOnClickListener(onLevelButtonClickListener)
+            Log.e("", "onCreate: calling setOnClickListener")
         }
-        buttonsArray.forEach { it.setOnClickListener(onLevelButtonClickListener) }
-
         btn_company_level_activity_back.setOnClickListener { finish() }
     }
 
+    private val onLevelButtonClickListener = View.OnClickListener {
+        it as Button
+        /*by level number picking all values from DB*/
+        val levelNumber = it.text.toString().toInt()
+        object : Thread() {
+            override fun run() {
+                super.run()
+                val db = Room.databaseBuilder(
+                    applicationContext,
+                    AppDatabase::class.java, "database-name"
+                ).build()
+                val dao = db.getCompanyGameDao()
+                val game = dao.get(levelNumber)
+
+                Log.e("TAG", "run: numberOfLevels:${game.unpack()}")
+                runOnUiThread { startGame(game.unpack()) }
+            }
+        }.start()
+    }
+
+    private fun startGame(companyLevel: CompanyGame) {
+        val myIntent = Intent(this, MinefieldActivity::class.java)
+        myIntent.putExtra(
+            Constant().EXTRA_GAME_MODE,
+            Constant().EXTRA_GAME_MODE_COMPANY
+        )
+        myIntent.putExtra(
+            GameConstant().EXTRA_GAME_OBJECT,
+            companyLevel
+        )
+        startActivity(myIntent)
+    }
+
     override fun onDestroy() {
-        db.close()
         super.onDestroy()
     }
 }
