@@ -1,8 +1,7 @@
 package com.example.sapper.db
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.sapper.entity.CompanyGameDB
+import com.example.sapper.constant.entity.CompanyGameDB
 
 @Dao
 interface CompanyGameDAO {

@@ -1,4 +1,4 @@
-package com.example.sapper.activity;
+package com.example.sapper.view.activity;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;

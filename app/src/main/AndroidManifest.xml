@@ -15,26 +15,26 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.MinefieldActivity.activity.MinefieldBTActivity"
-            android:parentActivityName=".activity.MainActivity" />
+            android:name="com.example.sapper.view.activity.MinefieldActivity.activity.MinefieldBTActivity"
+            android:parentActivityName="com.example.sapper.view.activity.MainActivity" />
         <activity
-            android:name=".activity.GameResultsActivity"
-            android:parentActivityName=".activity.MainActivity" />
-        <activity android:name=".activity.WaitingRoomActivity" />
+            android:name="com.example.sapper.view.activity.GameResultsActivity"
+            android:parentActivityName="com.example.sapper.view.activity.MainActivity" />
+        <activity android:name="com.example.sapper.view.activity.WaitingRoomActivity" />
         <activity
-            android:name=".activity.GameSettingsActivity"
-            android:parentActivityName=".activity.MainActivity"
+            android:name="com.example.sapper.view.activity.GameSettingsActivity"
+            android:parentActivityName="com.example.sapper.view.activity.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.CompanyLevelActivity"
-            android:parentActivityName=".activity.MainActivity"
+            android:name="com.example.sapper.view.activity.CompanyLevelActivity"
+            android:parentActivityName="com.example.sapper.view.activity.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.MinefieldActivity.activity.MinefieldActivity"
-            android:parentActivityName=".activity.MainActivity"
+            android:name="com.example.sapper.view.activity.MinefieldActivity.activity.MinefieldActivity"
+            android:parentActivityName="com.example.sapper.view.activity.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.MainActivity"
+            android:name="com.example.sapper.view.activity.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,8 +43,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.DeviceListActivity"
-            android:parentActivityName=".activity.MainActivity" />
+            android:name="com.example.sapper.view.activity.DeviceListActivity"
+            android:parentActivityName="com.example.sapper.view.activity.MainActivity" />
 
         <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
         <meta-data

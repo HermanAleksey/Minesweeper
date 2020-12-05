@@ -1,4 +1,4 @@
-package com.example.sapper.activity
+package com.example.sapper.view.activity
 
 import android.bluetooth.BluetoothAdapter
 import android.content.Context
@@ -8,18 +8,17 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.sapper.R
-import com.example.sapper.activity.MinefieldActivity.activity.MinefieldBTActivity
-import com.example.sapper.constant.BluetoothConstant
-import com.example.sapper.constant.Constant
+import com.example.sapper.view.activity.MinefieldActivity.activity.MinefieldBTActivity
+import com.example.sapper.model.constant.BluetoothConstant
+import com.example.sapper.model.constant.Constant
 import com.example.sapper.db.AppDatabase
-import com.example.sapper.entity.CompanyGame
-import com.example.sapper.entity.CompanyGameDB
-import com.example.sapper.entity.Field
+import com.example.sapper.constant.entity.CompanyGameDB
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
@@ -34,19 +33,20 @@ class MainActivity : AppCompatActivity() {
 
     private var mBluetoothAdapter: BluetoothAdapter? = null
 
+    lateinit var db: AppDatabase
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         /** filling DB with values**/
-        /*object : Thread() {
-            override fun run() {
-                super.run()
-                val db = Room.databaseBuilder(
+        val rdc: RoomDatabase.Callback = object : RoomDatabase.Callback() {
+            override fun onCreate(supportSQLiteDatabase: SupportSQLiteDatabase) {
+                val dao = Room.databaseBuilder(
                     applicationContext,
                     AppDatabase::class.java, "database-name"
-                ).build()
-                val dao = db.getCompanyGameDao()
+                ).build().getCompanyGameDao()
                 dao.deleteAll()
                 dao.insert(CompanyGameDB(1, 4, 4, 2, 10, 0, false))
                 dao.insert(CompanyGameDB(2, 4, 4, 3, 10, 0, false))
@@ -73,7 +73,15 @@ class MainActivity : AppCompatActivity() {
                 dao.insert(CompanyGameDB(20, 10, 10, 40, 6, 0, false))
                 dao.insert(CompanyGameDB(21, 10, 10, 40, 4, 0, false))
             }
-        }.start()*/
+
+            override fun onOpen(db: SupportSQLiteDatabase) {
+                // do something every time database is open
+            }
+        }
+        db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java, "database-name"
+        ).addCallback(rdc).build()
         /**-----------------------------**/
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
@@ -154,40 +162,6 @@ class MainActivity : AppCompatActivity() {
         val positiveButton: Button = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
         positiveButton.setTextColor(context.resources.getColor(R.color.colorPrimaryDark))
     }
-
-
-//    fun clickAll(view: View) {
-//        val db: SQLiteDatabase = baseContext.openOrCreateDatabase("app.db", MODE_PRIVATE, null)
-//        Log.e("TAG", "clickAll: ${DAOCompanyLevel(db).getAllCompanyLevels()}")
-//        db.close()
-//    }
-//
-//    fun clickRemove(view: View) {
-//        val db: SQLiteDatabase = baseContext.openOrCreateDatabase("app.db", MODE_PRIVATE, null)
-//        Log.e("TAG", "clickRemove: ${DAOCompanyLevel(db).removeAllCompanyLevels()}")
-//        db.close()
-//    }
-//    fun clickId(view: View) {
-//        val db: SQLiteDatabase = baseContext.openOrCreateDatabase("app.db", MODE_PRIVATE, null)
-//        val id = et_test.text.toString().toInt()
-//        Log.e("TAG", "clickId: ${DAOCompanyLevel(db).getCompanyLevelById(id)}")
-//        db.close()
-//    }
-//
-//    var id = 2
-//    fun clickAdd(view: View) {
-//        val db: SQLiteDatabase = baseContext.openOrCreateDatabase("app.db", MODE_PRIVATE, null)
-//        val obj = CompanyLevel(id,1,1,1,1,1,false)
-//        Log.e("TAG", "clickId: ${DAOCompanyLevel(db).insertCompanyLevel(obj)}")
-//        id++
-//        db.close()
-//    }
-//
-//    fun clickAmount(view: View) {
-//        val db: SQLiteDatabase = baseContext.openOrCreateDatabase("app.db", MODE_PRIVATE, null)
-//        Log.e("TAG", "clickAmount: ${DAOCompanyLevel(db).getTheNumberOfRecords()}")
-//        db.close()
-//    }
 
 }
 

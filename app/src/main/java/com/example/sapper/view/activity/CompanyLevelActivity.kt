@@ -1,9 +1,7 @@
-package com.example.sapper.activity
+package com.example.sapper.view.activity
 
 import android.content.Intent
-import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -11,13 +9,12 @@ import android.widget.Button
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
-import com.example.sapper.constant.Constant
+import com.example.sapper.model.constant.Constant
 import com.example.sapper.R
-import com.example.sapper.activity.MinefieldActivity.activity.MinefieldActivity
-import com.example.sapper.constant.GameConstant
+import com.example.sapper.view.activity.MinefieldActivity.activity.MinefieldActivity
+import com.example.sapper.model.constant.GameConstant
 import com.example.sapper.db.AppDatabase
-import com.example.sapper.entity.CompanyGame
-import com.example.sapper.entity.Field
+import com.example.sapper.constant.entity.CompanyGame
 import kotlinx.android.synthetic.main.activity_company_level.*
 
 class CompanyLevelActivity : AppCompatActivity() {
@@ -29,6 +26,8 @@ class CompanyLevelActivity : AppCompatActivity() {
         setContentView(R.layout.activity_company_level)
 
         /**----------------------------GENERATING NUM OF LEVELS--------------------------**/
+
+        //TODO("" 1 жизнь за рекламу)
 
         object : Thread() {
             override fun run() {

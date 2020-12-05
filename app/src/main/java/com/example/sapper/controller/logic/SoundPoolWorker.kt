@@ -1,4 +1,4 @@
-package com.example.sapper.logic
+package com.example.sapper.controller.logic
 
 import android.media.AudioAttributes
 import android.media.AudioManager

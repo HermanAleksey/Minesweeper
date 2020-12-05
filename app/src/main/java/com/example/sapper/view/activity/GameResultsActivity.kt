@@ -1,16 +1,14 @@
-package com.example.sapper.activity
+package com.example.sapper.view.activity
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NavUtils
-import androidx.room.Room
-import com.example.sapper.constant.GameConstant
+import com.example.sapper.model.constant.GameConstant
 import com.example.sapper.R
-import com.example.sapper.constant.Constant
-import com.example.sapper.db.AppDatabase
-import com.example.sapper.entity.Game
+import com.example.sapper.model.constant.Constant
+import com.example.sapper.constant.entity.Game
+import com.example.sapper.controller.logic.AsynсWorker
 import kotlinx.android.synthetic.main.activity_game_results.*
 
 
@@ -30,18 +28,8 @@ class GameResultsActivity : AppCompatActivity() {
             Constant().EXTRA_GAME_MODE_COMPANY -> {
                 //if level was passed (completed) - update DB
                 if (result) {
-                    object: Thread() {
-                        override fun run() {
-                            super.run()
-                            val db = Room.databaseBuilder(
-                                applicationContext,
-                                AppDatabase::class.java, "database-name"
-                            ).build()
-                            val dao = db.getCompanyGameDao()
-                            val completedLevel = intent.getIntExtra(GameConstant().EXTRA_GAME_ID,1)
-                            dao.setCompleted(completedLevel)
-                        }
-                    }.start()
+                    val completedLevel = intent.getIntExtra(GameConstant().EXTRA_GAME_ID,1)
+                    AsynсWorker().setLevelCompleted(this,completedLevel)
                 }
                 resources.getString(R.string.gameModeCompany)
             }

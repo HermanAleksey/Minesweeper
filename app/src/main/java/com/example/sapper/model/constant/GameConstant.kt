@@ -1,4 +1,4 @@
-package com.example.sapper.constant
+package com.example.sapper.model.constant
 
 class GameConstant {
     val EXTRA_HEIGHT: String = "com.example.sapper.height"

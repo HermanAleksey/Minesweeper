@@ -1,7 +1,4 @@
-package com.example.sapper.activity.MinefieldActivity
-
-import android.widget.Button
-import androidx.appcompat.app.AppCompatActivity
+package com.example.sapper.view.activity.MinefieldActivity
 
 interface IMinefieldActivity {
 

@@ -1,4 +1,4 @@
-package com.example.sapper.activity
+package com.example.sapper.view.activity
 
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
@@ -12,12 +12,11 @@ import android.os.Message
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
-import com.example.sapper.constant.Constant
-import com.example.sapper.constant.GameConstant
+import com.example.sapper.model.constant.Constant
+import com.example.sapper.model.constant.GameConstant
 import com.example.sapper.R
-import com.example.sapper.activity.MinefieldActivity.activity.MinefieldActivity
+import com.example.sapper.view.activity.MinefieldActivity.activity.MinefieldActivity
 import kotlinx.android.synthetic.main.activity_waiting_room.*
-import kotlinx.android.synthetic.main.activity_game_settings.*
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream

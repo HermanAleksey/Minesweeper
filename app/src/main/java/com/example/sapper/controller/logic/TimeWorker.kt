@@ -1,11 +1,10 @@
-package com.example.sapper.logic
+package com.example.sapper.controller.logic
 
 import android.os.CountDownTimer
 import android.os.Handler
 import android.os.SystemClock
 import android.widget.TextView
-import com.example.sapper.activity.MinefieldActivity.IMinefieldActivity
-import kotlinx.android.synthetic.main.activity_minefield.*
+import com.example.sapper.view.activity.MinefieldActivity.IMinefieldActivity
 
 class TimeWorker(private val interf: IMinefieldActivity, private val handler: Handler) {
 

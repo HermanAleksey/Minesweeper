@@ -1,6 +1,5 @@
-package com.example.sapper.logic;
+package com.example.sapper.controller.logic;
 
-import android.app.Application;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
@@ -12,7 +11,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.example.sapper.R;
-import com.example.sapper.constant.BluetoothConstant;
+import com.example.sapper.model.constant.BluetoothConstant;
 
 import java.io.IOException;
 import java.io.InputStream;

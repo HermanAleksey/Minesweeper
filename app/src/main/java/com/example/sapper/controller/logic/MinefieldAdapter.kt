@@ -1,4 +1,4 @@
-package com.example.sapper.logic
+package com.example.sapper.controller.logic
 
 import com.bsuir.saper.Saper
 import android.content.Context

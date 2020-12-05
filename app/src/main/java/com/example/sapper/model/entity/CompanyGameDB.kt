@@ -1,8 +1,7 @@
-package com.example.sapper.entity
+package com.example.sapper.constant.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.io.Serializable
 
 @Entity(tableName = "company_level")
 class CompanyGameDB(

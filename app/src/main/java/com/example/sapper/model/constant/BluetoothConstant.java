@@ -1,4 +1,4 @@
-package com.example.sapper.constant;
+package com.example.sapper.model.constant;
 
 public class BluetoothConstant {
     // Debugging

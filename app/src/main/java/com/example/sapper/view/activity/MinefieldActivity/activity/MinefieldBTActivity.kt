@@ -1,4 +1,4 @@
-package com.example.sapper.activity.MinefieldActivity.activity;
+package com.example.sapper.view.activity.MinefieldActivity.activity;
 
 import com.bsuir.saper.HostField
 import com.bsuir.saper.Saper
@@ -18,23 +18,22 @@ import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sapper.R
-import com.example.sapper.activity.DeviceListActivity
-import com.example.sapper.activity.GameResultsActivity
-import com.example.sapper.activity.MainActivity
-import com.example.sapper.activity.MainActivity.Companion.context
-import com.example.sapper.activity.MinefieldActivity.IMinefieldActivity
-import com.example.sapper.constant.BluetoothConstant
-import com.example.sapper.constant.Constant
-import com.example.sapper.constant.GameConstant
-import com.example.sapper.entity.BluetoothGame
-import com.example.sapper.entity.Field
-import com.example.sapper.entity.Game
-import com.example.sapper.logic.MinefieldAdapter
-import com.example.sapper.logic.MultiPlayerService
-import com.example.sapper.logic.SoundPoolWorker
-import com.example.sapper.logic.TimeWorker
+import com.example.sapper.view.activity.DeviceListActivity
+import com.example.sapper.view.activity.GameResultsActivity
+import com.example.sapper.view.activity.MainActivity
+import com.example.sapper.view.activity.MainActivity.Companion.context
+import com.example.sapper.view.activity.MinefieldActivity.IMinefieldActivity
+import com.example.sapper.model.constant.BluetoothConstant
+import com.example.sapper.model.constant.Constant
+import com.example.sapper.model.constant.GameConstant
+import com.example.sapper.constant.entity.BluetoothGame
+import com.example.sapper.constant.entity.Field
+import com.example.sapper.constant.entity.Game
+import com.example.sapper.controller.logic.MinefieldAdapter
+import com.example.sapper.controller.logic.MultiPlayerService
+import com.example.sapper.controller.logic.SoundPoolWorker
+import com.example.sapper.controller.logic.TimeWorker
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.activity_minefield.*
 import kotlinx.android.synthetic.main.activity_minefield_bt.*
 
 class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {

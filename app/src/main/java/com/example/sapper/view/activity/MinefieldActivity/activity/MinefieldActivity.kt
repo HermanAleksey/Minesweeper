@@ -1,4 +1,4 @@
-package com.example.sapper.activity.MinefieldActivity.activity
+package com.example.sapper.view.activity.MinefieldActivity.activity
 
 import com.bsuir.saper.HostField
 import com.bsuir.saper.Saper
@@ -12,18 +12,18 @@ import android.view.MenuItem
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.example.sapper.constant.GameConstant
-import com.example.sapper.logic.MinefieldAdapter
+import com.example.sapper.model.constant.GameConstant
+import com.example.sapper.controller.logic.MinefieldAdapter
 import com.example.sapper.R
-import com.example.sapper.activity.GameResultsActivity
-import com.example.sapper.activity.MinefieldActivity.IMinefieldActivity
-import com.example.sapper.constant.Constant
-import com.example.sapper.entity.CasualGame
-import com.example.sapper.entity.CompanyGame
-import com.example.sapper.entity.Field
-import com.example.sapper.entity.Game
-import com.example.sapper.logic.SoundPoolWorker
-import com.example.sapper.logic.TimeWorker
+import com.example.sapper.view.activity.GameResultsActivity
+import com.example.sapper.view.activity.MinefieldActivity.IMinefieldActivity
+import com.example.sapper.model.constant.Constant
+import com.example.sapper.constant.entity.CasualGame
+import com.example.sapper.constant.entity.CompanyGame
+import com.example.sapper.constant.entity.Field
+import com.example.sapper.constant.entity.Game
+import com.example.sapper.controller.logic.SoundPoolWorker
+import com.example.sapper.controller.logic.TimeWorker
 import kotlinx.android.synthetic.main.activity_minefield.*
 
 
