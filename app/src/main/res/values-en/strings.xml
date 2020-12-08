@@ -111,4 +111,30 @@
     <string name="selectDevice">Select device</string>
     <string name="noneFound">None devices was found</string>
 
+    //helper dialog
+    <string name="help_dialog_title">Help</string>
+    <string name="help_game_rules">game rules</string>
+    <string name="help_with_gameplay">gameplay</string>
+    <string name="help_game_modes">game modes</string>
+    <string name="help_bluetooth_game">bluetooh game</string>
+    <string name="description_game_rules">
+        Opening a cell - it may contain:\n 1) mine 2) number 3) nothing\n
+         1.If you open a cell with a mine, you lose; \ n
+         2.The number in the cell shows how many mines are hidden in the immediately adjacent cells; \ n
+         3.If there is nothing in an open cell, this is equivalent to zero minutes around this cell; \ n \ n
+
+        In order to complete the game you need: \ n
+         1.Open all cells, except those in which mines are located; \ n
+         2.All cells containing mines - mark with a flag.\n
+    </string>
+    <string name="description_game_process">
+
+    </string>
+    <string name="description_game_modes">
+
+    </string>
+    <string name="description_game_bluetooth">
+
+    </string>
+
 </resources>

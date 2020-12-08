@@ -20,6 +20,8 @@ import com.example.sapper.model.constant.BluetoothConstant
 import com.example.sapper.model.constant.Constant
 import com.example.sapper.db.AppDatabase
 import com.example.sapper.constant.entity.CompanyGameDB
+import com.example.sapper.dialog.DialogHelp
+import com.example.sapper.dialog.DialogSettingsSize
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
@@ -75,7 +77,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
         button_main_bluetooth_game_server.setOnClickListener {
             if (!mBluetoothAdapter!!.isEnabled) {
                 requestEnableBluetooth()
@@ -115,20 +116,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.item_toolbar_rules) {
-            showGameRulesAlertDialog(this)
+            showGameRulesAlertDialog()
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun showGameRulesAlertDialog(context: Context) {
-        val dialog = AlertDialog.Builder(context)
-            .setTitle(R.string.rules)
-            .setMessage("R.string.rules? IDK maybe info about game should be placed there ")
-            .setPositiveButton(R.string.understand, null)
-            .show()
-
-        val positiveButton: Button = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
-        positiveButton.setTextColor(context.resources.getColor(R.color.colorPrimaryDark))
+    private fun showGameRulesAlertDialog() {
+        val dialog = DialogHelp()
+        dialog.show(supportFragmentManager, Constant().HELPER_DIALOG)
     }
 
 }
