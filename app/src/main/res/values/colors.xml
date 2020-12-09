@@ -7,4 +7,14 @@
     <color name="colorAllLabels">#444</color>
     <color name="colorMainBackground">#DDDDDD</color>
     <color name="colorBlack">#000</color>
+
+<!--    colors for theme OLD-->
+    <color name="colorPrimary_old">#999FA9</color>
+    <color name="textColorPrimary_old">#999FA9</color>
+    <color name="colorPrimaryDark_old">#363E43</color>
+    <color name="navigationBarColor_old">#363E43</color>
+
+    <color name="colorButtonLabel_old">#444</color>
+    //game settings
+    <color name="colorSettingsLabel_old">#222</color>
 </resources>

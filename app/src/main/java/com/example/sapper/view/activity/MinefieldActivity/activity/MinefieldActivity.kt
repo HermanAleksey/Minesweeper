@@ -24,6 +24,7 @@ import com.example.sapper.constant.entity.Field
 import com.example.sapper.constant.entity.Game
 import com.example.sapper.controller.logic.SoundPoolWorker
 import com.example.sapper.controller.logic.TimeWorker
+import com.example.sapper.view.Utils
 import kotlinx.android.synthetic.main.activity_minefield.*
 
 
@@ -52,6 +53,7 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Utils.onActivityCreateSetTheme(this)
         setContentView(R.layout.activity_minefield)
         /*sound pool settings for diff versions*/
         soundPoolWorker = SoundPoolWorker()

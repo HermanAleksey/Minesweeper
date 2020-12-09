@@ -12,11 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="20dp"
-        android:fontFamily="@font/art_modern_ap"
-        android:textSize="36sp"
-        android:text="@string/company"
-        android:textColor="#000" />
+        style="?label_company_levels"
+        android:text="@string/company" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,9 +42,7 @@
             android:layout_gravity="center|end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/StyleMenuButtonFormat"
-            android:padding="16dp"
-            android:background="@drawable/my_main_button"
+            style="?button_main_menu"
             android:text="@string/cancel"/>
 
     </LinearLayout>

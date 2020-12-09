@@ -80,7 +80,7 @@
     </style>
 
 
-    /**-------------------------------------------------------------------------------------------------------------------**/
+    /**------------------------------------------------OLD---------------------------------------------------**/
     //Main activity  OLD
     <style name="background_page_old">
         <item name="android:background">@color/colorMainBackground</item>
@@ -97,7 +97,91 @@
     <style name="button_main_menu_old">
         <item name="android:background">@drawable/my_main_button</item>
         <item name="android:layout_margin">8dp</item>
+        <item name="android:fontFamily">@font/inverserif_regular</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/colorButtonLabel_old</item>
+        <item name="android:layout_gravity">center</item>
     </style>
+
+    //Company levels
+    <style name="company_label_company_levels">
+        <item name="fontFamily">@font/art_modern_ap</item>
+        <item name="android:textSize">@dimen/company_label_text_size</item>
+        <item name="android:layout_margin">@dimen/company_label_margin</item>
+        <item name="android:textColor">@color/colorBlack</item>
+    </style>
+
+    //Game settings
+    <style name="main_label_game_settings">
+        <item name="android:paddingTop">@dimen/game_settings_label_padding_top</item>
+        <item name="android:fontFamily">@font/inverserif_regular</item>
+        <item name="android:textColor">@color/colorSettingsLabel_old</item>
+        <item name="android:textSize">@dimen/game_settings_label_text_size</item>
+    </style>
+    <style name="main_line_game_settings">
+        <item name="android:background">@drawable/big_line_1</item>
+    </style>
+    <style name="secondary_line_game_settings">
+        <item name="android:background">@drawable/small_line_1</item>
+    </style>
+    <style name="setting_description_game_settings">
+        @style/StyleSettingsText
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">@color/colorSettingsLabel_old</item>
+        <item name="fontFamily">@font/times_new_roman</item>
+        <item name="android:textSize">@dimen/game_settings_description_text_size</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="checkbox_game_settings">
+        <item name="android:button">@drawable/my_checkbox</item>
+    </style>
+
+    //Result activity
+    <style name="game_result_border">
+        <item name="android:background">@drawable/background_border_1</item>
+    </style>
+    <style name="text_result_game_result">
+        <item name="android:fontFamily">@font/art_modern_ap</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textSize">@dimen/result_activity_label_text_size</item>
+    </style>
+    <style name="game_info_game_result">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">@color/colorButtonLabel_old</item>
+        <item name="fontFamily">@font/inverserif_regular</item>
+        <item name="android:textSize">@dimen/result_activity_description_text_size</item>
+    </style>
+
+    //Minefield activity
+    <style name="minefield_description_label">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">@color/colorButtonLabel_old</item>
+        <item name="fontFamily">@font/inverserif_regular</item>
+        <item name="android:textSize">@dimen/minefield_description_text_size</item>
+    </style>
+    <style name="minefield_time_label">
+        <item name="android:fontFamily">@font/rectangle_numbers</item>
+        <item name="android:textSize">@dimen/minefield_time_text_size</item>
+        <item name="android:textColor">@color/colorBlack</item>
+    </style>
+    <style name="minefield_vertical_separator">
+        <item name="android:background">@drawable/vertical_gradient_line</item>
+    </style>
+    <style name="minefield_toggle_button">
+        <item name="android:layout_margin">@dimen/minefield_toggle_button_margin</item>
+        <item name="android:background">@drawable/my_tooggle_button</item>
+        <item name="android:textOff">""</item>
+        <item name="android:textOn">""</item>
+    </style>
+
+
+
+
+
+
+
+
+
 
     //Main activity  MATERIAL
     <style name="background_page_material">

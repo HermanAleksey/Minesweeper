@@ -40,19 +40,18 @@
             android:id="@+id/button_main_bluetooth_game_client"
             android:layout_width="210dp"
             android:layout_height="wrap_content"
-            android:text="BT_GAME_CLIENT"
+            android:text="BT_CLIENT"
             style="?attr/button_main_menu" />
 
         <Button
             android:id="@+id/button_main_bluetooth_game_server"
             android:layout_width="210dp"
             android:layout_height="wrap_content"
-            android:text="BT_GAME_SERVER"
+            android:text="BT_SERVER"
             style="?attr/button_main_menu" />
 
         <Spinner
             android:id="@+id/spThemes"
-            style="?spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:entries="@array/theme_array"

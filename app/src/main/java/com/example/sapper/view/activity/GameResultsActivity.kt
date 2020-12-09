@@ -9,6 +9,7 @@ import com.example.sapper.R
 import com.example.sapper.model.constant.Constant
 import com.example.sapper.constant.entity.Game
 import com.example.sapper.controller.logic.AsynсWorker
+import com.example.sapper.view.Utils
 import kotlinx.android.synthetic.main.activity_game_results.*
 
 
@@ -16,6 +17,7 @@ class GameResultsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Utils.onActivityCreateSetTheme(this)
         setContentView(R.layout.activity_game_results)
 
         val result = intent.getBooleanExtra(GameConstant().GAME_RESULT, true)

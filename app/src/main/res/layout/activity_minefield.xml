@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="?background_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorMainBackground"
     android:orientation="vertical"
     tools:context=".view.activity.MinefieldActivity.activity.MinefieldActivity">
 
@@ -17,15 +17,15 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="vertical">
 
             <TextView
-                style="@style/StyleMenuButtonFormat"
+                style="?minefield_description_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/field_size"
-                android:textSize="20sp" />
+                android:text="@string/field_size" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -34,31 +34,29 @@
 
                 <TextView
                     android:id="@+id/tv_minefield_field_width"
-                    style="@style/StyleMenuButtonFormat"
+                    style="?minefield_description_label"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="w" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
-                    style="@style/StyleMenuButtonFormat"
+                    style="?minefield_description_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="*" />
 
                 <TextView
                     android:id="@+id/tv_minefield_field_height"
-                    style="@style/StyleMenuButtonFormat"
+                    style="?minefield_description_label"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="h" />
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
+            style="?minefield_vertical_separator"
             android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/vertical_gradient_line" />
+            android:layout_height="match_parent" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -67,42 +65,34 @@
 
             <TextView
                 android:id="@+id/tv_minefield_minutes"
+                style="?minefield_time_label"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:fontFamily="@font/rectangle_numbers"
-                android:gravity="right"
-                android:text="min"
-                android:textColor="@color/colorBlack"
-                android:textSize="26sp" />
+                android:gravity="right" />
 
             <TextView
+                style="?minefield_time_label"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:fontFamily="@font/rectangle_numbers"
                 android:gravity="center"
-                android:text=":"
-                android:textColor="@color/colorBlack"
-                android:textSize="35sp" />
+                android:text=":" />
 
             <TextView
                 android:id="@+id/tv_minefield_seconds"
+                style="?minefield_time_label"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:fontFamily="@font/rectangle_numbers"
-                android:gravity="left"
-                android:text="sec"
-                android:textColor="@color/colorBlack"
-                android:textSize="26sp" />
+                android:gravity="left" />
         </LinearLayout>
 
         <LinearLayout
+            style="?minefield_vertical_separator"
             android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/vertical_gradient_line" />
+            android:layout_height="match_parent" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -112,20 +102,18 @@
             android:orientation="vertical">
 
             <TextView
-                style="@style/StyleMenuButtonFormat"
+                style="?minefield_description_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/mines"
-                android:textSize="20sp" />
+                android:text="@string/mines" />
 
             <TextView
                 android:id="@+id/tv_minefield_mines"
-                style="@style/StyleMenuButtonFormat"
+                style="?minefield_description_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="mines left" />
+                android:layout_gravity="center" />
 
         </LinearLayout>
 
@@ -135,15 +123,15 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="10"
-        android:background="@drawable/minefield_background_border"
+        android:background="@color/colorPrimary"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
-            android:isScrollContainer="true"
             android:gravity="center"
+            android:isScrollContainer="true"
             android:orientation="vertical">
 
             <ScrollView
@@ -180,13 +168,12 @@
             android:orientation="vertical">
 
             <TextView
-                style="@style/StyleMenuButtonFormat"
+                style="?minefield_description_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingVertical="5dp"
-                android:text="@string/chooseCellSize"
-                android:textSize="20sp" />
+                android:text="@string/chooseCellSize" />
 
             <SeekBar
                 android:id="@+id/seek_bar_minefield_cell_size"
@@ -197,12 +184,9 @@
 
         <ToggleButton
             android:id="@+id/togglebutton_minefield_flag"
+            style="?minefield_toggle_button"
             android:layout_width="61dp"
-            android:layout_height="63dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/my_tooggle_button"
-            android:textOff=""
-            android:textOn="" />
+            android:layout_height="63dp" />
 
     </LinearLayout>
 

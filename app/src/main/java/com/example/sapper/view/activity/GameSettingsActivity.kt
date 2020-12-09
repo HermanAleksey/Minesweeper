@@ -21,6 +21,7 @@ import com.example.sapper.model.constant.BluetoothConstant
 import com.example.sapper.dialog.DialogSettingMinesCount
 import com.example.sapper.dialog.DialogSettingsSize
 import com.example.sapper.constant.entity.*
+import com.example.sapper.view.Utils
 import kotlinx.android.synthetic.main.activity_game_settings.*
 
 
@@ -33,6 +34,7 @@ class GameSettingsActivity : AppCompatActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Utils.onActivityCreateSetTheme(this)
         setContentView(R.layout.activity_game_settings)
 
         np_game_settings_minutes.minValue = 0

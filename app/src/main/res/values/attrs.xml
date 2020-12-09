@@ -5,13 +5,23 @@
     <attr name="background_layout" format="reference" />
     <attr name="game_label_main_menu" format="reference" />
     <attr name="button_main_menu" format="reference" />
+    //company levels activity
+    <attr name="label_company_levels" format="reference" />
+    //game settings activity
+    <attr name="label_game_settings" format="reference"/>
+    <attr name="main_line_game_settings" format="reference"/>
+    <attr name="secondary_line_game_settings" format="reference"/>
+    <attr name="setting_description_game_settings" format="reference"/>
+    <attr name="checkbox_game_settings" format="reference"/>
+    //game result activity
+    <attr name="game_result_border" format="reference"/>
+    <attr name="text_result_game_result" format="reference"/>
+    <attr name="game_info_game_result" format="reference"/>
+    //minefield activity
+    <attr name="minefield_description_label" format="reference"/>
+    <attr name="minefield_time_label" format="reference"/>
+    <attr name="minefield_vertical_separator" format="reference"/>
+    <attr name="minefield_toggle_button" format="reference"/>
 
-    //
-    <attr name="textSubheader" format="reference" />
-    <attr name="textLarge" format="reference" />
-    <attr name="textRegular" format="reference" />
-    <attr name="whiteBackground" format="reference" />
-    <attr name="button" format="reference" />
-    <attr name="spinner" format="reference" />
 
 </resources>

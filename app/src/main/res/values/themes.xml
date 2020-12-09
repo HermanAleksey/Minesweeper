@@ -1,12 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-
     <style name="Theme.OldMode" parent="Theme.AppCompat.Light">
+
+        <item name="colorPrimary">@color/colorPrimary_old</item>                           тулбар
+        <item name="android:textColorPrimary">@color/textColorPrimary_old</item>           текст тулбара
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_old</item>                   шторка
+        <item name="android:navigationBarColor">@color/navigationBarColor_old</item>       кнопки снизу
+
         //main activity
         <item name="background_layout">@style/background_page_old</item>
         <item name="game_label_main_menu">@style/game_label_main_menu_old</item>
         <item name="button_main_menu">@style/button_main_menu_old</item>
+        //company level activity
+        <item name="label_company_levels">@style/company_label_company_levels</item>
+        //game settings activity
+        <item name="label_game_settings">@style/main_label_game_settings</item>
+        <item name="main_line_game_settings">@style/main_line_game_settings</item>
+        <item name="secondary_line_game_settings">@style/secondary_line_game_settings</item>
+        <item name="setting_description_game_settings">@style/setting_description_game_settings</item>
+        <item name="checkbox_game_settings">@style/checkbox_game_settings</item>
+        //result activity
+        <item name="game_result_border">@style/game_result_border</item>
+        <item name="text_result_game_result">@style/text_result_game_result</item>
+        <item name="game_info_game_result">@style/game_info_game_result</item>
+        //minefield activity
+        <item name="minefield_description_label">@style/minefield_description_label</item>
+        <item name="minefield_time_label">@style/minefield_time_label</item>
+        <item name="minefield_vertical_separator">@style/minefield_vertical_separator</item>
+        <item name="minefield_toggle_button">@style/minefield_toggle_button</item>
     </style>
 
     <style name="Theme.Material" parent="Theme.AppCompat.Light">

@@ -4,16 +4,20 @@
     <dimen name="main_label_text_size">36sp</dimen>
     <dimen name="main_label_padding_top">52dp</dimen>
     <dimen name="main_label_padding_bottom">120dp</dimen>
+    //company levels
+    <dimen name="company_label_margin">20dp</dimen>
+    <dimen name="company_label_text_size">36sp</dimen>
+    //game settings
+    <dimen name="game_settings_label_padding_top">20dp</dimen>
+    <dimen name="game_settings_label_text_size">20dp</dimen>
+    <dimen name="game_settings_description_text_size">18dp</dimen>
+    //result activity
+    <dimen name="result_activity_description_text_size">20dp</dimen>
+    <dimen name="result_activity_label_text_size">46dp</dimen>
+    //minefield activity
+    <dimen name="minefield_description_text_size">20dp</dimen>
+    <dimen name="minefield_toggle_button_margin">10dp</dimen>
+    <dimen name="minefield_time_text_size">26dp</dimen>
 
 
-    <dimen name="content_left_margin_wh">8sp</dimen>
-    <dimen name="text_large_margin_top">40dp</dimen>
-    <dimen name="text_large_text_size">18sp</dimen>
-    <dimen name="text_subheader_text_size">16sp</dimen>
-    <dimen name="text_regular_text_size">15sp</dimen>
-    <dimen name="view_margin">20dp</dimen>
-    <dimen name="white_background_padding">20dp</dimen>
-    <dimen name="edittext_margin_top">10dp</dimen>
-    <dimen name="spinner_margin_left">10dp</dimen>
-    <dimen name="card_margin_top">40dp</dimen>
 </resources>
