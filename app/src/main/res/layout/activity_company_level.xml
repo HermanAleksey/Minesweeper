@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        style="?label_company_levels"
+        style="?attr/main_label"
         android:text="@string/company" />
 
     <LinearLayout
@@ -42,7 +42,7 @@
             android:layout_gravity="center|end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="?button_main_menu"
+            style="?attr/main_button"
             android:text="@string/cancel"/>
 
     </LinearLayout>

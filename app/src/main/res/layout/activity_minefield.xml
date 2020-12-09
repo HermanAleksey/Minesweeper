@@ -21,7 +21,7 @@
             android:orientation="vertical">
 
             <TextView
-                style="?minefield_description_label"
+                style="?casual_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -34,19 +34,19 @@
 
                 <TextView
                     android:id="@+id/tv_minefield_field_width"
-                    style="?minefield_description_label"
+                    style="?casual_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    style="?minefield_description_label"
+                    style="?casual_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="*" />
 
                 <TextView
                     android:id="@+id/tv_minefield_field_height"
-                    style="?minefield_description_label"
+                    style="?casual_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -54,7 +54,7 @@
         </LinearLayout>
 
         <LinearLayout
-            style="?minefield_vertical_separator"
+            style="?attr/secondary_vertical_line"
             android:layout_width="2dp"
             android:layout_height="match_parent" />
 
@@ -90,7 +90,7 @@
         </LinearLayout>
 
         <LinearLayout
-            style="?minefield_vertical_separator"
+            style="?attr/secondary_vertical_line"
             android:layout_width="2dp"
             android:layout_height="match_parent" />
 
@@ -102,7 +102,7 @@
             android:orientation="vertical">
 
             <TextView
-                style="?minefield_description_label"
+                style="?casual_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -110,7 +110,7 @@
 
             <TextView
                 android:id="@+id/tv_minefield_mines"
-                style="?minefield_description_label"
+                style="?casual_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center" />
@@ -168,7 +168,7 @@
             android:orientation="vertical">
 
             <TextView
-                style="?minefield_description_label"
+                style="?casual_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"

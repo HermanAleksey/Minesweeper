@@ -39,21 +39,21 @@
             android:layout_gravity="center">
 
             <TextView
-                style="?game_info_game_result"
+                style="?attr/casual_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/game_mode" />
 
             <TextView
-                style="?game_info_game_result"
+                style="?attr/casual_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" " />
 
             <TextView
                 android:id="@+id/tv_game_result_game_mode"
-                style="?game_info_game_result"
+                style="?attr/casual_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -65,14 +65,14 @@
             android:layout_gravity="center">
 
             <TextView
-                style="?game_info_game_result"
+                style="?attr/casual_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/minefieldSize" />
 
             <TextView
-                style="?game_info_game_result"
+                style="?attr/casual_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -80,13 +80,13 @@
 
             <TextView
                 android:id="@+id/tv_game_result_height"
-                style="?game_info_game_result"
+                style="?attr/casual_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center" />
 
             <TextView
-                style="?game_info_game_result"
+                style="?attr/casual_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -94,7 +94,7 @@
 
             <TextView
                 android:id="@+id/tv_game_result_width"
-                style="?game_info_game_result"
+                style="?attr/casual_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center" />
@@ -106,14 +106,14 @@
             android:layout_gravity="center">
 
             <TextView
-                style="?game_info_game_result"
+                style="?attr/casual_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/minesCount" />
 
             <TextView
-                style="?game_info_game_result"
+                style="?attr/casual_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -121,7 +121,7 @@
 
             <TextView
                 android:id="@+id/tv_game_result_mines_count"
-                style="?game_info_game_result"
+                style="?attr/casual_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center" />
@@ -140,14 +140,14 @@
             android:layout_gravity="center">
 
             <TextView
-                style="?game_info_game_result"
+                style="?attr/casual_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/completion_time" />
 
             <TextView
-                style="?game_info_game_result"
+                style="?attr/casual_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -155,13 +155,13 @@
 
             <TextView
                 android:id="@+id/tv_game_result_minutes"
-                style="?game_info_game_result"
+                style="?attr/casual_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center" />
 
             <TextView
-                style="?game_info_game_result"
+                style="?attr/casual_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -169,7 +169,7 @@
 
             <TextView
                 android:id="@+id/tv_game_result_seconds"
-                style="?game_info_game_result"
+                style="?attr/casual_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center" />
@@ -187,7 +187,7 @@
 
         <Button
             android:id="@+id/btn_game_result_confirm"
-            style="?button_main_menu"
+            style="?attr/main_button"
             android:layout_width="250dp"
             android:layout_height="70dp"
             android:onClick="onConfirmButtonClick"

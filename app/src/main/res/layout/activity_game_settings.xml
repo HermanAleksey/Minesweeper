@@ -11,12 +11,12 @@
         android:fontFamily="@font/inverserif_regular"
         android:gravity="center|bottom"
         android:text="@string/fieldSizeOptions"
-        style="?label_game_settings"/>
+        style="?main_label"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        style="?main_line_game_settings" />
+        style="?attr/strong_line_separator" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -32,9 +32,10 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    style="?setting_description_game_settings"
+                    style="?attr/casual_description"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:gravity="center"
                     android:text="@string/heightAndWidth" />
             </LinearLayout>
 
@@ -52,7 +53,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                style="?secondary_line_game_settings"
+                style="?attr/secondary_horizontal_line"
                 />
 
             <LinearLayout
@@ -60,7 +61,8 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    style="?setting_description_game_settings"
+                    style="?attr/casual_description"
+                    android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="@string/minesCount" />
@@ -80,14 +82,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                style="?secondary_line_game_settings" />
+                style="?attr/secondary_horizontal_line" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
-                    style="?setting_description_game_settings"
+                    style="?attr/casual_description"
+                    android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="@string/timeLimit" />
@@ -114,7 +117,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                style="?secondary_line_game_settings" />
+                style="?attr/secondary_horizontal_line" />
 
             <LinearLayout
                 android:id="@+id/ll_game_settings_first_click_mine"
@@ -128,7 +131,8 @@
                     android:gravity="center">
 
                     <TextView
-                        style="?setting_description_game_settings"
+                        style="?attr/casual_description"
+                        android:gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="@string/firstClickCanBeOnAMine" />
@@ -144,7 +148,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    style="?secondary_line_game_settings" />
+                    style="?attr/secondary_horizontal_line" />
             </LinearLayout>
 
 
@@ -160,7 +164,8 @@
                     android:gravity="center">
 
                     <TextView
-                        style="?setting_description_game_settings"
+                        style="?attr/casual_description"
+                        android:gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="@string/useTheSameField" />
@@ -176,12 +181,12 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    style="?secondary_line_game_settings"  />
+                    style="?attr/secondary_horizontal_line"  />
             </LinearLayout>
 
             <Button
                 android:id="@+id/btn_game_settings_create_game"
-                style="?button_main_menu"
+                style="?attr/main_button"
                 android:layout_width="220dp"
                 android:layout_height="wrap_content"
                 android:text="@string/createGame" />

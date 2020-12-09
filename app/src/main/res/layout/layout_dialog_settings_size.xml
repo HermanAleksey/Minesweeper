@@ -6,15 +6,14 @@
     android:background="@color/colorMainBackground">
 
     <TextView
-        style="@style/StyleGameSettingsToggleButtonFormat"
+        style="?main_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/dialogGameSettingsSizeTitle"
-        android:textSize="24sp" />
+        android:text="@string/dialogGameSettingsSizeTitle" />
 
     <TextView
-        style="@style/StyleGameSettingsToggleButtonFormat"
+        style="?casual_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="20dp"
@@ -39,17 +38,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/inputWidthValue"
-            style="@style/StyleGameSettingsToggleButtonFormat"
-            />
+            style="?casual_description"            />
 
         <EditText
             android:id="@+id/edittext_settings_dialog_width"
             android:inputType="numberSigned"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            style="@style/StyleGameSettingsToggleButtonFormat"
-            android:layout_marginStart="10dp"
-            />
+            style="?casual_description"
+            android:layout_marginStart="10dp"            />
 
     </LinearLayout>
 
@@ -63,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/inputHeightValue"
-            style="@style/StyleGameSettingsToggleButtonFormat"
+            style="?casual_description"
             />
 
         <EditText
@@ -71,16 +68,15 @@
             android:inputType="numberSigned"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            style="@style/StyleGameSettingsToggleButtonFormat"
-            android:layout_marginStart="10dp"
-            />
+            style="?casual_description"
+            android:layout_marginStart="10dp"            />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:padding="20dp">
 
         <Button
             android:id="@+id/button_setting_size_fragment_cancel"
@@ -88,8 +84,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/cancel"
-            android:paddingVertical="20dp"
-            style="@style/StyleMenuButtonFormat"/>
+            android:paddingVertical="13dp"
+            style="?main_button"/>
 
         <Button
             android:id="@+id/button_setting_size_fragment_accept"
@@ -97,8 +93,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/confirm"
-            android:paddingVertical="20dp"
-            style="@style/StyleMenuButtonFormat"/>
+            android:paddingVertical="13dp"
+            style="?main_button"/>
 
     </LinearLayout>
 

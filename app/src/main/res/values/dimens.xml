@@ -18,6 +18,10 @@
     <dimen name="minefield_description_text_size">20dp</dimen>
     <dimen name="minefield_toggle_button_margin">10dp</dimen>
     <dimen name="minefield_time_text_size">26dp</dimen>
+    //helper dialog
+    <dimen name="helper_dialog_label_text_size">36sp</dimen>
+    <dimen name="helper_dialog_label_margin">20dp</dimen>
+    <dimen name="helper_dialog_button_margin">10dp</dimen>
 
 
 </resources>

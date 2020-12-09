@@ -8,33 +8,32 @@
         <item name="android:navigationBarColor">@color/navigationBarColor_old</item>       кнопки снизу
 
         //main activity
-        <item name="background_layout">@style/background_page_old</item>
-        <item name="game_label_main_menu">@style/game_label_main_menu_old</item>
-        <item name="button_main_menu">@style/button_main_menu_old</item>
+        <item name="background_layout">@style/background_layout_old</item>
+        <item name="game_label">@style/game_label_old</item>
+        <item name="main_button">@style/main_button_old</item>
         //company level activity
-        <item name="label_company_levels">@style/company_label_company_levels</item>
+        <item name="main_label">@style/main_label_old</item>
         //game settings activity
-        <item name="label_game_settings">@style/main_label_game_settings</item>
-        <item name="main_line_game_settings">@style/main_line_game_settings</item>
-        <item name="secondary_line_game_settings">@style/secondary_line_game_settings</item>
-        <item name="setting_description_game_settings">@style/setting_description_game_settings</item>
-        <item name="checkbox_game_settings">@style/checkbox_game_settings</item>
+        <item name="strong_line_separator">@style/strong_line_separator_old</item>
+        <item name="secondary_horizontal_line">@style/secondary_horizontal_line_old</item>
+        <item name="checkbox_game_settings">@style/checkbox_game_settings_old</item>
         //result activity
-        <item name="game_result_border">@style/game_result_border</item>
-        <item name="text_result_game_result">@style/text_result_game_result</item>
-        <item name="game_info_game_result">@style/game_info_game_result</item>
+        <item name="game_result_border">@style/game_result_border_old</item>
+        <item name="text_result_game_result">@style/text_result_game_result_old</item>
+        <item name="casual_description">@style/casual_description_old</item>
         //minefield activity
-        <item name="minefield_description_label">@style/minefield_description_label</item>
-        <item name="minefield_time_label">@style/minefield_time_label</item>
-        <item name="minefield_vertical_separator">@style/minefield_vertical_separator</item>
-        <item name="minefield_toggle_button">@style/minefield_toggle_button</item>
+        <item name="minefield_time_label">@style/minefield_time_label_old</item>
+        <item name="secondary_vertical_line">@style/secondary_vertical_line_old</item>
+        <item name="minefield_toggle_button">@style/minefield_toggle_button_old</item>
+        //helper dialog
+        <item name="helper_dialog_text">@style/helper_dialog_text_old</item>
     </style>
 
     <style name="Theme.Material" parent="Theme.AppCompat.Light">
         //main activity
         <item name="background_layout">@style/background_page_material</item>
-        <item name="game_label_main_menu">@style/game_label_main_menu_material</item>
-        <item name="button_main_menu">@style/button_main_menu_material</item>
+        <item name="game_label">@style/game_label_main_menu_material</item>
+        <item name="main_button">@style/button_main_menu_material</item>
     </style>
 
 </resources>

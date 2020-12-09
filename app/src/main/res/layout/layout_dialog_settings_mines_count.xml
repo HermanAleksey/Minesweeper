@@ -6,15 +6,14 @@
     android:background="@color/colorMainBackground">
 
     <TextView
-        style="@style/StyleGameSettingsToggleButtonFormat"
+        style="?attr/main_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/dialogGameSettingsMinesCountTitle"
-        android:textSize="24sp" />
+        android:text="@string/dialogGameSettingsMinesCountTitle" />
 
     <TextView
-        style="@style/StyleGameSettingsToggleButtonFormat"
+        style="?casual_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="20dp"
@@ -33,15 +32,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/inputMinesCountValue"
-            style="@style/StyleGameSettingsToggleButtonFormat"
-            />
+            style="?casual_description" />
 
         <EditText
             android:id="@+id/edittext_settings_dialog_mines_count"
             android:inputType="numberSigned"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            style="@style/StyleGameSettingsToggleButtonFormat"
+            style="?casual_description"
             android:layout_marginStart="10dp"
             />
 
@@ -57,8 +55,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/cancel"
-            android:paddingVertical="20dp"
-            style="@style/StyleMenuButtonFormat"/>
+            android:layout_margin="20dp"
+            style="?attr/main_button"/>
 
         <Button
             android:id="@+id/button_setting_mines_count_fragment_accept"
@@ -66,8 +64,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/confirm"
-            android:paddingVertical="20dp"
-            style="@style/StyleMenuButtonFormat"/>
+            android:layout_margin="20dp"
+            style="?attr/main_button"/>
 
     </LinearLayout>
 

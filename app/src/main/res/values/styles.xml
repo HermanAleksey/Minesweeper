@@ -7,86 +7,15 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="MyCheckBoxStyle" parent="Theme.AppCompat">
-        <item name="colorPrimary">@color/colorBlack</item>
-        <item name="colorPrimaryDark">@color/colorBlack</item>
-        <item name="colorAccent">@color/colorBlack</item>
-    </style>
-
-    <style name="StyleMenuButtonFormat">
-        <item name="android:textAllCaps">false</item>
-        <item name="android:layout_gravity">center</item>
-        <item name="android:textColor">#444</item>
-        <item name="fontFamily">@font/inverserif_regular</item>
-        <item name="android:textSize">26sp</item>
-    </style>
-
-    <style name="StyleMenuButtonFormatHDPI">
-        <item name="android:textAllCaps">false</item>
-        <item name="android:layout_gravity">center</item>
-        <item name="android:textColor">#444</item>
-        <item name="fontFamily">@font/inverserif_regular</item>
-        <item name="android:textSize">20sp</item>
-    </style>
-
-    <style name="StyleSettingsText">
-        <item name="android:layout_gravity">center</item>
-        <item name="android:textColor">#222</item>
-        <item name="fontFamily">@font/times_new_roman</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:gravity">center</item>
-    </style>
-
-    <style name="StyleSettingsTextXHDPI">
-        <item name="android:layout_gravity">center</item>
-        <item name="android:textColor">#222</item>
-        <item name="fontFamily">@font/times_new_roman</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:gravity">center</item>
-    </style>
-
-    <style name="StyleGameSettingsToggleButtonFormat">
-        <item name="android:textAllCaps">false</item>
-        <item name="android:layout_gravity">center</item>
-        <item name="android:textColor">#444</item>
-        <item name="fontFamily">@font/inverserif_regular</item>
-        <item name="android:textSize">20sp</item>
-    </style>
-
-    <style name="StyleGameResultGameDescriptionXXHDPI">
-        <item name="android:textAllCaps">false</item>
-        <item name="android:layout_gravity">center</item>
-        <item name="android:textColor">#444</item>
-        <item name="fontFamily">@font/inverserif_regular</item>
-        <item name="android:textSize">19sp</item>
-    </style>
-
-    <style name="StyleGameResultGameDescriptionXHDPI">
-        <item name="android:textAllCaps">false</item>
-        <item name="android:layout_gravity">center</item>
-        <item name="android:textColor">#444</item>
-        <item name="fontFamily">@font/inverserif_regular</item>
-        <item name="android:textSize">18sp</item>
-    </style>
-
-    <style name="StyleAllMachineText16sp">
-        <item name="android:textColor">@color/colorPrimaryDark</item>
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="StyleCheckboxColorBlack" parent="Theme.AppCompat.Light">
-<!--        <item name="colorControlNormal">@android:color/holo_green_light</item>-->
-        <item name="colorControlActivated">@android:color/black</item>
-    </style>
-
 
     /**------------------------------------------------OLD---------------------------------------------------**/
-    //Main activity  OLD
-    <style name="background_page_old">
+    //Main activity OLD
+
+    <style name="background_layout_old">
         <item name="android:background">@color/colorMainBackground</item>
     </style>
 
-    <style name="game_label_main_menu_old">
+    <style name="game_label_old">
         <item name="fontFamily">@font/bungee_shade_regular</item>
         <item name="android:textSize">@dimen/main_label_text_size</item>
         <item name="android:paddingTop">@dimen/main_label_padding_top</item>
@@ -94,7 +23,7 @@
         <item name="android:paddingBottom">@dimen/main_label_padding_bottom</item>
     </style>
 
-    <style name="button_main_menu_old">
+    <style name="main_button_old">
         <item name="android:background">@drawable/my_main_button</item>
         <item name="android:layout_margin">8dp</item>
         <item name="android:fontFamily">@font/inverserif_regular</item>
@@ -104,7 +33,8 @@
     </style>
 
     //Company levels
-    <style name="company_label_company_levels">
+
+    <style name="main_label_old">
         <item name="fontFamily">@font/art_modern_ap</item>
         <item name="android:textSize">@dimen/company_label_text_size</item>
         <item name="android:layout_margin">@dimen/company_label_margin</item>
@@ -112,40 +42,32 @@
     </style>
 
     //Game settings
-    <style name="main_label_game_settings">
-        <item name="android:paddingTop">@dimen/game_settings_label_padding_top</item>
-        <item name="android:fontFamily">@font/inverserif_regular</item>
-        <item name="android:textColor">@color/colorSettingsLabel_old</item>
-        <item name="android:textSize">@dimen/game_settings_label_text_size</item>
-    </style>
-    <style name="main_line_game_settings">
+
+    <style name="strong_line_separator_old">
         <item name="android:background">@drawable/big_line_1</item>
     </style>
-    <style name="secondary_line_game_settings">
+
+    <style name="secondary_horizontal_line_old">
         <item name="android:background">@drawable/small_line_1</item>
     </style>
-    <style name="setting_description_game_settings">
-        @style/StyleSettingsText
-        <item name="android:layout_gravity">center</item>
-        <item name="android:textColor">@color/colorSettingsLabel_old</item>
-        <item name="fontFamily">@font/times_new_roman</item>
-        <item name="android:textSize">@dimen/game_settings_description_text_size</item>
-        <item name="android:gravity">center</item>
-    </style>
-    <style name="checkbox_game_settings">
+
+    <style name="checkbox_game_settings_old">
         <item name="android:button">@drawable/my_checkbox</item>
     </style>
 
     //Result activity
-    <style name="game_result_border">
+
+    <style name="game_result_border_old">
         <item name="android:background">@drawable/background_border_1</item>
     </style>
-    <style name="text_result_game_result">
+
+    <style name="text_result_game_result_old">
         <item name="android:fontFamily">@font/art_modern_ap</item>
         <item name="android:textColor">@color/colorBlack</item>
         <item name="android:textSize">@dimen/result_activity_label_text_size</item>
     </style>
-    <style name="game_info_game_result">
+
+    <style name="casual_description_old">
         <item name="android:layout_gravity">center</item>
         <item name="android:textColor">@color/colorButtonLabel_old</item>
         <item name="fontFamily">@font/inverserif_regular</item>
@@ -153,37 +75,38 @@
     </style>
 
     //Minefield activity
-    <style name="minefield_description_label">
-        <item name="android:layout_gravity">center</item>
-        <item name="android:textColor">@color/colorButtonLabel_old</item>
-        <item name="fontFamily">@font/inverserif_regular</item>
-        <item name="android:textSize">@dimen/minefield_description_text_size</item>
-    </style>
-    <style name="minefield_time_label">
+
+    <style name="minefield_time_label_old">
         <item name="android:fontFamily">@font/rectangle_numbers</item>
         <item name="android:textSize">@dimen/minefield_time_text_size</item>
         <item name="android:textColor">@color/colorBlack</item>
     </style>
-    <style name="minefield_vertical_separator">
+
+    <style name="secondary_vertical_line_old">
         <item name="android:background">@drawable/vertical_gradient_line</item>
     </style>
-    <style name="minefield_toggle_button">
+
+    <style name="minefield_toggle_button_old">
         <item name="android:layout_margin">@dimen/minefield_toggle_button_margin</item>
         <item name="android:background">@drawable/my_tooggle_button</item>
         <item name="android:textOff">""</item>
         <item name="android:textOn">""</item>
     </style>
 
+    //helper dialog
+
+    <style name="helper_dialog_label">
+        <item name="android:textSize">@dimen/helper_dialog_label_text_size</item>
+        <item name="android:layout_margin">@dimen/helper_dialog_label_margin</item>
+        <item name="android:textColor">#444</item>
+        <item name="fontFamily">@font/inverserif_regular</item>
+    </style>
+
+    <style name="helper_dialog_text_old"></style>
 
 
+    //Main activity MATERIAL
 
-
-
-
-
-
-
-    //Main activity  MATERIAL
     <style name="background_page_material">
         <item name="android:background">#a00</item>
     </style>

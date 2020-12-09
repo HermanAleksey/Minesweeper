@@ -2,26 +2,25 @@
 <resources>
 
     //main activity
-    <attr name="background_layout" format="reference" />
-    <attr name="game_label_main_menu" format="reference" />
-    <attr name="button_main_menu" format="reference" />
-    //company levels activity
-    <attr name="label_company_levels" format="reference" />
-    //game settings activity
-    <attr name="label_game_settings" format="reference"/>
-    <attr name="main_line_game_settings" format="reference"/>
-    <attr name="secondary_line_game_settings" format="reference"/>
-    <attr name="setting_description_game_settings" format="reference"/>
-    <attr name="checkbox_game_settings" format="reference"/>
+    <attr name="background_layout" format="reference" />// задний фон
+    <attr name="game_label" format="reference" />//         название игры
+    <attr name="main_button" format="reference" />//   основной стиль кнопок
+    <attr name="main_label" format="reference" />//        основная подпись экрана
+    //game settings
+    <attr name="strong_line_separator" format="reference"/>//  Сильная подводящая черта
+    <attr name="secondary_horizontal_line" format="reference"/>//    вторичная горизонтальная черта
+    <attr name="secondary_vertical_line" format="reference"/>//    вертикальная черта
+    <attr name="checkbox_game_settings" format="reference"/>//           чекбокс
     //game result activity
-    <attr name="game_result_border" format="reference"/>
-    <attr name="text_result_game_result" format="reference"/>
-    <attr name="game_info_game_result" format="reference"/>
+    <attr name="game_result_border" format="reference"/>//                рамка окончания игры
+    <attr name="text_result_game_result" format="reference"/>//           надпись завершения игры
+    <attr name="casual_description" format="reference"/>         // обычные надписи/пояснения
     //minefield activity
-    <attr name="minefield_description_label" format="reference"/>
-    <attr name="minefield_time_label" format="reference"/>
-    <attr name="minefield_vertical_separator" format="reference"/>
-    <attr name="minefield_toggle_button" format="reference"/>
+    <attr name="minefield_time_label" format="reference"/>//          подпись времени игры
+
+    <attr name="minefield_toggle_button" format="reference"/>//         тугл кнопка выбора инструмента
+    //helper dialog
+    <attr name="helper_dialog_text" format="reference"/>//         текст подсказок
 
 
 </resources>
