@@ -15,6 +15,8 @@ import com.example.sapper.view.activity.MinefieldActivity.activity.MinefieldActi
 import com.example.sapper.model.constant.GameConstant
 import com.example.sapper.db.AppDatabase
 import com.example.sapper.constant.entity.CompanyGame
+import com.example.sapper.model.ThemeApplication
+import com.example.sapper.view.Utils
 import kotlinx.android.synthetic.main.activity_company_level.*
 
 class CompanyLevelActivity : AppCompatActivity() {
@@ -23,6 +25,10 @@ class CompanyLevelActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        /*theme processing*/
+        Utils.onActivityCreateSetTheme(this)
+
         setContentView(R.layout.activity_company_level)
 
         /**----------------------------GENERATING NUM OF LEVELS--------------------------**/

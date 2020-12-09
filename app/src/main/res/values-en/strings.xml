@@ -137,4 +137,12 @@
 
     </string>
 
+
+    //Themes
+    <string-array name="theme_array">
+        <item>None</item>
+        <item>Old</item>
+        <item>Material</item>
+    </string-array>
+
 </resources>

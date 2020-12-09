@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <style name="Theme.OldMode" parent="Theme.AppCompat.Light">
+        //main activity
+        <item name="background_layout">@style/background_page_old</item>
+        <item name="game_label_main_menu">@style/game_label_main_menu_old</item>
+        <item name="button_main_menu">@style/button_main_menu_old</item>
+    </style>
+
+    <style name="Theme.Material" parent="Theme.AppCompat.Light">
+        //main activity
+        <item name="background_layout">@style/background_page_material</item>
+        <item name="game_label_main_menu">@style/game_label_main_menu_material</item>
+        <item name="button_main_menu">@style/button_main_menu_material</item>
+    </style>
+
+</resources>

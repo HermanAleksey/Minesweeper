@@ -175,4 +175,13 @@
         Игра продолжается до тех пор, пока хотя бы один из игроков не проиграет,
         либо до победы хотя бы одного из игроков.\n
     </string>
+
+
+
+    //Themes
+    <string-array name="theme_array">
+        <item>None</item>
+        <item>Old</item>
+        <item>Material</item>
+    </string-array>
 </resources>

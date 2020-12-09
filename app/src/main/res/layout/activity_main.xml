@@ -7,11 +7,11 @@
     tools:context=".view.activity.MainActivity"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="@color/colorMainBackground">
+    style="?attr/background_layout">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:orientation="vertical"
         android:layout_weight="1">
 
@@ -19,48 +19,44 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="@font/bungee_shade_regular"
-            android:textSize="36sp"
-            android:text="@string/app_name"
-            android:paddingTop="52dp"
-            android:textColor="#000"
-            android:paddingBottom="120dp"/>
+            style="?attr/game_label_main_menu"
+            android:text="@string/app_name" />
 
         <Button
             android:id="@+id/button_main_company"
             android:layout_width="210dp"
             android:layout_height="wrap_content"
             android:text="@string/company"
-            style="@style/StyleMenuButtonFormat"
-            android:background="@drawable/my_main_button"
-            android:layout_margin="8dp"/>
+            style="?attr/button_main_menu" />
 
         <Button
             android:id="@+id/button_main_custom_game"
             android:layout_width="210dp"
             android:layout_height="wrap_content"
             android:text="@string/singleplayer"
-            style="@style/StyleMenuButtonFormat"
-            android:background="@drawable/my_main_button"
-            android:layout_margin="8dp"/>
+            style="?attr/button_main_menu" />
 
         <Button
             android:id="@+id/button_main_bluetooth_game_client"
             android:layout_width="210dp"
             android:layout_height="wrap_content"
             android:text="BT_GAME_CLIENT"
-            style="@style/StyleMenuButtonFormat"
-            android:background="@drawable/my_main_button"
-            android:layout_margin="8dp"/>
+            style="?attr/button_main_menu" />
 
         <Button
             android:id="@+id/button_main_bluetooth_game_server"
             android:layout_width="210dp"
             android:layout_height="wrap_content"
             android:text="BT_GAME_SERVER"
-            style="@style/StyleMenuButtonFormat"
-            android:background="@drawable/my_main_button"
-            android:layout_margin="8dp"/>
+            style="?attr/button_main_menu" />
+
+        <Spinner
+            android:id="@+id/spThemes"
+            style="?spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/theme_array"
+            android:spinnerMode="dropdown" />
     </LinearLayout>
 
     <com.google.android.gms.ads.AdView
@@ -68,8 +64,6 @@
         android:id="@+id/adView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
         ads:adSize="BANNER"
         ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
     </com.google.android.gms.ads.AdView>

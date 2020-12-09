@@ -3,30 +3,27 @@ package com.example.sapper.view.activity
 import android.bluetooth.BluetoothAdapter
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
-import androidx.appcompat.app.AlertDialog
+import android.view.View
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
-import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.sapper.R
-import com.example.sapper.view.activity.MinefieldActivity.activity.MinefieldBTActivity
+import com.example.sapper.db.AppDatabase
+import com.example.sapper.dialog.DialogHelp
+import com.example.sapper.model.ThemeApplication
 import com.example.sapper.model.constant.BluetoothConstant
 import com.example.sapper.model.constant.Constant
-import com.example.sapper.db.AppDatabase
-import com.example.sapper.constant.entity.CompanyGameDB
-import com.example.sapper.dialog.DialogHelp
-import com.example.sapper.dialog.DialogSettingsSize
+import com.example.sapper.view.Utils
+import com.example.sapper.view.activity.MinefieldActivity.activity.MinefieldBTActivity
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import kotlinx.android.synthetic.main.activity_main.*
-import java.lang.Exception
 
 
 class MainActivity : AppCompatActivity() {
@@ -39,18 +36,25 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        /*theme processing*/
+        val sharedPreferences = getSharedPreferences(Constant().APP_PREFERENCES_THEME, MODE_PRIVATE)
+        ThemeApplication.currentPosition = sharedPreferences.getInt(Constant().CURRENT_THEME, 0)
+        Utils.onActivityCreateSetTheme(this)
+
         setContentView(R.layout.activity_main)
+        setupSpinnerItemSelection()
 
 
         /** filling DB with values**/
-        val newDB = getPreferences(MODE_PRIVATE).getBoolean("NEW_DB",true)
+        val newDB = getPreferences(MODE_PRIVATE).getBoolean("NEW_DB", true)
         val db = AppDatabase.getDatabase(this)
-        if (newDB == true) Thread {
+        if (newDB) Thread {
             try {
                 db.callOnCreateDatabase(this)
                 getPreferences(MODE_PRIVATE).edit().putBoolean("NEW_DB", false)
             } catch (e: Exception) {
-                Log.e("TAG", "onCreate: Error on initial filling DB" )
+                Log.e("TAG", "onCreate: Error on initial filling DB")
             }
         }.start()
         /**-----------------------------**/
@@ -124,6 +128,36 @@ class MainActivity : AppCompatActivity() {
     private fun showGameRulesAlertDialog() {
         val dialog = DialogHelp()
         dialog.show(supportFragmentManager, Constant().HELPER_DIALOG)
+    }
+
+
+    private lateinit var spThemes: Spinner
+    private fun setupSpinnerItemSelection() {
+        spThemes = findViewById<View>(R.id.spThemes) as Spinner
+        spThemes.setSelection(ThemeApplication.currentPosition)
+        ThemeApplication.currentPosition = spThemes.selectedItemPosition
+        spThemes.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onItemSelected(
+                adapterView: AdapterView<*>?, view: View,
+                i: Int, l: Long
+            ) {
+                if (ThemeApplication.currentPosition != i) {
+                    saveCurrentTheme(i)
+                    Utils.applySelectedTheme(this@MainActivity)
+                }
+                ThemeApplication.currentPosition = i
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+    }
+
+    private fun saveCurrentTheme(pos: Int) {
+        val sharedPreferences = getSharedPreferences(
+            Constant().APP_PREFERENCES_THEME,
+            MODE_PRIVATE
+        )
+        sharedPreferences.edit().putInt(Constant().CURRENT_THEME, pos).apply()
     }
 
 }

@@ -79,4 +79,41 @@
         <item name="colorControlActivated">@android:color/black</item>
     </style>
 
+
+    /**-------------------------------------------------------------------------------------------------------------------**/
+    //Main activity  OLD
+    <style name="background_page_old">
+        <item name="android:background">@color/colorMainBackground</item>
+    </style>
+
+    <style name="game_label_main_menu_old">
+        <item name="fontFamily">@font/bungee_shade_regular</item>
+        <item name="android:textSize">@dimen/main_label_text_size</item>
+        <item name="android:paddingTop">@dimen/main_label_padding_top</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:paddingBottom">@dimen/main_label_padding_bottom</item>
+    </style>
+
+    <style name="button_main_menu_old">
+        <item name="android:background">@drawable/my_main_button</item>
+        <item name="android:layout_margin">8dp</item>
+    </style>
+
+    //Main activity  MATERIAL
+    <style name="background_page_material">
+        <item name="android:background">#a00</item>
+    </style>
+
+    <style name="game_label_main_menu_material">
+        <item name="fontFamily">@font/bungee_shade_regular</item>
+        <item name="android:textSize">@dimen/main_label_text_size</item>
+        <item name="android:paddingTop">@dimen/main_label_padding_top</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:paddingBottom">@dimen/main_label_padding_bottom</item>
+    </style>
+
+    <style name="button_main_menu_material">
+        <item name="android:background">@drawable/my_main_button</item>
+        <item name="android:layout_margin">8dp</item>
+    </style>
 </resources>

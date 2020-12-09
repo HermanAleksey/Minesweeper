@@ -19,4 +19,7 @@ class Constant {
     val REQUEST_ENABLE_BLUETOOTH: Int = 10001
 
     val CELL_SIZE = "com.example.sapper.view.activity.activity_minefield.cell_size"
+
+    val CURRENT_THEME = "com.example.sapper.view.currentTheme"
+    val APP_PREFERENCES_THEME = "com.example.sapper.APP_PREFERENCES_THEME"
 }
