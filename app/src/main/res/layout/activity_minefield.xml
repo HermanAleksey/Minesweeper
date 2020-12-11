@@ -123,7 +123,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="10"
-        android:background="@color/colorPrimary"
         android:orientation="vertical">
 
         <LinearLayout
@@ -137,7 +136,7 @@
             <ScrollView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/colorMainBackground"
+                android:background="@color/colorMainBackground_old"
                 android:scrollbars="horizontal|vertical">
 
                 <HorizontalScrollView
@@ -146,6 +145,7 @@
                     android:scrollbars="vertical">
 
                     <LinearLayout
+                        style="?minefield_filed_background"
                         android:id="@+id/linear_layout_minefield"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -177,6 +177,7 @@
 
             <SeekBar
                 android:id="@+id/seek_bar_minefield_cell_size"
+                style="?seekBar_cell_size"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

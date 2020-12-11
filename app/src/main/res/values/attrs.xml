@@ -17,7 +17,8 @@
     <attr name="casual_description" format="reference"/>         // обычные надписи/пояснения
     //minefield activity
     <attr name="minefield_time_label" format="reference"/>//          подпись времени игры
-
+    <attr name="minefield_filed_background" format="reference" />     зданий план поля, заполненного ячейками
+    <attr name="seekBar_cell_size" format="reference" />                  Сик бар размера ячейки
     <attr name="minefield_toggle_button" format="reference"/>//         тугл кнопка выбора инструмента
     //helper dialog
     <attr name="helper_dialog_text" format="reference"/>//         текст подсказок

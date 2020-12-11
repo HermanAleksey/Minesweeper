@@ -9,6 +9,14 @@ import com.example.sapper.R
 
 class MinefieldAdapter {
 
+    fun setMinefieldUnclickable(arrayButtonsField: Array<Array<Button>>) {
+        arrayButtonsField.forEach { buttonsArray ->
+            buttonsArray.forEach { button ->
+                button.isClickable = false
+            }
+        }
+    }
+
     /*Установка видимого минного поля в соответствии с переданным массивом*/
     fun setupMinefield(
         minefield: Array<Array<Char>>,
@@ -17,7 +25,7 @@ class MinefieldAdapter {
         for (x in minefield.indices) {
             for (y in minefield[x].indices) {
                 if (minefield[x][y].isDigit()) {
-                    when (minefield[x][y]){
+                    when (minefield[x][y]) {
                         '0' -> {
                             arrayButtonsField[x][y].text = "0"
                             arrayButtonsField[x][y].setBackgroundResource(R.drawable.number_0)

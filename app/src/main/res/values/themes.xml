@@ -25,15 +25,69 @@
         <item name="minefield_time_label">@style/minefield_time_label_old</item>
         <item name="secondary_vertical_line">@style/secondary_vertical_line_old</item>
         <item name="minefield_toggle_button">@style/minefield_toggle_button_old</item>
+        <item name="minefield_filed_background">@style/minefield_filed_background_old</item>
+        <item name="seekBar_cell_size">@style/seekBar_cell_size_old</item>
         //helper dialog
         <item name="helper_dialog_text">@style/helper_dialog_text_old</item>
     </style>
 
     <style name="Theme.Material" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/colorPrimary_material_1</item>                           тулбар
+        <item name="android:textColorPrimary">@color/textColorPrimary_material_1</item>           текст тулбара
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_material_1</item>                   шторка
+        <item name="android:navigationBarColor">@color/navigationBarColor_material_1</item>       кнопки снизу
+
         //main activity
-        <item name="background_layout">@style/background_page_material</item>
-        <item name="game_label">@style/game_label_main_menu_material</item>
-        <item name="main_button">@style/button_main_menu_material</item>
+        <item name="background_layout">@style/background_layout_material_1</item>
+        <item name="game_label">@style/game_label_material_1</item>
+        <item name="main_button">@style/main_button_material_1</item>
+        //company level activity
+        <item name="main_label">@style/main_label_material_1</item>
+        //game settings activity
+        <item name="strong_line_separator">@style/strong_line_separator_material_1</item>
+        <item name="secondary_horizontal_line">@style/secondary_horizontal_line_material_1</item>
+        <item name="checkbox_game_settings">@style/checkbox_game_settings_material_1</item>
+        //result activity
+        <item name="game_result_border">@style/game_result_border_material_1</item>
+        <item name="text_result_game_result">@style/text_result_game_result_material_1</item>
+        <item name="casual_description">@style/casual_description_material_1</item>
+        //minefield activity
+        <item name="minefield_time_label">@style/minefield_time_label_material_1</item>
+        <item name="secondary_vertical_line">@style/secondary_vertical_line_material_1</item>
+        <item name="minefield_toggle_button">@style/minefield_toggle_button_material_1</item>
+        <item name="minefield_filed_background">@style/minefield_filed_background_material_1</item>
+        <item name="seekBar_cell_size">@style/seekBar_cell_size_material_1</item>
+        //helper dialog
+        <item name="helper_dialog_text">@style/helper_dialog_text_material_1</item>
+    </style>
+
+    <style name="Theme.CustomColorized" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/colorPrimary_custom_colorized</item>                           тулбар
+        <item name="android:textColorPrimary">@color/textColorPrimary_custom_colorized</item>           текст тулбара
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_custom_colorized</item>                   шторка
+        <item name="android:navigationBarColor">@color/navigationBarColor_custom_colorized</item>       кнопки снизу
+
+        //main activity
+        <item name="background_layout">@style/background_layout_custom_colorized</item>
+        <item name="game_label">@style/game_label_custom_colorized</item>
+        <item name="main_button">@style/main_button_custom_colorized</item>
+        //company level activity
+        <item name="main_label">@style/main_label_custom_colorized</item>
+        //game settings activity
+        <item name="strong_line_separator">@style/strong_line_separator_custom_colorized</item>
+        <item name="secondary_horizontal_line">@style/secondary_horizontal_line_custom_colorized</item>
+        <item name="checkbox_game_settings">@style/checkbox_game_settings_custom_colorized</item>
+        //result activity
+        <item name="game_result_border">@style/game_result_border_custom_colorized</item>
+        <item name="text_result_game_result">@style/text_result_game_result_custom_colorized</item>
+        <item name="casual_description">@style/casual_description_custom_colorized</item>
+        //minefield activity
+        <item name="minefield_time_label">@style/minefield_time_label_custom_colorized</item>
+        <item name="secondary_vertical_line">@style/secondary_vertical_line_custom_colorized</item>
+        <item name="minefield_toggle_button">@style/minefield_toggle_button_custom_colorized</item>
+        <item name="minefield_filed_background">@style/minefield_filed_background_custom_colorized</item>
+        //helper dialog
+        <item name="helper_dialog_text">@style/helper_dialog_text_custom_colorized</item>
     </style>
 
 </resources>

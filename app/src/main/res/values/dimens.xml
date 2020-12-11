@@ -24,4 +24,8 @@
     <dimen name="helper_dialog_button_margin">10dp</dimen>
 
 
+    //Material
+    <dimen name="buttons_layout_margin">8dp</dimen>
+    <dimen name="main_label_padding">15dp</dimen>
+
 </resources>

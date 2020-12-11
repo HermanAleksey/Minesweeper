@@ -48,6 +48,9 @@ dependencies {
     //Text view
     implementation 'me.biubiubiu.justifytext:library:1.1'
 
+    //material
+    implementation 'com.google.android.material:material:1.2.1'
+
 //    // Kotlin components
 //    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 //    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.coroutines"
