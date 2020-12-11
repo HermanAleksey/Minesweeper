@@ -194,13 +194,13 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
                         soundPoolWorker.playSound(soundPool, soundTap)
                         val keepGame = Saper().openCoordinate(x, y, hostField.content, userField)
                         if (!keepGame) {
-                            performEndEvents(false)
+                            performEndEvents(false, arrayButtonsField)
                         } else {
                             /*если не проиграл - проверить, возможно теперь условия выполняются.*/
                             /*т.к. openCoordinate возвращает false только если проиграл и не отличает
                             * продолжение игры от победы*/
                             if (Saper().checkWinCondition(hostField.content, userField)) {
-                                performEndEvents(true)
+                                performEndEvents(true, arrayButtonsField)
                             }
                         }
                         MinefieldAdapter().setupMinefield(userField, arrayButtonsField)
@@ -211,7 +211,7 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
                         val win = Saper().useFlagOnSpot(x, y, hostField.content, userField)
                         MinefieldAdapter().setupMinefield(userField, arrayButtonsField)
                         if (win) {
-                            performEndEvents(true)
+                            performEndEvents(true, arrayButtonsField)
                         }
                     }
                 }
@@ -269,9 +269,10 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
         tv_bt_minefield_mines.text = minesCount.toString()
     }
 
-    private fun performEndEvents(result: Boolean) {
+    private fun performEndEvents(result: Boolean,arrayButtonsField: Array<Array<Button>>) {
         val sound = if (result) soundWin else soundExplosion
         soundPoolWorker.playSound(soundPool, sound)
+        MinefieldAdapter().setMinefieldUnclickable(arrayButtonsField)
         ll_bt_minefield_minefield_layout.postDelayed({
             intentToResultActivity(result)
             timeWorker.stopCountDownTimer(countDownTimer)
@@ -492,7 +493,7 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
                                 Toast.LENGTH_SHORT
                             ).show()
                             disconnectBluetooth()
-                            performEndEvents(false)
+                            performEndEvents(false, arrayButtonsField)
                         }
                         /**-----------Если пришло сообщение "Win" ------------------*/
                         readMessage == "Win" -> {
@@ -502,7 +503,7 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
                                 Toast.LENGTH_SHORT
                             ).show()
                             disconnectBluetooth()
-                            performEndEvents(true)
+                            performEndEvents(true, arrayButtonsField)
                         }
                         else -> {
                             textViewAppend("Incoming message:\n\"$readMessage\"\ncan't be processed")

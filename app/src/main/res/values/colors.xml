@@ -39,5 +39,6 @@
     <color name="navigationBarColor_custom_colorized">#222</color>
 
     <color name="colorMainBackground_custom_colorized">#6fa49e</color>
+    <color name="buttonsBackground_custom_colorized">#9b999a</color>
 
 </resources>

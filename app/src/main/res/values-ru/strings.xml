@@ -183,5 +183,6 @@
         <item>None</item>
         <item>Old</item>
         <item>Material</item>
+        <item>Colorized</item>
     </string-array>
 </resources>

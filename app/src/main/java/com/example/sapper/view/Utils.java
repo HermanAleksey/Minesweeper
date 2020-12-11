@@ -12,6 +12,7 @@ public class Utils {
     public final static int THEME_NONE = 0;
     public final static int THEME_OLD = 1;
     public final static int THEME_MATERIAL = 2;
+    public final static int THEME_COLORIZED = 3;
 
     public static void applySelectedTheme(Activity activity) {
         activity.finish();
@@ -31,6 +32,9 @@ public class Utils {
                 break;
             case THEME_MATERIAL:
                 activity.setTheme(R.style.Theme_Material);
+                break;
+            case THEME_COLORIZED:
+                activity.setTheme(R.style.Theme_CustomColorized);
                 break;
         }
     }

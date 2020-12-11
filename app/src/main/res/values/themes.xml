@@ -88,6 +88,10 @@
         <item name="minefield_filed_background">@style/minefield_filed_background_custom_colorized</item>
         //helper dialog
         <item name="helper_dialog_text">@style/helper_dialog_text_custom_colorized</item>
+
+
+        <item name="background_image_main">@style/background_image_main_custom_colorized</item>
+        <item name="company_bg">@style/company_bg_custom_colorized</item>
     </style>
 
 </resources>

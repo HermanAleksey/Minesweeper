@@ -208,21 +208,25 @@
         <item name="android:background">@color/colorMainBackground_custom_colorized</item>
     </style>
 
+    <style name="background_image_main_custom_colorized">
+        <item name="android:background">@drawable/mainactivity_background</item>
+    </style>
+
     <style name="game_label_custom_colorized">
-        <item name="fontFamily">@font/roboto</item>
-        <item name="android:background">@drawable/background_card_view</item>
-        <item name="android:textSize">@dimen/main_label_text_size</item>
+        <item name="fontFamily">@font/baskerville_regular</item>
+        <item name="android:textSize">0sp</item>
         <item name="android:layout_marginTop">@dimen/main_label_padding_top</item>
-        <item name="android:padding">@dimen/main_label_padding</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textColor">@color/navigationBarColor_custom_colorized</item>
         <item name="android:layout_marginBottom">@dimen/main_label_padding_bottom</item>
+        <item name="android:paddingTop">10dp</item>
     </style>
 
     <style name="main_button_custom_colorized">
-        <item name="android:backgroundTint">@color/colorPrimary_material_1</item>
+        <item name="android:backgroundTint">@color/buttonsBackground_custom_colorized</item>
+        <item name="android:drawableLeft">@drawable/mine_32</item>
         <item name="android:layout_margin">@dimen/buttons_layout_margin</item>
-        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:fontFamily">@font/secondary_font_colorized</item>
         <item name="android:textSize">24sp</item>
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:layout_gravity">center</item>
@@ -231,21 +235,23 @@
     //Company levels
 
     <style name="main_label_custom_colorized">
-        <item name="fontFamily">@font/roboto</item>
+        <item name="android:fontFamily">@font/secondary_font_colorized</item>
         <item name="android:textSize">@dimen/company_label_text_size</item>
         <item name="android:layout_margin">@dimen/company_label_margin</item>
         <item name="android:textColor">@color/colorBlack</item>
     </style>
 
+    <style name="company_bg_custom_colorized">
+        <item name="android:background">@drawable/back_without_hint</item>
+    </style>
+
     //Result activity
 
     <style name="game_result_border_custom_colorized">
-        <item name="android:background">@drawable/background_card_view</item>
-        <item name="android:layout_margin">40dp</item>
     </style>
 
     <style name="text_result_game_result_custom_colorized">
-        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:fontFamily">@font/secondary_font_colorized</item>
         <item name="android:textColor">@color/colorBlack</item>
         <item name="android:textSize">@dimen/result_activity_label_text_size</item>
     </style>
@@ -253,7 +259,7 @@
     <style name="casual_description_custom_colorized">
         <item name="android:layout_gravity">center</item>
         <item name="android:textColor">@color/colorButtonLabel_old</item>
-        <item name="fontFamily">@font/roboto</item>
+        <item name="fontFamily">@font/secondary_font_colorized</item>
         <item name="android:textSize">@dimen/result_activity_description_text_size</item>
     </style>
 
@@ -266,7 +272,7 @@
     </style>
 
     <style name="checkbox_game_settings_custom_colorized">
-        <item name="buttonTint">@color/colorOrange</item>
+        <item name="buttonTint">@color/colorPrimaryDark</item>
     </style>
 
     //Minefield activity
@@ -278,7 +284,6 @@
     </style>
 
     <style name="secondary_vertical_line_custom_colorized">
-        <item name="android:background">@drawable/vertical_gradient_line</item>
     </style>
 
     <style name="minefield_toggle_button_custom_colorized">
