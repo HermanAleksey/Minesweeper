@@ -45,6 +45,7 @@ class DialogSettingMinesCount : DialogFragment() {
         }
 
         buttonCancel.setOnClickListener {
+            listener.sendMinesCount(8)
             dismiss()
         }
 

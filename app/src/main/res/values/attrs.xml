@@ -24,6 +24,7 @@
     <attr name="helper_dialog_text" format="reference"/>//         текст подсказок
     <attr name="background_image_main" format="reference" />
     <attr name="company_bg" format="reference" />
+    <attr name="company_level_buttons" format="reference"/>
 
 
 </resources>

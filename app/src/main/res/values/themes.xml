@@ -29,6 +29,7 @@
         <item name="seekBar_cell_size">@style/seekBar_cell_size_old</item>
         //helper dialog
         <item name="helper_dialog_text">@style/helper_dialog_text_old</item>
+        <item name="company_level_buttons">@style/company_level_buttons_old</item>
     </style>
 
     <style name="Theme.Material" parent="Theme.AppCompat.Light">
@@ -59,6 +60,7 @@
         <item name="seekBar_cell_size">@style/seekBar_cell_size_material_1</item>
         //helper dialog
         <item name="helper_dialog_text">@style/helper_dialog_text_material_1</item>
+        <item name="company_level_buttons">@style/company_level_buttons_material_1</item>
     </style>
 
     <style name="Theme.CustomColorized" parent="Theme.AppCompat.Light">
@@ -92,6 +94,7 @@
 
         <item name="background_image_main">@style/background_image_main_custom_colorized</item>
         <item name="company_bg">@style/company_bg_custom_colorized</item>
+        <item name="company_level_buttons">@style/company_level_buttons_custom_colorized</item>
     </style>
 
 </resources>

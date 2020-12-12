@@ -41,6 +41,7 @@ class DialogSettingsSize : DialogFragment() {
         }
 
         buttonCancel.setOnClickListener {
+            listener.sendSizeParams(8,8)
             dismiss()
         }
 

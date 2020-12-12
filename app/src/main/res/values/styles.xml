@@ -102,6 +102,12 @@
     </style>
 
     <style name="helper_dialog_text_old"></style>
+    <style name="company_level_buttons_old">
+        <item name="android:background">@drawable/company_level_buttons_bg</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">2dp</item>
+        <item name="android:textColor">@color/colorBlack</item>
+    </style>
 
 
 
@@ -196,6 +202,12 @@
     </style>
     <style name="seekBar_cell_size_material_1">
         <item name="android:colorAccent">@color/colorOrange</item>
+    </style>
+    <style name="company_level_buttons_material_1" parent="Widget.AppCompat.Button">
+        <item name="android:backgroundTint">@color/colorPrimary_material_1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">2dp</item>
+        <item name="android:textColor">@color/colorWhite</item>
     </style>
 
     <style name="helper_dialog_text_material_1"></style>
@@ -301,4 +313,11 @@
     </style>
 
     <style name="helper_dialog_text_custom_colorized"></style>
+
+    <style name="company_level_buttons_custom_colorized" parent="Widget.AppCompat.Button">
+        <item name="android:backgroundTint">@color/colorOrange</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">2dp</item>
+        <item name="android:textColor">@color/colorPrimaryDark_custom_colorized</item>
+    </style>
 </resources>

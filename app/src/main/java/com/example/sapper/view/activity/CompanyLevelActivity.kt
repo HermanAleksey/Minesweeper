@@ -1,6 +1,7 @@
 package com.example.sapper.view.activity
 
 import android.content.Intent
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -56,14 +57,15 @@ class CompanyLevelActivity : AppCompatActivity() {
         if (numOfElemsOnLastLine != 0) numberOfLines++
 
         val metrics = resources.displayMetrics
-        var height = 100
+        var height = 150
         when (metrics.densityDpi) {
-            480 -> height = 120
+            480 -> height = 180
         }
         val layoutParams: ViewGroup.LayoutParams = LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             height
         )
+
         val buttonLayoutParams: ViewGroup.LayoutParams = LinearLayout.LayoutParams(
             0,
             ViewGroup.LayoutParams.MATCH_PARENT,
@@ -80,17 +82,19 @@ class CompanyLevelActivity : AppCompatActivity() {
 
             if (i == numberOfLines - 1) {
                 for (j in 0 until numOfElemsOnLastLine) {
-                    val button = Button(this)
+                    val button = Button(this,null, R.attr.company_level_buttons)
                     button.text = "${i * 4 + 1 + j}"
                     button.id = 0 + i * 10 + j
+//                    button.setTextColor(resources.getColor(R.color.colorBlack))
                     linearLayout.addView(button, buttonLayoutParams)
                     buttonsArray.add(button)
                 }
             } else {
                 for (j in 0..3) {
-                    val button = Button(this)
+                    val button = Button(this,null ,R.attr.company_level_buttons)
                     button.text = "${i * 4 + 1 + j}"
                     button.id = 0 + i * 10 + j
+//                    button.setTextColor(resources.getColor(R.color.colorBlack))
                     linearLayout.addView(button, buttonLayoutParams)
                     buttonsArray.add(button)
                 }

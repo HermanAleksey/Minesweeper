@@ -16,10 +16,12 @@
 
         <activity
             android:name=".view.activity.MinefieldActivity.activity.MinefieldBTActivity"
-            android:parentActivityName=".view.activity.MainActivity" />
+            android:parentActivityName=".view.activity.MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.GameResultsActivity"
-            android:parentActivityName=".view.activity.MainActivity" />
+            android:parentActivityName=".view.activity.MainActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".view.activity.WaitingRoomActivity" />
         <activity
             android:name=".view.activity.GameSettingsActivity"
@@ -44,7 +46,8 @@
         </activity>
         <activity
             android:name=".view.activity.DeviceListActivity"
-            android:parentActivityName=".view.activity.MainActivity" /> <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
+            android:parentActivityName=".view.activity.MainActivity"
+            android:screenOrientation="portrait" /> <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-5303222102711101~9781743838" />
