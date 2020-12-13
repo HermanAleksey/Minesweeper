@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.media.SoundPool
 import android.os.*
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.*
@@ -98,6 +99,8 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
 
         MinefieldAdapter().setupMinefield(userField.content, arrayButtonsField)
 
+        Log.e("TAG", "Current value: \n arrayButtonsField:\n size:${arrayButtonsField.size}\nsize inside:${arrayButtonsField[1].size}", )
+        Log.e("TAG", "Current value: \n userField.content:\n size:${userField.content.size}\nsize inside:${userField.content[1].size}", )
         setOnClickListenerForField(
             arrayButtonsField,
             userField.content
@@ -167,8 +170,10 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
         arrayButtonsField: Array<Array<Button>>,
         userField: Array<Array<Char>>
     ) {
-        for (y in arrayButtonsField.indices) {
-            for (x in arrayButtonsField[y].indices) {
+        Log.e("TAG", "Current value: \n arrayButtonsField:\n size:${arrayButtonsField.size}\nsize inside:${arrayButtonsField[1].size}", )
+        Log.e("TAG", "Current value: \n userField.content:\n size:${userField.size}\nsize inside:${userField[1].size}", )
+        for (x in arrayButtonsField.indices) {
+            for (y in arrayButtonsField[x].indices) {
                 arrayButtonsField[x][y].setOnClickListener {
                     /*Opener*/
                     if (!togglebutton_minefield_flag.isChecked) {
