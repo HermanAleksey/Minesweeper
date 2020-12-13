@@ -241,7 +241,7 @@ public class MultiPlayerService {
         // Send a failure message back to the Activity
         Message msg = mHandler.obtainMessage(BluetoothConstant.MESSAGE_TOAST);
         Bundle bundle = new Bundle();
-        bundle.putString(BluetoothConstant.TOAST, String.valueOf(R.string.unableToConnectDevice));
+//        bundle.putString(BluetoothConstant.TOAST, String.valueOf(R.string.unableToConnectDevice));
         msg.setData(bundle);
         mHandler.sendMessage(msg);
 
@@ -256,7 +256,7 @@ public class MultiPlayerService {
         // Send a failure message back to the Activity
         Message msg = mHandler.obtainMessage(BluetoothConstant.MESSAGE_TOAST);
         Bundle bundle = new Bundle();
-        bundle.putString(BluetoothConstant.TOAST, String.valueOf(R.string.diveConnectionWasLost));
+//        bundle.putString(BluetoothConstant.TOAST, String.valueOf(R.string.diveConnectionWasLost));
         msg.setData(bundle);
         mHandler.sendMessage(msg);
 

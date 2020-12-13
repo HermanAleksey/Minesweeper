@@ -8,6 +8,10 @@
     </style>
 
 
+    <style name="number_picker_material_1" parent="Theme.AppCompat">
+        <item name="android:background">@color/colorPrimary_material_1</item>
+    </style>
+
     /**------------------------------------------------OLD---------------------------------------------------**/
     //Main activity OLD
 

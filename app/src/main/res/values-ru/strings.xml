@@ -176,8 +176,6 @@
         либо до победы хотя бы одного из игроков.\n
     </string>
 
-
-
     //Themes
     <string-array name="theme_array">
         <item>None</item>
@@ -185,4 +183,12 @@
         <item>Material</item>
         <item>Colorized</item>
     </string-array>
+
+
+
+    //ad dialog
+    <string name="adDialog">Предложение</string>
+    <string name="wouldLikeToContinue">К сожалению вы проиграли. Вы можете просмотреть рекламное видео
+     чтобы отменить предыдущий ход. Желаете это сделать?</string>
+    <string name="watch">Смотреть</string>
 </resources>

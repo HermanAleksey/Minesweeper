@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="?background_layout"
+    android:orientation="vertical">
+
+    <TextView
+        style="?attr/main_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/adDialog" />
+
+    <TextView
+        style="?casual_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="20dp"
+        android:gravity="center"
+        android:text="@string/wouldLikeToContinue" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/button_ad_fragment_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cancel"
+            android:layout_margin="20dp"
+            style="?attr/main_button"/>
+
+        <Button
+            android:id="@+id/button_ad_fragment_accept"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/watch"
+            android:layout_margin="20dp"
+            style="?attr/main_button"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="?background_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="?background_layout"
+    android:background="#D62525"
+    android:backgroundTint="#F6F4F4"
     android:orientation="vertical">
 
     <TextView
+        style="?main_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/inverserif_regular"
         android:gravity="center|bottom"
-        android:text="@string/fieldSizeOptions"
-        style="?main_label"/>
+        android:text="@string/fieldSizeOptions" />
 
     <LinearLayout
+        style="?attr/strong_line_separator"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        style="?attr/strong_line_separator" />
+        android:layout_height="40dp" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -51,10 +54,9 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
                 style="?attr/secondary_horizontal_line"
-                />
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -62,9 +64,9 @@
 
                 <TextView
                     style="?attr/casual_description"
-                    android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:gravity="center"
                     android:text="@string/minesCount" />
             </LinearLayout>
 
@@ -80,9 +82,9 @@
             </LinearLayout>
 
             <LinearLayout
+                style="?attr/secondary_horizontal_line"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                style="?attr/secondary_horizontal_line" />
+                android:layout_height="30dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -90,9 +92,9 @@
 
                 <TextView
                     style="?attr/casual_description"
-                    android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:gravity="center"
                     android:text="@string/timeLimit" />
             </LinearLayout>
 
@@ -103,21 +105,23 @@
 
                 <NumberPicker
                     android:id="@+id/np_game_settings_minutes"
+                    style="?attr/number_picker"
                     android:layout_width="0dp"
                     android:layout_height="80dp"
                     android:layout_weight="1" />
 
                 <NumberPicker
                     android:id="@+id/np_game_settings_seconds"
+                    style="?attr/number_picker"
                     android:layout_width="0dp"
                     android:layout_height="80dp"
                     android:layout_weight="1" />
             </LinearLayout>
 
             <LinearLayout
+                style="?attr/secondary_horizontal_line"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                style="?attr/secondary_horizontal_line" />
+                android:layout_height="30dp" />
 
             <LinearLayout
                 android:id="@+id/ll_game_settings_first_click_mine"
@@ -139,16 +143,16 @@
 
                     <CheckBox
                         android:id="@+id/cb_game_settings_first_click_mine"
+                        style="?checkbox_game_settings"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        style="?checkbox_game_settings"
                         android:checked="true" />
                 </LinearLayout>
 
                 <LinearLayout
+                    style="?attr/secondary_horizontal_line"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    style="?attr/secondary_horizontal_line" />
+                    android:layout_height="30dp" />
             </LinearLayout>
 
 
@@ -165,23 +169,23 @@
 
                     <TextView
                         style="?attr/casual_description"
-                        android:gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:gravity="center"
                         android:text="@string/useTheSameField" />
 
                     <CheckBox
                         android:id="@+id/cb_game_settings_use_same_field"
+                        style="?checkbox_game_settings"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        style="?checkbox_game_settings" />
+                        android:layout_height="match_parent" />
 
                 </LinearLayout>
 
                 <LinearLayout
+                    style="?attr/secondary_horizontal_line"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    style="?attr/secondary_horizontal_line"  />
+                    android:layout_height="30dp" />
             </LinearLayout>
 
             <Button

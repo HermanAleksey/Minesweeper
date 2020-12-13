@@ -17,6 +17,7 @@
         <item name="strong_line_separator">@style/strong_line_separator_old</item>
         <item name="secondary_horizontal_line">@style/secondary_horizontal_line_old</item>
         <item name="checkbox_game_settings">@style/checkbox_game_settings_old</item>
+
         //result activity
         <item name="game_result_border">@style/game_result_border_old</item>
         <item name="text_result_game_result">@style/text_result_game_result_old</item>
@@ -48,6 +49,7 @@
         <item name="strong_line_separator">@style/strong_line_separator_material_1</item>
         <item name="secondary_horizontal_line">@style/secondary_horizontal_line_material_1</item>
         <item name="checkbox_game_settings">@style/checkbox_game_settings_material_1</item>
+        <item name="number_picker">@style/number_picker_material_1</item>
         //result activity
         <item name="game_result_border">@style/game_result_border_material_1</item>
         <item name="text_result_game_result">@style/text_result_game_result_material_1</item>

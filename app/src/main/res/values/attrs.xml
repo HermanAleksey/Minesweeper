@@ -11,6 +11,7 @@
     <attr name="secondary_horizontal_line" format="reference"/>//    вторичная горизонтальная черта
     <attr name="secondary_vertical_line" format="reference"/>//    вертикальная черта
     <attr name="checkbox_game_settings" format="reference"/>//           чекбокс
+    <attr name="number_picker" format="reference" />
     //game result activity
     <attr name="game_result_border" format="reference"/>//                рамка окончания игры
     <attr name="text_result_game_result" format="reference"/>//           надпись завершения игры

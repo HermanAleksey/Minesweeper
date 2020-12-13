@@ -141,7 +141,7 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
-        seek_bar_minefield_cell_size.progress = 60
+        seek_bar_minefield_cell_size. progress = 60
     }
 
     private fun fillViewElements() {
