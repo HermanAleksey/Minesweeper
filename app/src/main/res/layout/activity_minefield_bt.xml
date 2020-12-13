@@ -30,6 +30,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:gravity="center"
                     android:text="@string/field_size" />
 
                 <LinearLayout
@@ -158,6 +159,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_bt_minefield_debug_elem"
                     style="?attr/casual_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -211,29 +213,29 @@
                 android:hint="sended GSON" />
 
             <TextView
-                android:id="@+id/textViewChat"
+                android:id="@+id/tv_bt_debug_log"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="LOG" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName"
+                android:id="@+id/et_bt_debug_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:text="NoN" />
 
             <Button
-                android:id="@+id/buttonSend"
+                android:id="@+id/btn_bt_debug_send"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Send" />
 
             <Button
-                android:id="@+id/buttonBTVisibility"
+                android:id="@+id/btn_bt_debug_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="send JSON" />
+                android:text="Back" />
 
         </LinearLayout>
 

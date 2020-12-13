@@ -21,6 +21,7 @@ import com.example.sapper.model.constant.BluetoothConstant
 import com.example.sapper.dialog.DialogSettingMinesCount
 import com.example.sapper.dialog.DialogSettingsSize
 import com.example.sapper.constant.entity.*
+import com.example.sapper.dialog.DialogHelp
 import com.example.sapper.view.Utils
 import kotlinx.android.synthetic.main.activity_game_settings.*
 
@@ -195,20 +196,14 @@ class GameSettingsActivity : AppCompatActivity(),
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.item_toolbar_rules) {
-            showGameRulesAlertDialog(this)
+            showGameRulesAlertDialog()
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun showGameRulesAlertDialog(context: Context) {
-        val dialog = AlertDialog.Builder(context)
-            .setTitle(R.string.rules)
-            .setMessage("R.string.navigation what to do with all this settings")
-            .setPositiveButton(R.string.understand, null)
-            .show()
-
-        val positiveButton: Button = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
-        positiveButton.setTextColor(context.resources.getColor(R.color.colorPrimaryDark))
+    private fun showGameRulesAlertDialog() {
+        val dialog = DialogHelp()
+        dialog.show(supportFragmentManager, Constant().HELPER_DIALOG)
     }
 
     /*callbacks from dialogs*/

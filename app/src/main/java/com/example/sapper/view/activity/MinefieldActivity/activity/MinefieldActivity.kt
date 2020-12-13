@@ -24,6 +24,7 @@ import com.example.sapper.constant.entity.Field
 import com.example.sapper.constant.entity.Game
 import com.example.sapper.controller.logic.SoundPoolWorker
 import com.example.sapper.controller.logic.TimeWorker
+import com.example.sapper.dialog.DialogHelp
 import com.example.sapper.view.Utils
 import kotlinx.android.synthetic.main.activity_minefield.*
 
@@ -308,20 +309,14 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.item_toolbar_rules) {
-            showGameRulesAlertDialog(this)
+            showGameRulesAlertDialog()
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun showGameRulesAlertDialog(context: Context) {
-        val dialog = AlertDialog.Builder(context)
-            .setTitle(R.string.rules)
-            .setMessage("R.string.rulesOfTheGame")
-            .setPositiveButton(R.string.understand, null)
-            .show()
-
-        val positiveButton: Button = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
-        positiveButton.setTextColor(context.resources.getColor(R.color.colorPrimaryDark))
+    private fun showGameRulesAlertDialog() {
+        val dialog = DialogHelp()
+        dialog.show(supportFragmentManager, Constant().HELPER_DIALOG)
     }
 
     override fun onBackPressed() {

@@ -1,6 +1,8 @@
 package com.example.sapper.view.activity
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NavUtils
@@ -9,6 +11,7 @@ import com.example.sapper.R
 import com.example.sapper.model.constant.Constant
 import com.example.sapper.constant.entity.Game
 import com.example.sapper.controller.logic.AsynсWorker
+import com.example.sapper.dialog.DialogHelp
 import com.example.sapper.view.Utils
 import kotlinx.android.synthetic.main.activity_game_results.*
 
@@ -54,5 +57,22 @@ class GameResultsActivity : AppCompatActivity() {
 
     fun onConfirmButtonClick(view: View) {
         finish()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.item_toolbar_rules) {
+            showGameRulesAlertDialog()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun showGameRulesAlertDialog() {
+        val dialog = DialogHelp()
+        dialog.show(supportFragmentManager, Constant().HELPER_DIALOG)
     }
 }

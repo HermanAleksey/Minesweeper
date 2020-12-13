@@ -4,6 +4,8 @@ import android.content.Intent
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -16,6 +18,7 @@ import com.example.sapper.view.activity.MinefieldActivity.activity.MinefieldActi
 import com.example.sapper.model.constant.GameConstant
 import com.example.sapper.db.AppDatabase
 import com.example.sapper.constant.entity.CompanyGame
+import com.example.sapper.dialog.DialogHelp
 import com.example.sapper.model.ThemeApplication
 import com.example.sapper.view.Utils
 import kotlinx.android.synthetic.main.activity_company_level.*
@@ -146,7 +149,20 @@ class CompanyLevelActivity : AppCompatActivity() {
         startActivity(myIntent)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.item_toolbar_rules) {
+            showGameRulesAlertDialog()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun showGameRulesAlertDialog() {
+        val dialog = DialogHelp()
+        dialog.show(supportFragmentManager, Constant().HELPER_DIALOG)
     }
 }

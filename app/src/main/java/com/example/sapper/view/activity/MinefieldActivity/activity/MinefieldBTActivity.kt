@@ -33,6 +33,8 @@ import com.example.sapper.controller.logic.MinefieldAdapter
 import com.example.sapper.controller.logic.MultiPlayerService
 import com.example.sapper.controller.logic.SoundPoolWorker
 import com.example.sapper.controller.logic.TimeWorker
+import com.example.sapper.dialog.DialogHelp
+import com.example.sapper.view.Utils
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_minefield_bt.*
 
@@ -100,14 +102,20 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (ll_bt_minefield_minefield_screen.visibility == View.VISIBLE) {
-            ll_bt_minefield_minefield_screen.visibility = View.GONE
-        } else ll_bt_minefield_minefield_screen.visibility = View.VISIBLE
+        if (item.itemId == R.id.item_toolbar_rules) {
+            showGameRulesAlertDialog()
+        }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun showGameRulesAlertDialog() {
+        val dialog = DialogHelp()
+        dialog.show(supportFragmentManager, Constant().HELPER_DIALOG)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Utils.onActivityCreateSetTheme(this)
         setContentView(R.layout.activity_minefield_bt)
         //timer
         handler = Handler()
@@ -115,9 +123,6 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
 
         // Get local Bluetooth adapter
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-
-        buttonBTVisibility.setOnClickListener { sendMessages(GSONobject) }
-        buttonSend.setOnClickListener { sendMessages(editTextTextPersonName.text.toString()) }
 
         // setup the chat session
         if (mChatService == null) {
@@ -156,7 +161,26 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
                 )
             }
         }
+
+        /**---for debuging----**/
+        btn_bt_debug_send.setOnClickListener { sendMessages(et_bt_debug_message.text.toString()) }
+        btn_bt_debug_back.setOnClickListener {
+            ll_bt_minefield_minefield_screen.visibility = View.VISIBLE
+        }
+        tv_bt_minefield_debug_elem.setOnClickListener {
+            debugCounter+=1
+            Log.i("DEBUG BT GAME", "debugCounter: $debugCounter")
+        }
+        tv_bt_minefield_debug_elem.setOnLongClickListener {
+            Log.i("DEBUG BT GAME", "LongClickListener triggered: $debugCounter")
+            if (debugCounter % 4 == 0) {
+                ll_bt_minefield_minefield_screen.visibility = View.GONE
+            }
+            return@setOnLongClickListener true
+        }
     }
+
+    private var debugCounter: Int = 1
 
     private fun configureSeekBar(arrayButtonsField: Array<Array<Button>>) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -269,7 +293,7 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
         tv_bt_minefield_mines.text = minesCount.toString()
     }
 
-    private fun performEndEvents(result: Boolean,arrayButtonsField: Array<Array<Button>>) {
+    private fun performEndEvents(result: Boolean, arrayButtonsField: Array<Array<Button>>) {
         val sound = if (result) soundWin else soundExplosion
         soundPoolWorker.playSound(soundPool, sound)
         MinefieldAdapter().setMinefieldUnclickable(arrayButtonsField)
@@ -546,7 +570,7 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
 
     fun textViewAppend(str: String) {
         string += "\n-----------------------------\n$str\n"
-        textViewChat.text = string
+        tv_bt_debug_log.text = string
     }
 
     /**

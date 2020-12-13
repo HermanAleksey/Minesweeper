@@ -118,23 +118,63 @@
     <string name="help_game_modes">game modes</string>
     <string name="help_bluetooth_game">bluetooh game</string>
     <string name="description_game_rules">
-        Opening a cell - it may contain:\n 1) mine 2) number 3) nothing\n
-         1.If you open a cell with a mine, you lose; \ n
-         2.The number in the cell shows how many mines are hidden in the immediately adjacent cells; \ n
-         3.If there is nothing in an open cell, this is equivalent to zero minutes around this cell; \ n \ n
+Opening a cell - it may contain: \n 1) mine 2) number 3) nothing \n
+         1.If you open a cell with a mine, you lose; \n
+         2. The number in the cell shows how many mines are hidden in the immediately adjacent cells; \n
+         3.If there is nothing in an open cell, this is equivalent to zero minutes around this cell; \n \n
 
-        In order to complete the game you need: \ n
-         1.Open all cells, except those in which mines are located; \ n
-         2.All cells containing mines - mark with a flag.\n
+         In order to complete the game you need: \n
+         1. Open all cells, except those in which mines are located; \n
+         2.All cells with mines - mark with a flag. \n
     </string>
     <string name="description_game_process">
+On the playing field in the lower right corner there is an icon of the selected action \n
+        If there is a "Flag" there: \n
+        when you touch a cell on the field - this cell is marked with a flag. \n
+        If the cell has already been marked with a flag before, the flag is removed. \n \n
 
+        If the Shovel icon is selected: \n
+        when you touch a cell on the field, it opens it. \n
+        If the cell is marked with a flag, or is open, it has no effect. \n \n
+
+        ----------- \n
+
+        There is a slider at the bottom of the screen, the value of which determines the size of the cells on the margin. \n \n
+
+        ----------- \n
+
+        If not all cells fit on the screen, the minefield can be scrolled. For this
+        you need to slide the pressed finger along the field horizontally or vertically, depending on
+        from the desired direction. \n \n
+
+        ----------- \n
+
+        There is a timer at the top of the screen. If the time expires, the player will
+        automatically assigned defeat \n
+        If there is no time limit, it acts as a stopwatch. \n
     </string>
     <string name="description_game_modes">
+At the moment there are 3 game modes in the game:\n
+         1. Campaign \n
+         2. Own game \n
+         3. Bluetooth play \n \n
 
+         In the campaign, the player is asked to complete levels with pre-prepared settings. \n
+         In your game, you need to set the settings for the game yourself before playing. \n
+         2 people participate in the bluetooth game. One of the players must create
+         the game, and the second is to connect to it. Whoever solves the card faster is the winner. \n
     </string>
     <string name="description_game_bluetooth">
+Several things are required to play via bluetooth: \n
+        1. Bluetooth enabled; \n
+        2. Configured pairing via bluetooth with the second player; \n \n
 
+        1. One player must act as a "Server" and create a game. \n
+        2. The second player, the "Client", after the first creation of the game players, must
+        go to the "Client" section of the Bluetooth game mode. There will be a list of all
+        paired devices. Among them, you must select the first Name of the first player. \n \n
+        The game continues until at least one of the players loses,
+        or until at least one of the players wins. \n
     </string>
 
 

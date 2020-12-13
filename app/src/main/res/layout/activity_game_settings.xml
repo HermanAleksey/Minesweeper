@@ -132,9 +132,9 @@
 
                     <TextView
                         style="?attr/casual_description"
-                        android:gravity="center"
-                        android:layout_width="wrap_content"
+                        android:layout_width="295dp"
                         android:layout_height="match_parent"
+                        android:gravity="center"
                         android:text="@string/firstClickCanBeOnAMine" />
 
                     <CheckBox
