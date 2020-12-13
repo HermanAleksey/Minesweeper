@@ -99,8 +99,6 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
 
         MinefieldAdapter().setupMinefield(userField.content, arrayButtonsField)
 
-        Log.e("TAG", "Current value: \n arrayButtonsField:\n size:${arrayButtonsField.size}\nsize inside:${arrayButtonsField[1].size}", )
-        Log.e("TAG", "Current value: \n userField.content:\n size:${userField.content.size}\nsize inside:${userField.content[1].size}", )
         setOnClickListenerForField(
             arrayButtonsField,
             userField.content
@@ -143,6 +141,7 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
+        seek_bar_minefield_cell_size.progress = 60
     }
 
     private fun fillViewElements() {
@@ -170,8 +169,6 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
         arrayButtonsField: Array<Array<Button>>,
         userField: Array<Array<Char>>
     ) {
-        Log.e("TAG", "Current value: \n arrayButtonsField:\n size:${arrayButtonsField.size}\nsize inside:${arrayButtonsField[1].size}", )
-        Log.e("TAG", "Current value: \n userField.content:\n size:${userField.size}\nsize inside:${userField[1].size}", )
         for (x in arrayButtonsField.indices) {
             for (y in arrayButtonsField[x].indices) {
                 arrayButtonsField[x][y].setOnClickListener {
