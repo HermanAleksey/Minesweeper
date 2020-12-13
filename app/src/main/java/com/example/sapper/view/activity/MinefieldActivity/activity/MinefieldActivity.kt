@@ -112,7 +112,7 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
             stopWatchRunnable = timeWorker.getStopWatchRunnable(startTime)
             stopWatchRunnable.run()
         } else {
-            timeWorker.getCountDownTimer(
+            countDownTimer = timeWorker.getCountDownTimer(
                 tv_minefield_minutes,
                 tv_minefield_seconds, gameTimerMilli
             ).start()
