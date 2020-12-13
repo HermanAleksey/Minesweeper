@@ -3,15 +3,12 @@ package com.example.sapper.view.activity.MinefieldActivity.activity
 import com.bsuir.saper.HostField
 import com.bsuir.saper.Saper
 import com.bsuir.saper.UserField
-import android.content.Context
 import android.content.Intent
 import android.media.SoundPool
 import android.os.*
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.*
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sapper.model.constant.GameConstant
 import com.example.sapper.controller.logic.MinefieldAdapter
@@ -27,26 +24,33 @@ import com.example.sapper.controller.logic.SoundPoolWorker
 import com.example.sapper.controller.logic.TimeWorker
 import com.example.sapper.dialog.DialogHelp
 import com.example.sapper.view.Utils
+import com.example.sapper.view.dialog.DialogRewardedAd
 import kotlinx.android.synthetic.main.activity_minefield.*
 
 
-class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
-    var hostField: HostField? = null
+class MinefieldActivity : AppCompatActivity(), IMinefieldActivity,
+    DialogRewardedAd.AdDialogListener {
+    private var hostField: HostField? = null
+    private lateinit var userField: UserField
+    private lateinit var arrayButtonsField: Array<Array<Button>>
+    private var previousField: Array<Array<Char>>? = null
+    private var newAttemptAvailable = true
 
     private lateinit var game: CasualGame
     private var gameId: Int = 0
     private lateinit var mode: String
 
+    //timers
     private var gameTimerMilli: Long = 0
     private var countDownTimer: CountDownTimer? = null
-
     lateinit var handler: Handler
 
-    //    private var startTime: Long = 0
+    //workers
     private lateinit var timeWorker: TimeWorker
     private lateinit var stopWatchRunnable: Runnable
     private lateinit var soundPoolWorker: SoundPoolWorker
 
+    //sounds
     private lateinit var soundPool: SoundPool
     private var soundExplosion: Int = 0
     private var soundWin: Int = 0
@@ -84,25 +88,22 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
         fillViewElements()
 
         /*Visual minefield (from buttons)*/
-        val arrayButtonsField =
+        arrayButtonsField =
             MinefieldAdapter().createMinefield(
                 game.field.width, game.field.height, linear_layout_minefield, this
             )
 
-        configureSeekBar(arrayButtonsField)
+        configureSeekBar()
 
         /*generating field only if first click can be on mine*/
         if (game.firstClickMine) {
             hostField = HostField(game.field.width, game.field.height, game.field.minesCount)
         }
-        val userField = UserField(game.field.width, game.field.height, game.field.minesCount)
+        userField = UserField(game.field.width, game.field.height, game.field.minesCount)
 
         MinefieldAdapter().setupMinefield(userField.content, arrayButtonsField)
 
-        setOnClickListenerForField(
-            arrayButtonsField,
-            userField.content
-        )
+        setOnClickListenerForField()
     }
 
     private fun startStopWatch() {
@@ -120,7 +121,7 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
         }
     }
 
-    private fun configureSeekBar(arrayButtonsField: Array<Array<Button>>) {
+    private fun configureSeekBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             seek_bar_minefield_cell_size.min = 30
         }
@@ -141,7 +142,7 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
-        seek_bar_minefield_cell_size. progress = 60
+        seek_bar_minefield_cell_size.progress = 60
     }
 
     private fun fillViewElements() {
@@ -166,54 +167,41 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
 
     /*define how each cell gonna react to click with flag/open selected*/
     private fun setOnClickListenerForField(
-        arrayButtonsField: Array<Array<Button>>,
-        userField: Array<Array<Char>>
     ) {
         for (x in arrayButtonsField.indices) {
             for (y in arrayButtonsField[x].indices) {
                 arrayButtonsField[x][y].setOnClickListener {
+                    previousField = userField.content
                     /*Opener*/
                     if (!togglebutton_minefield_flag.isChecked) {
-                        if (hostField == null) {
-                            hostField = HostField(
-                                game.field.width,
-                                game.field.height,
-                                game.field.minesCount,
-                                x,
-                                y
-                            )
-                        }
+                        createHostField(x, y)
+
                         soundPoolWorker.playSound(soundPool, soundTap)
 
-                        val keepGame = Saper().openCoordinate(x, y, hostField!!.content, userField)
+                        val keepGame = Saper().openCoordinate(x, y, hostField!!.content, userField.content)
                         if (!keepGame) {
-                            performEndEvents(false, arrayButtonsField)
+                            if (newAttemptAvailable) {
+                                offerRewardedAd()
+                            } else performEndEvents(false)
                         } else {
                             /*если не проиграл - проверить, возможно теперь условия выполняются.*/
                             /*т.к. openCoordinate возвращает false только если проиграл и не отличает
                             * продолжение игры от победы*/
-                            if (Saper().checkWinCondition(hostField!!.content, userField)) {
-                                performEndEvents(true, arrayButtonsField)
+                            if (Saper().checkWinCondition(hostField!!.content, userField.content)) {
+                                performEndEvents(true)
                             }
                         }
-                        MinefieldAdapter().setupMinefield(userField, arrayButtonsField)
+                        MinefieldAdapter().setupMinefield(userField.content, arrayButtonsField)
                     }
                     /*FLAG*/
                     if (togglebutton_minefield_flag.isChecked) {
-                        if (hostField == null) {
-                            hostField = HostField(
-                                game.field.width,
-                                game.field.height,
-                                game.field.minesCount,
-                                x,
-                                y
-                            )
-                        }
+                        createHostField(x, y)
+
                         soundPoolWorker.playSound(soundPool, soundFlagDrop)
-                        val win = Saper().useFlagOnSpot(x, y, hostField!!.content, userField)
-                        MinefieldAdapter().setupMinefield(userField, arrayButtonsField)
+                        val win = Saper().useFlagOnSpot(x, y, hostField!!.content, userField.content)
+                        MinefieldAdapter().setupMinefield(userField.content, arrayButtonsField)
                         if (win) {
-                            performEndEvents(true, arrayButtonsField)
+                            performEndEvents(true)
                         }
                     }
                 }
@@ -221,7 +209,37 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity {
         }
     }
 
-    private fun performEndEvents(result: Boolean, arrayButtonsField: Array<Array<Button>>,) {
+    private fun offerRewardedAd() {
+        soundPoolWorker.playSound(soundPool, soundExplosion)
+        MinefieldAdapter().setMinefieldUnclickable(arrayButtonsField)
+
+        val dialog = DialogRewardedAd()
+        dialog.show(supportFragmentManager, Constant().AD_DIALOG)
+    }
+
+    override fun sendResponse(success: Boolean) {
+        newAttemptAvailable = false
+        if (success) {
+            MinefieldAdapter().setMinefieldClickable(arrayButtonsField)
+            userField.content = previousField!!
+        } else {
+            performEndEvents(false)
+        }
+    }
+
+    private fun createHostField(x: Int, y: Int) {
+        if (hostField == null) {
+            hostField = HostField(
+                game.field.width,
+                game.field.height,
+                game.field.minesCount,
+                x,
+                y
+            )
+        }
+    }
+
+    private fun performEndEvents(result: Boolean) {
         val sound = if (result) soundWin else soundExplosion
         soundPoolWorker.playSound(soundPool, sound)
         MinefieldAdapter().setMinefieldUnclickable(arrayButtonsField)

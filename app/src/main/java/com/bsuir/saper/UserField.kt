@@ -10,6 +10,6 @@ data class UserField(
 ) : Serializable {
 
     //field for interacting with user
-    val content: Array<Array<Char>> = Array(width) { Array(height) { Saper().UNKNOWN_SPOT } }
+    var content: Array<Array<Char>> = Array(width) { Array(height) { Saper().UNKNOWN_SPOT } }
 
 }

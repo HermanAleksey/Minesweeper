@@ -4,6 +4,7 @@ class Constant {
     val SETTING_SIZE_DIALOG: String = "com.example.sapper.DialogSettingSize"
     val SETTING_MINES_COUNT_DIALOG: String = "com.example.sapper.DialogSettingMinesCount"
     val HELPER_DIALOG: String = "com.example.sapper.helperDialog"
+    val AD_DIALOG: String = "com.example.sapper.adDialog"
 
     val EXTRA_GAME_MODE = "com.example.sapper.view.activity.gameMode"
     val EXTRA_GAME_MODE_COMPANY = "com.example.sapper.view.activity.gameModeCompany"

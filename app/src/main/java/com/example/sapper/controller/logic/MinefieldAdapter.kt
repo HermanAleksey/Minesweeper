@@ -17,6 +17,14 @@ class MinefieldAdapter {
         }
     }
 
+    fun setMinefieldClickable(arrayButtonsField: Array<Array<Button>>) {
+        arrayButtonsField.forEach { buttonsArray ->
+            buttonsArray.forEach { button ->
+                button.isClickable = true
+            }
+        }
+    }
+
     /*Установка видимого минного поля в соответствии с переданным массивом*/
     fun setupMinefield(
         minefield: Array<Array<Char>>,
