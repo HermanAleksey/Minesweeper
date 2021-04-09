@@ -1,6 +1,6 @@
 package com.example.sapper.controller.logic
 
-import com.bsuir.saper.Saper
+import com.bsuir.herman.saper.Saper
 import android.content.Context
 import android.view.ViewGroup
 import android.widget.Button
@@ -73,19 +73,19 @@ class MinefieldAdapter {
                     }
                 }
                 when (minefield[x][y]) {
-                    Saper().EMPTY_SPOT -> {
+                    com.bsuir.herman.saper.Saper().EMPTY_SPOT -> {
                         arrayButtonsField[x][y].text = "."
                         arrayButtonsField[x][y].setBackgroundResource(0)
                     }
-                    Saper().UNKNOWN_SPOT -> {
+                    com.bsuir.herman.saper.Saper().UNKNOWN_SPOT -> {
                         arrayButtonsField[x][y]
                             .setBackgroundResource(R.drawable.ic_baseline_remove_red_eye_24)
                     }
-                    Saper().FLAG -> {
+                    com.bsuir.herman.saper.Saper().FLAG -> {
                         arrayButtonsField[x][y]
                             .setBackgroundResource(R.drawable.ic_baseline_flag_24)
                     }
-                    Saper().MINE -> {
+                    com.bsuir.herman.saper.Saper().MINE -> {
                         arrayButtonsField[x][y]
                             .setBackgroundResource(R.drawable.ic_baseline_brightness_7_24)
                     }

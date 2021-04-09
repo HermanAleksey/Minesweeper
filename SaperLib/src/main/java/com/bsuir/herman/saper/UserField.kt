@@ -1,6 +1,5 @@
-package com.bsuir.saper
+package com.bsuir.herman.saper
 
-import com.bsuir.saper.Saper
 import java.io.Serializable
 
 data class UserField(

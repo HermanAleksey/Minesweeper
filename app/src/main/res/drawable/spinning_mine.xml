@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false"
+    >
+<!--    android:pivotX="50%"-->
+<!--    android:pivotY="50%">-->
+
+    <item android:drawable="@drawable/background_card_view" android:duration="50" />
+    <item android:drawable="@drawable/company_level_buttons_bg" android:duration="400" />
+<!--    <bitmap android:src="@drawable/mine" />-->
+
+</animation-list>

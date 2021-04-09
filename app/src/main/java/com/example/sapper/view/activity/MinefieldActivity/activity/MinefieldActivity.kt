@@ -1,8 +1,5 @@
 package com.example.sapper.view.activity.MinefieldActivity.activity
 
-import com.bsuir.saper.HostField
-import com.bsuir.saper.Saper
-import com.bsuir.saper.UserField
 import android.content.Intent
 import android.media.SoundPool
 import android.os.*
@@ -30,8 +27,8 @@ import kotlinx.android.synthetic.main.activity_minefield.*
 
 class MinefieldActivity : AppCompatActivity(), IMinefieldActivity,
     DialogRewardedAd.AdDialogListener {
-    private var hostField: HostField? = null
-    private lateinit var userField: UserField
+    private var hostField: com.bsuir.herman.saper.HostField? = null
+    private lateinit var userField: com.bsuir.herman.saper.UserField
     private lateinit var arrayButtonsField: Array<Array<Button>>
     private var previousField: Array<Array<Char>>? = null
     private var newAttemptAvailable = true
@@ -71,7 +68,7 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity,
         timeWorker = TimeWorker(this, handler)
 
         /*getting data about game depends on game mode*/
-        mode = intent.getStringExtra(Constant().EXTRA_GAME_MODE)
+        mode = intent.getStringExtra(Constant().EXTRA_GAME_MODE)!!
         when (mode) {
             Constant().EXTRA_GAME_MODE_COMPANY -> {
                 val a = intent.getSerializableExtra(GameConstant().EXTRA_GAME_OBJECT) as CompanyGame
@@ -97,9 +94,17 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity,
 
         /*generating field only if first click can be on mine*/
         if (game.firstClickMine) {
-            hostField = HostField(game.field.width, game.field.height, game.field.minesCount)
+            hostField = com.bsuir.herman.saper.HostField(
+                game.field.width,
+                game.field.height,
+                game.field.minesCount
+            )
         }
-        userField = UserField(game.field.width, game.field.height, game.field.minesCount)
+        userField = com.bsuir.herman.saper.UserField(
+            game.field.width,
+            game.field.height,
+            game.field.minesCount
+        )
 
         MinefieldAdapter().setupMinefield(userField.content, arrayButtonsField)
 
@@ -178,7 +183,8 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity,
 
                         soundPoolWorker.playSound(soundPool, soundTap)
 
-                        val keepGame = Saper().openCoordinate(x, y, hostField!!.content, userField.content)
+                        val keepGame = com.bsuir.herman.saper.Saper()
+                            .openCoordinate(x, y, hostField!!.content, userField.content)
                         if (!keepGame) {
                             if (newAttemptAvailable) {
                                 offerRewardedAd()
@@ -187,7 +193,8 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity,
                             /*если не проиграл - проверить, возможно теперь условия выполняются.*/
                             /*т.к. openCoordinate возвращает false только если проиграл и не отличает
                             * продолжение игры от победы*/
-                            if (Saper().checkWinCondition(hostField!!.content, userField.content)) {
+                            if (com.bsuir.herman.saper.Saper()
+                                    .checkWinCondition(hostField!!.content, userField.content)) {
                                 performEndEvents(true)
                             }
                         }
@@ -198,7 +205,8 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity,
                         createHostField(x, y)
 
                         soundPoolWorker.playSound(soundPool, soundFlagDrop)
-                        val win = Saper().useFlagOnSpot(x, y, hostField!!.content, userField.content)
+                        val win = com.bsuir.herman.saper.Saper()
+                            .useFlagOnSpot(x, y, hostField!!.content, userField.content)
                         MinefieldAdapter().setupMinefield(userField.content, arrayButtonsField)
                         if (win) {
                             performEndEvents(true)
@@ -229,7 +237,7 @@ class MinefieldActivity : AppCompatActivity(), IMinefieldActivity,
 
     private fun createHostField(x: Int, y: Int) {
         if (hostField == null) {
-            hostField = HostField(
+            hostField = com.bsuir.herman.saper.HostField(
                 game.field.width,
                 game.field.height,
                 game.field.minesCount,

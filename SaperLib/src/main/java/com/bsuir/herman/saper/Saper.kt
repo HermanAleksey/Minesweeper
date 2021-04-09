@@ -1,4 +1,4 @@
-package com.bsuir.saper
+package com.bsuir.herman.saper
 
 import java.lang.Exception
 import java.lang.StringBuilder

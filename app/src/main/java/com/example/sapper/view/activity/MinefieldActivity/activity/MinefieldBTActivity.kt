@@ -1,8 +1,5 @@
 package com.example.sapper.view.activity.MinefieldActivity.activity;
 
-import com.bsuir.saper.HostField
-import com.bsuir.saper.Saper
-import com.bsuir.saper.UserField
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
@@ -56,8 +53,8 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
 
     lateinit var roomSettings: BluetoothGame
     lateinit var arrayButtonsField: Array<Array<Button>>
-    lateinit var hostField: HostField
-    lateinit var userField: UserField
+    lateinit var hostField: com.bsuir.herman.saper.HostField
+    lateinit var userField: com.bsuir.herman.saper.UserField
 
     /** ---------------------------------SOUND POOL IMPL -----------------------------------**/
     private lateinit var soundPoolWorker: SoundPoolWorker
@@ -216,14 +213,16 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
                     /*Opener*/
                     if (!toggle_button_bt_minefield_flag.isChecked) {
                         soundPoolWorker.playSound(soundPool, soundTap)
-                        val keepGame = Saper().openCoordinate(x, y, hostField.content, userField)
+                        val keepGame = com.bsuir.herman.saper.Saper()
+                            .openCoordinate(x, y, hostField.content, userField)
                         if (!keepGame) {
                             performEndEvents(false, arrayButtonsField)
                         } else {
                             /*если не проиграл - проверить, возможно теперь условия выполняются.*/
                             /*т.к. openCoordinate возвращает false только если проиграл и не отличает
                             * продолжение игры от победы*/
-                            if (Saper().checkWinCondition(hostField.content, userField)) {
+                            if (com.bsuir.herman.saper.Saper()
+                                    .checkWinCondition(hostField.content, userField)) {
                                 performEndEvents(true, arrayButtonsField)
                             }
                         }
@@ -232,7 +231,8 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
                     /*FLAGer*/
                     if (toggle_button_bt_minefield_flag.isChecked) {
                         soundPoolWorker.playSound(soundPool, soundFlagDrop)
-                        val win = Saper().useFlagOnSpot(x, y, hostField.content, userField)
+                        val win = com.bsuir.herman.saper.Saper()
+                            .useFlagOnSpot(x, y, hostField.content, userField)
                         MinefieldAdapter().setupMinefield(userField, arrayButtonsField)
                         if (win) {
                             performEndEvents(true, arrayButtonsField)
@@ -244,7 +244,7 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
     }
 
     private fun prepareFields() {
-        hostField = HostField(
+        hostField = com.bsuir.herman.saper.HostField(
             roomSettings.field.width,
             roomSettings.field.height,
             roomSettings.field.minesCount
@@ -255,7 +255,7 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
                 ll_bt_minefield_minefield_layout, this@MinefieldBTActivity
             )
         configureSeekBar(arrayButtonsField)
-        userField = UserField(
+        userField = com.bsuir.herman.saper.UserField(
             roomSettings.field.width,
             roomSettings.field.height,
             roomSettings.field.minesCount
