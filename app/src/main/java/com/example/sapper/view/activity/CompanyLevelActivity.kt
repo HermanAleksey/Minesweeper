@@ -1,7 +1,6 @@
 package com.example.sapper.view.activity
 
 import android.content.Intent
-import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -17,9 +16,8 @@ import com.example.sapper.R
 import com.example.sapper.view.activity.MinefieldActivity.activity.MinefieldActivity
 import com.example.sapper.model.constant.GameConstant
 import com.example.sapper.db.AppDatabase
-import com.example.sapper.constant.entity.CompanyGame
+import com.example.sapper.model.entity.local.CompanyGame
 import com.example.sapper.dialog.DialogHelp
-import com.example.sapper.model.ThemeApplication
 import com.example.sapper.view.Utils
 import kotlinx.android.synthetic.main.activity_company_level.*
 

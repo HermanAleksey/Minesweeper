@@ -1,15 +1,11 @@
 package com.example.sapper.db
 
 import android.content.Context
-import android.provider.SyncStateContract.Helpers.insert
 import android.util.Log
-import android.view.View
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
-import com.example.sapper.constant.entity.CompanyGameDB
-import java.util.logging.Handler
+import com.example.sapper.model.entity.local.CompanyGameDB
 
 @Database(entities = arrayOf(CompanyGameDB::class), version = 1)
 abstract class AppDatabase : RoomDatabase() {

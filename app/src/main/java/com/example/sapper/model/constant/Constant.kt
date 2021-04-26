@@ -1,6 +1,7 @@
 package com.example.sapper.model.constant
 
 class Constant {
+
     val SETTING_SIZE_DIALOG: String = "com.example.sapper.DialogSettingSize"
     val SETTING_MINES_COUNT_DIALOG: String = "com.example.sapper.DialogSettingMinesCount"
     val HELPER_DIALOG: String = "com.example.sapper.helperDialog"
@@ -23,4 +24,8 @@ class Constant {
 
     val CURRENT_THEME = "com.example.sapper.view.currentTheme"
     val APP_PREFERENCES_THEME = "com.example.sapper.APP_PREFERENCES_THEME"
+
+    val APP_PREFERENCE_USER: String = "com.example.sapper.APP_PREFERENCE_USER"
+    val CURRENT_USER_ID: String = "com.example.sapper.CURRENT_USER_ID"
+    val CURRENT_USER_NAME: String = "com.example.sapper.CURRENT_USERNAME"
 }

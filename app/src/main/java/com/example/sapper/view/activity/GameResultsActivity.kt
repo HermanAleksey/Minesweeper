@@ -9,7 +9,7 @@ import androidx.core.app.NavUtils
 import com.example.sapper.model.constant.GameConstant
 import com.example.sapper.R
 import com.example.sapper.model.constant.Constant
-import com.example.sapper.constant.entity.Game
+import com.example.sapper.model.entity.local.Game
 import com.example.sapper.controller.logic.AsynсWorker
 import com.example.sapper.dialog.DialogHelp
 import com.example.sapper.view.Utils

@@ -13,16 +13,30 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".view.activity.SplashActivity"
+        <activity android:name=".view.activity.ChatRoomActivity.ChatRoomActivity"
+            android:parentActivityName=".view.activity.RoomListActivity"/>
+        <activity
+            android:name=".view.activity.RegistrationActivity"
+            android:parentActivityName=".view.activity.MainActivity" />
+        <activity
+            android:name=".view.activity.ProfileActivity"
+            android:parentActivityName=".view.activity.MainActivity" />
+        <activity
+            android:name=".view.activity.AuthActivity"
+            android:parentActivityName=".view.activity.MainActivity" />
+        <activity
+            android:name=".view.activity.RoomListActivity"
+            android:parentActivityName=".view.activity.MainActivity" />
+        <activity
+            android:name=".view.activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".view.activity.MinefieldActivity.activity.MinefieldBTActivity"
             android:parentActivityName=".view.activity.MainActivity"
@@ -47,7 +61,6 @@
         <activity
             android:name=".view.activity.MainActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".view.activity.DeviceListActivity"
             android:parentActivityName=".view.activity.MainActivity"

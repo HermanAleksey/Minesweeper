@@ -192,4 +192,8 @@ Several things are required to play via bluetooth: \n
     <string name="wouldLikeToContinue">Sorry, you lost. You can watch the promotional video
         to undo the previous move. Would you like to do it?</string>
     <string name="watch">Watch</string>
+
+
+    //WEB PART---------------------------------------------------------------------------------------------------------------------------------------------------------------
+    <string name="haveToAuth">You have to authorize first!</string>
 </resources>

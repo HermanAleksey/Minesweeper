@@ -1,4 +1,4 @@
-package com.example.sapper.constant.entity
+package com.example.sapper.model.entity.local
 
 import java.io.Serializable
 

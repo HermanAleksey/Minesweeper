@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.activity.RoomListActivity">
+
+    <Button
+        android:id="@+id/button_rooms_list_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="refresh" />
+
+    <Button
+        android:id="@+id/button_rooms_list_logout"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="log out" />
+
+    <Button
+        android:id="@+id/button_rooms_list_add"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="create" />
+
+    <ListView
+        android:id="@+id/list_view_rooms_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+
+    </ListView>
+
+</LinearLayout>

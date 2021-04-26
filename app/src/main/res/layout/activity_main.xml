@@ -24,6 +24,14 @@
             style="?attr/game_label"
             android:text="@string/app_name" />
 
+        <ImageButton
+            android:id="@+id/button_main_profile"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_baseline_person_24"
+            android:layout_gravity="center"
+            android:contentDescription="PROFILE" />
+
         <Button
             android:id="@+id/button_main_company"
             android:layout_width="210dp"
@@ -41,15 +49,22 @@
         <Button
             android:id="@+id/button_main_bluetooth_game_client"
             android:layout_width="210dp"
-            android:layout_height="wrap_content"
+            android:layout_height="1dp"
             android:text="BT_CLIENT"
             style="?attr/main_button" />
 
         <Button
             android:id="@+id/button_main_bluetooth_game_server"
             android:layout_width="210dp"
-            android:layout_height="wrap_content"
+            android:layout_height="1dp"
             android:text="BT_SERVER"
+            style="?attr/main_button" />
+
+        <Button
+            android:id="@+id/button_main_web_game"
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:text="WEB_GAME"
             style="?attr/main_button" />
 
         <Spinner

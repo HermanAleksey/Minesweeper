@@ -23,9 +23,9 @@ import com.example.sapper.view.activity.MinefieldActivity.IMinefieldActivity
 import com.example.sapper.model.constant.BluetoothConstant
 import com.example.sapper.model.constant.Constant
 import com.example.sapper.model.constant.GameConstant
-import com.example.sapper.constant.entity.BluetoothGame
-import com.example.sapper.constant.entity.Field
-import com.example.sapper.constant.entity.Game
+import com.example.sapper.model.entity.local.BluetoothGame
+import com.example.sapper.model.entity.local.Field
+import com.example.sapper.model.entity.local.Game
 import com.example.sapper.controller.logic.MinefieldAdapter
 import com.example.sapper.controller.logic.MultiPlayerService
 import com.example.sapper.controller.logic.SoundPoolWorker

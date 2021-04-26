@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sapper.R
 import com.example.sapper.db.AppDatabase
@@ -18,12 +19,15 @@ import com.example.sapper.dialog.DialogHelp
 import com.example.sapper.model.ThemeApplication
 import com.example.sapper.model.constant.BluetoothConstant
 import com.example.sapper.model.constant.Constant
+import com.example.sapper.model.entity.web.WebPlayer
+import com.example.sapper.network.WebSocketHandler
 import com.example.sapper.view.Utils
 import com.example.sapper.view.activity.MinefieldActivity.activity.MinefieldBTActivity
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import kotlinx.android.synthetic.main.activity_main.*
+import com.example.sapper.view.activity.ChatRoomActivity.ViewModel
 
 
 class MainActivity : AppCompatActivity() {
@@ -41,8 +45,8 @@ class MainActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences(Constant().APP_PREFERENCES_THEME, MODE_PRIVATE)
         ThemeApplication.currentPosition = sharedPreferences.getInt(Constant().CURRENT_THEME, 0)
         Utils.onActivityCreateSetTheme(this)
-
         setContentView(R.layout.activity_main)
+        ViewModel.init()
         setupSpinnerItemSelection()
 
 
@@ -98,6 +102,31 @@ class MainActivity : AppCompatActivity() {
             } else {
                 val intent = Intent(this, MinefieldBTActivity::class.java)
                 intent.putExtra(Constant().EXTRA_BLUETOOTH_ROLE, Constant().ROLE_CLIENT)
+                startActivity(intent)
+            }
+        }
+        button_main_profile.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+        }
+        button_main_web_game.setOnClickListener {
+            //check if player authorized
+            val username = getSharedPreferences(
+                Constant().APP_PREFERENCE_USER,
+                MODE_PRIVATE
+            ).getString(Constant().CURRENT_USER_NAME, "")
+            if (username == "") {
+                Toast.makeText(this, resources.getString(R.string.haveToAuth), Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                val id =
+                    getSharedPreferences(
+                        Constant().APP_PREFERENCE_USER,
+                        MODE_PRIVATE
+                    ).getLong(Constant().CURRENT_USER_ID, 0)
+                WebSocketHandler.openWSConnection(WebPlayer(id, username!!))
+
+                val intent = Intent(this, RoomListActivity::class.java)
                 startActivity(intent)
             }
         }

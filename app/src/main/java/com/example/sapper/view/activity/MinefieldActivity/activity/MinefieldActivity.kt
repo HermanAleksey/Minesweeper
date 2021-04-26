@@ -13,10 +13,10 @@ import com.example.sapper.R
 import com.example.sapper.view.activity.GameResultsActivity
 import com.example.sapper.view.activity.MinefieldActivity.IMinefieldActivity
 import com.example.sapper.model.constant.Constant
-import com.example.sapper.constant.entity.CasualGame
-import com.example.sapper.constant.entity.CompanyGame
-import com.example.sapper.constant.entity.Field
-import com.example.sapper.constant.entity.Game
+import com.example.sapper.model.entity.local.CasualGame
+import com.example.sapper.model.entity.local.CompanyGame
+import com.example.sapper.model.entity.local.Field
+import com.example.sapper.model.entity.local.Game
 import com.example.sapper.controller.logic.SoundPoolWorker
 import com.example.sapper.controller.logic.TimeWorker
 import com.example.sapper.dialog.DialogHelp

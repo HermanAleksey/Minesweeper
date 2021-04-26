@@ -1,7 +1,6 @@
 package com.example.sapper.view.activity
 
 import android.bluetooth.BluetoothAdapter
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -9,8 +8,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Button
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sapper.model.constant.Constant
 import com.example.sapper.model.constant.GameConstant
@@ -20,10 +17,15 @@ import com.example.sapper.view.activity.MinefieldActivity.activity.MinefieldBTAc
 import com.example.sapper.model.constant.BluetoothConstant
 import com.example.sapper.dialog.DialogSettingMinesCount
 import com.example.sapper.dialog.DialogSettingsSize
-import com.example.sapper.constant.entity.*
+import com.example.sapper.model.constant.*
 import com.example.sapper.dialog.DialogHelp
+import com.example.sapper.model.entity.local.BluetoothGame
+import com.example.sapper.model.entity.local.CasualGame
+import com.example.sapper.model.entity.local.Field
+import com.example.sapper.model.entity.local.Game
 import com.example.sapper.view.Utils
 import kotlinx.android.synthetic.main.activity_game_settings.*
+import java.lang.invoke.MethodHandles.constant
 
 
 class GameSettingsActivity : AppCompatActivity(),
