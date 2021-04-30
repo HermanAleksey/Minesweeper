@@ -1,5 +1,6 @@
 package com.example.sapper.view.activity
 
+import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.os.Bundle
@@ -9,23 +10,19 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
-import com.example.sapper.model.constant.Constant
-import com.example.sapper.model.constant.GameConstant
 import com.example.sapper.R
-import com.example.sapper.view.activity.MinefieldActivity.activity.MinefieldActivity
-import com.example.sapper.view.activity.MinefieldActivity.activity.MinefieldBTActivity
-import com.example.sapper.model.constant.BluetoothConstant
+import com.example.sapper.dialog.DialogHelp
 import com.example.sapper.dialog.DialogSettingMinesCount
 import com.example.sapper.dialog.DialogSettingsSize
 import com.example.sapper.model.constant.*
-import com.example.sapper.dialog.DialogHelp
-import com.example.sapper.model.entity.local.BluetoothGame
+import com.example.sapper.model.entity.local.MultiplayerGame
 import com.example.sapper.model.entity.local.CasualGame
 import com.example.sapper.model.entity.local.Field
 import com.example.sapper.model.entity.local.Game
 import com.example.sapper.view.Utils
+import com.example.sapper.view.activity.MinefieldActivity.activity.MinefieldActivity
+import com.example.sapper.view.activity.MinefieldActivity.activity.MinefieldBTActivity
 import kotlinx.android.synthetic.main.activity_game_settings.*
-import java.lang.invoke.MethodHandles.constant
 
 
 class GameSettingsActivity : AppCompatActivity(),
@@ -59,6 +56,10 @@ class GameSettingsActivity : AppCompatActivity(),
             }
             Constant().EXTRA_GAME_MODE_BLUETOOTH -> {
                 title = getString(R.string.bluetooth)
+                ll_game_settings_first_click_mine.visibility = View.GONE
+            }
+            Constant().EXTRA_GAME_MODE_INTERNET -> {
+                title = getString(R.string.internet)
                 ll_game_settings_first_click_mine.visibility = View.GONE
             }
         }
@@ -117,11 +118,24 @@ class GameSettingsActivity : AppCompatActivity(),
         var game: Game? = null
         when(mode){
             Constant().EXTRA_GAME_MODE_CREATIVE -> {
-                game = CasualGame(Field(width,height,minesCount), timeMin,timeSec, firstClickMine)
+                game = CasualGame(
+                    Field(width, height, minesCount),
+                    timeMin,
+                    timeSec,
+                    firstClickMine
+                )
             }
             Constant().EXTRA_GAME_MODE_BLUETOOTH -> {
-                game = BluetoothGame(Field(width,height,minesCount), timeMin,timeSec, sameField)
+                game = MultiplayerGame(Field(width, height, minesCount), timeMin, timeSec, sameField)
                 myIntent.putExtra(Constant().EXTRA_BLUETOOTH_ROLE, Constant().ROLE_SERVER)
+            }
+            Constant().EXTRA_GAME_MODE_INTERNET -> {
+                game = MultiplayerGame(Field(width, height, minesCount), timeMin, timeSec, sameField)
+                val intent = Intent()
+                intent.putExtra(GameConstant().EXTRA_GAME_OBJECT, game)
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+                return@OnClickListener
             }
         }
         myIntent.putExtra(GameConstant().EXTRA_GAME_OBJECT, game)
@@ -247,5 +261,10 @@ class GameSettingsActivity : AppCompatActivity(),
     private fun showSettingMinesCountDialog() {
         val settingMinesCountDialog = DialogSettingMinesCount()
         settingMinesCountDialog.show(supportFragmentManager, Constant().SETTING_MINES_COUNT_DIALOG)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (mode == Constant().EXTRA_GAME_MODE_INTERNET) setResult(Activity.RESULT_CANCELED)
     }
 }

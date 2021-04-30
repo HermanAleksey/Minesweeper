@@ -49,14 +49,14 @@
         <Button
             android:id="@+id/button_main_bluetooth_game_client"
             android:layout_width="210dp"
-            android:layout_height="1dp"
+            android:layout_height="wrap_content"
             android:text="BT_CLIENT"
             style="?attr/main_button" />
 
         <Button
             android:id="@+id/button_main_bluetooth_game_server"
             android:layout_width="210dp"
-            android:layout_height="1dp"
+            android:layout_height="wrap_content"
             android:text="BT_SERVER"
             style="?attr/main_button" />
 

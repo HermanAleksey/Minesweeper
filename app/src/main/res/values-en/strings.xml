@@ -85,7 +85,7 @@
     <string name="useTheSameField">Use the same minefield:</string>
     <string name="createGame">Create game</string>
     <string name="minefieldSize">Minefield size</string>
-    <string name="nickname">Nickname</string>
+    <string name="nickname">Nickname:</string>
     <string name="player_1">Player 1</string>
     <string name="player_2">Player 2</string>
     <string name="field_size">Field size:</string>
@@ -196,4 +196,5 @@ Several things are required to play via bluetooth: \n
 
     //WEB PART---------------------------------------------------------------------------------------------------------------------------------------------------------------
     <string name="haveToAuth">You have to authorize first!</string>
+    <string name="internet">Internet</string>
 </resources>

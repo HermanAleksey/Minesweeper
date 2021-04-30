@@ -48,7 +48,6 @@
         <activity android:name=".view.activity.WaitingRoomActivity" />
         <activity
             android:name=".view.activity.GameSettingsActivity"
-            android:parentActivityName=".view.activity.MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.CompanyLevelActivity"

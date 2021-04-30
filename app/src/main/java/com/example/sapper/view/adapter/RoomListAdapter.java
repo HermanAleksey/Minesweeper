@@ -23,9 +23,14 @@ public class RoomListAdapter extends ArrayAdapter<RoomDTO> implements View.OnCli
 
     // View lookup cache
     private static class ViewHolder {
-        TextView tvId;
-        TextView tvPlayer_1;
-        TextView tvPlayer_2;
+        TextView tv_id;
+        TextView tv_player_1;
+        TextView tv_player_2;
+        TextView tv_height;
+        TextView tv_width;
+        TextView tv_mines;
+        TextView tv_time_m;
+        TextView tv_time_s;
     }
 
     public RoomListAdapter(ArrayList<RoomDTO> data, Context context) {
@@ -61,9 +66,14 @@ public class RoomListAdapter extends ArrayAdapter<RoomDTO> implements View.OnCli
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.rooms_list_item, parent, false);
-            viewHolder.tvId = convertView.findViewById(R.id.tv_rooms_list_item_id);
-            viewHolder.tvPlayer_1 = convertView.findViewById(R.id.tv_rooms_list_item_player_1);
-            viewHolder.tvPlayer_2 = convertView.findViewById(R.id.tv_rooms_list_item_player_2);
+            viewHolder.tv_id = convertView.findViewById(R.id.tv_rooms_list_item_id);
+            viewHolder.tv_player_1 = convertView.findViewById(R.id.tv_rooms_list_item_player_1);
+            viewHolder.tv_player_2 = convertView.findViewById(R.id.tv_rooms_list_item_player_2);
+            viewHolder.tv_height = convertView.findViewById(R.id.tv_rooms_list_item_height);
+            viewHolder.tv_width = convertView.findViewById(R.id.tv_rooms_list_item_width);
+            viewHolder.tv_mines = convertView.findViewById(R.id.tv_rooms_list_item_mines);
+            viewHolder.tv_time_m = convertView.findViewById(R.id.tv_rooms_list_item_time_min);
+            viewHolder.tv_time_s = convertView.findViewById(R.id.tv_rooms_list_item_time_sec);
 
             result = convertView;
 
@@ -77,10 +87,16 @@ public class RoomListAdapter extends ArrayAdapter<RoomDTO> implements View.OnCli
         result.startAnimation(animation);
         lastPosition = position;
 
-        viewHolder.tvId.setText("" + dataModel.getId());
-        viewHolder.tvPlayer_1.setText(""+dataModel.getPlayer_1().getUsername());
-        viewHolder.tvPlayer_2.setText(""+dataModel.getPlayer_2().getUsername());
-        viewHolder.tvId.setOnClickListener(this);
+        viewHolder.tv_id.setText("" + dataModel.getId());
+        viewHolder.tv_player_1.setText(""+dataModel.getPlayer_1().getUsername());
+        viewHolder.tv_player_2.setText(""+dataModel.getPlayer_2().getUsername());
+//        viewHolder.tv_id.setOnClickListener(this);
+
+        viewHolder.tv_height.setText(""+dataModel.getHeight());
+        viewHolder.tv_width.setText(""+dataModel.getWidth());
+        viewHolder.tv_mines.setText(""+dataModel.getMinesCount());
+        viewHolder.tv_time_m.setText(""+dataModel.getTimeMin());
+        viewHolder.tv_time_s.setText(""+dataModel.getTimeSec());
         // Return the completed view to render on screen
         return convertView;
     }

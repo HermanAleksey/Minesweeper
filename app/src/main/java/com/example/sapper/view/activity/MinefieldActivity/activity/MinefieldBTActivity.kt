@@ -14,6 +14,8 @@ import android.widget.Button
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.bsuir.herman.saper.HostField
+import com.bsuir.herman.saper.UserField
 import com.example.sapper.R
 import com.example.sapper.view.activity.DeviceListActivity
 import com.example.sapper.view.activity.GameResultsActivity
@@ -23,7 +25,7 @@ import com.example.sapper.view.activity.MinefieldActivity.IMinefieldActivity
 import com.example.sapper.model.constant.BluetoothConstant
 import com.example.sapper.model.constant.Constant
 import com.example.sapper.model.constant.GameConstant
-import com.example.sapper.model.entity.local.BluetoothGame
+import com.example.sapper.model.entity.local.MultiplayerGame
 import com.example.sapper.model.entity.local.Field
 import com.example.sapper.model.entity.local.Game
 import com.example.sapper.controller.logic.MinefieldAdapter
@@ -51,10 +53,10 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
     private var GSONobject = ""
     private val gson = Gson()
 
-    lateinit var roomSettings: BluetoothGame
+    lateinit var roomSettings: MultiplayerGame
     lateinit var arrayButtonsField: Array<Array<Button>>
-    lateinit var hostField: com.bsuir.herman.saper.HostField
-    lateinit var userField: com.bsuir.herman.saper.UserField
+    lateinit var hostField: HostField
+    lateinit var userField: UserField
 
     /** ---------------------------------SOUND POOL IMPL -----------------------------------**/
     private lateinit var soundPoolWorker: SoundPoolWorker
@@ -72,7 +74,6 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
 
     private var gameTimerMilli: Long = 0
 
-    //    private var startTime: Long = 0
     lateinit var stopWatchRunnable: Runnable
 
 
@@ -134,7 +135,7 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
         when (intent.getStringExtra(Constant().EXTRA_BLUETOOTH_ROLE)) {
             Constant().ROLE_SERVER -> {
                 roomSettings =
-                    intent.getSerializableExtra(GameConstant().EXTRA_GAME_OBJECT) as BluetoothGame
+                    intent.getSerializableExtra(GameConstant().EXTRA_GAME_OBJECT) as MultiplayerGame
                 GSONobject = gson.toJson(roomSettings)
                 role = "Server"
 
@@ -489,7 +490,7 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
                     when {
                         /**-----------------------------------Processing JSON with ROOM configs-----------------------------------------------*/
                         readMessage.startsWith('{') -> {
-                            roomSettings = gson.fromJson(readMessage, BluetoothGame::class.java)
+                            roomSettings = gson.fromJson(readMessage, MultiplayerGame::class.java)
                             textViewAppend("Client get and processing room info gson:")
                             textViewAppend(roomSettings.toString())
 

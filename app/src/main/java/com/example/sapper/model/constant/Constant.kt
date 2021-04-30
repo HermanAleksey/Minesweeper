@@ -28,4 +28,6 @@ class Constant {
     val APP_PREFERENCE_USER: String = "com.example.sapper.APP_PREFERENCE_USER"
     val CURRENT_USER_ID: String = "com.example.sapper.CURRENT_USER_ID"
     val CURRENT_USER_NAME: String = "com.example.sapper.CURRENT_USERNAME"
+
+    val WEB_GAME_SETTINGS_REQUEST: Int = 100
 }

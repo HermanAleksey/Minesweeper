@@ -1,7 +1,9 @@
 package com.example.sapper.view.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -10,7 +12,12 @@ import com.example.sapper.network.NetworkService
 import com.example.sapper.network.WebSocketHandler
 import com.example.sapper.view.adapter.RoomListAdapter
 import com.example.sapper.databinding.ActivityRoomListBinding
+import com.example.sapper.model.constant.Constant
+import com.example.sapper.model.constant.GameConstant
 import com.example.sapper.model.dto.RoomDTO
+import com.example.sapper.model.dto.WebGameDto
+import com.example.sapper.model.entity.local.Field
+import com.example.sapper.model.entity.local.MultiplayerGame
 import com.example.sapper.view.activity.ChatRoomActivity.ChatRoomActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -39,31 +46,48 @@ class RoomListActivity : AppCompatActivity(), IJoinRoomCallback {
             finish()
         }
         binding.buttonRoomsListAdd.setOnClickListener {
-            NetworkService.getSaperApi().createRoom().enqueue(object : Callback<RoomDTO> {
-                override fun onResponse(call: Call<RoomDTO>?, response: Response<RoomDTO>?) {
-                    Toast.makeText(this@RoomListActivity, "onResponse", Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onFailure(call: Call<RoomDTO>?, t: Throwable?) {
-                    Toast.makeText(this@RoomListActivity, "onFailure", Toast.LENGTH_SHORT).show()
-                }
-
-            })
+            //TODO("перенестись на экран настройки комнаты и веруть готорвый обьект.
+            // "отправить его на сервер)
+//            sendRequestCreateRoom(WebGameDto(8,8,8,5,0,false))
+            val intent = Intent(this, GameSettingsActivity::class.java)
+            intent.putExtra(Constant().EXTRA_GAME_MODE, Constant().EXTRA_GAME_MODE_INTERNET)
+            startActivityForResult(intent, Constant().WEB_GAME_SETTINGS_REQUEST)
         }
     }
 
+    private fun sendRequestCreateRoom(room: WebGameDto) {
+        Log.e(TAG, "sendRequestCreateRoom: room:${room.toString()}")
+        NetworkService.getSaperApi().createRoom(room).enqueue(object : Callback<RoomDTO> {
+            override fun onResponse(call: Call<RoomDTO>?, response: Response<RoomDTO>?) {
+                Toast.makeText(this@RoomListActivity, "onResponse", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onFailure(call: Call<RoomDTO>?, t: Throwable?) {
+                Toast.makeText(this@RoomListActivity, "onFailure", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
+
     private fun fetchData() {
-        NetworkService.getSaperApi().selectAllRooms().enqueue(object : Callback<ArrayList<RoomDTO>> {
-            override fun onResponse(call: Call<ArrayList<RoomDTO>>?, response: Response<ArrayList<RoomDTO>>?) {
-                Toast.makeText(this@RoomListActivity, "Rooms list updated", Toast.LENGTH_SHORT).show()
+        NetworkService.getSaperApi().selectAllRooms().enqueue(object :
+            Callback<ArrayList<RoomDTO>> {
+            override fun onResponse(
+                call: Call<ArrayList<RoomDTO>>?,
+                response: Response<ArrayList<RoomDTO>>?
+            ) {
+                Toast.makeText(this@RoomListActivity, "Rooms list updated", Toast.LENGTH_SHORT)
+                    .show()
                 rooms = response!!.body()
+                Log.e(TAG, "onResponse: $rooms")
                 runOnUiThread {
                     updateListView()
                 }
             }
 
             override fun onFailure(call: Call<ArrayList<RoomDTO>>?, t: Throwable?) {
-                Toast.makeText(this@RoomListActivity, "Error update list", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@RoomListActivity, "Error update list", Toast.LENGTH_SHORT)
+                    .show()
             }
 
         })
@@ -89,13 +113,34 @@ class RoomListActivity : AppCompatActivity(), IJoinRoomCallback {
     override fun onJoinRoomResponse(result: Boolean) {
         if (result) {
             val intent = Intent(this, ChatRoomActivity::class.java)
-            intent.putExtra("ROOM", room)
+//            val game = MultiplayerGame(
+//                Field(room.width, room.height, room.minesCount),
+//                room.timeMin,
+//                room.timeSec,
+//                room.isSameField
+//            )
+            intent.putExtra(GameConstant().EXTRA_GAME_OBJECT, room)
             startActivity(intent)
         }
     }
 
-//    override fun onRoomUpdateReceived(uname1: String, uname2: String) {
-//        room.player_1.username = uname1
-//        room.player_2.username = uname2
-//    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode != Activity.RESULT_OK) return
+
+        val game = data?.getSerializableExtra(GameConstant().EXTRA_GAME_OBJECT) as MultiplayerGame
+        sendRequestCreateRoom(
+            WebGameDto(
+                game.field.width,
+                game.field.height,
+                game.field.minesCount,
+                game.minutes,
+                game.seconds,
+                game.sameField
+            )
+        )
+
+
+    }
 }
