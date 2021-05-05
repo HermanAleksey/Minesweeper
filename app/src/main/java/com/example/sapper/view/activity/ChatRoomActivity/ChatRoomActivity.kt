@@ -27,7 +27,7 @@ import com.example.sapper.model.constant.GameConstant
 import com.example.sapper.model.dto.RoomDTO
 import com.example.sapper.model.entity.local.Field
 import com.example.sapper.model.entity.local.Game
-import com.example.sapper.network.WebSocketHandler
+import com.example.sapper.controller.network.WebSocketHandler
 import com.example.sapper.view.Utils
 import com.example.sapper.view.activity.GameResultsActivity
 import com.example.sapper.view.activity.MinefieldActivity.IMinefieldActivity
@@ -133,7 +133,6 @@ class ChatRoomActivity : AppCompatActivity(), IMessageCallback, IMinefieldActivi
             if (binding.tvChatWaitingRoomPlayer1Name.text != "null"
                 && binding.tvChatWaitingRoomPlayer2Name.text != "null"
             ) {
-                //TODO() Если готовы оба игрока (Подтвердить рэди) - старт.
                 if (binding.chbWaitingRoomPlayer1Ready.isChecked && binding.chbWaitingRoomPlayer2Ready.isChecked) {
                     sendStartGameRequest()
                 } else {

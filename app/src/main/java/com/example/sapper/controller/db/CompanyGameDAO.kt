@@ -1,4 +1,4 @@
-package com.example.sapper.db
+package com.example.sapper.controller.db
 
 import androidx.room.*
 import com.example.sapper.model.entity.local.CompanyGameDB

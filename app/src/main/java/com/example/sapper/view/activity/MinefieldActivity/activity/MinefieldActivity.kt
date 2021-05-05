@@ -7,6 +7,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.bsuir.herman.saper.HostField
+import com.bsuir.herman.saper.UserField
 import com.example.sapper.model.constant.GameConstant
 import com.example.sapper.controller.logic.MinefieldAdapter
 import com.example.sapper.R
@@ -27,8 +29,8 @@ import kotlinx.android.synthetic.main.activity_minefield.*
 
 class MinefieldActivity : AppCompatActivity(), IMinefieldActivity,
     DialogRewardedAd.AdDialogListener {
-    private var hostField: com.bsuir.herman.saper.HostField? = null
-    private lateinit var userField: com.bsuir.herman.saper.UserField
+    private var hostField: HostField? = null
+    private lateinit var userField: UserField
     private lateinit var arrayButtonsField: Array<Array<Button>>
     private var previousField: Array<Array<Char>>? = null
     private var newAttemptAvailable = true

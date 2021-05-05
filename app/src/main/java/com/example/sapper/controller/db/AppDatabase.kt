@@ -1,4 +1,4 @@
-package com.example.sapper.db
+package com.example.sapper.controller.db
 
 import android.content.Context
 import android.util.Log

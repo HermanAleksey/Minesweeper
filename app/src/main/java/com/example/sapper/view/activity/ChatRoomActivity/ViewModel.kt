@@ -3,7 +3,7 @@ package com.example.sapper.view.activity.ChatRoomActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.bsuir.herman.authscreenapp.IRoomUpdateCallback
-import com.example.sapper.network.WebSocketHandler.setRoomUpdateCallbackListener
+import com.example.sapper.controller.network.WebSocketHandler.setRoomUpdateCallbackListener
 
 object ViewModel : IRoomUpdateCallback{
 

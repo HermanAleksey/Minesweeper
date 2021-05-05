@@ -1,4 +1,4 @@
-package com.example.sapper.network.api;
+package com.example.sapper.controller.network.api;
 
 import com.example.sapper.model.dto.AuthenticationRequestDto;
 import com.example.sapper.model.dto.LoginResponseDto;

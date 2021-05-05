@@ -1,7 +1,7 @@
-package com.example.sapper.network
+package com.example.sapper.controller.network
 
-import com.example.sapper.network.api.AuthApi
-import com.example.sapper.network.api.SaperApi
+import com.example.sapper.controller.network.api.AuthApi
+import com.example.sapper.controller.network.api.SaperApi
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

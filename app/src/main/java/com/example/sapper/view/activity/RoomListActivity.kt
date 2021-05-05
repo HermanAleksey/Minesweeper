@@ -8,15 +8,14 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bsuir.herman.authscreenapp.IJoinRoomCallback
-import com.example.sapper.network.NetworkService
-import com.example.sapper.network.WebSocketHandler
+import com.example.sapper.controller.network.NetworkService
+import com.example.sapper.controller.network.WebSocketHandler
 import com.example.sapper.view.adapter.RoomListAdapter
 import com.example.sapper.databinding.ActivityRoomListBinding
 import com.example.sapper.model.constant.Constant
 import com.example.sapper.model.constant.GameConstant
 import com.example.sapper.model.dto.RoomDTO
 import com.example.sapper.model.dto.WebGameDto
-import com.example.sapper.model.entity.local.Field
 import com.example.sapper.model.entity.local.MultiplayerGame
 import com.example.sapper.view.activity.ChatRoomActivity.ChatRoomActivity
 import retrofit2.Call
@@ -46,9 +45,6 @@ class RoomListActivity : AppCompatActivity(), IJoinRoomCallback {
             finish()
         }
         binding.buttonRoomsListAdd.setOnClickListener {
-            //TODO("перенестись на экран настройки комнаты и веруть готорвый обьект.
-            // "отправить его на сервер)
-//            sendRequestCreateRoom(WebGameDto(8,8,8,5,0,false))
             val intent = Intent(this, GameSettingsActivity::class.java)
             intent.putExtra(Constant().EXTRA_GAME_MODE, Constant().EXTRA_GAME_MODE_INTERNET)
             startActivityForResult(intent, Constant().WEB_GAME_SETTINGS_REQUEST)
@@ -113,12 +109,6 @@ class RoomListActivity : AppCompatActivity(), IJoinRoomCallback {
     override fun onJoinRoomResponse(result: Boolean) {
         if (result) {
             val intent = Intent(this, ChatRoomActivity::class.java)
-//            val game = MultiplayerGame(
-//                Field(room.width, room.height, room.minesCount),
-//                room.timeMin,
-//                room.timeSec,
-//                room.isSameField
-//            )
             intent.putExtra(GameConstant().EXTRA_GAME_OBJECT, room)
             startActivity(intent)
         }

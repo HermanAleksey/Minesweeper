@@ -14,13 +14,13 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sapper.R
-import com.example.sapper.db.AppDatabase
+import com.example.sapper.controller.db.AppDatabase
 import com.example.sapper.dialog.DialogHelp
 import com.example.sapper.model.ThemeApplication
 import com.example.sapper.model.constant.BluetoothConstant
 import com.example.sapper.model.constant.Constant
 import com.example.sapper.model.entity.web.WebPlayer
-import com.example.sapper.network.WebSocketHandler
+import com.example.sapper.controller.network.WebSocketHandler
 import com.example.sapper.view.Utils
 import com.example.sapper.view.activity.MinefieldActivity.activity.MinefieldBTActivity
 import com.google.android.gms.ads.AdRequest
@@ -28,6 +28,7 @@ import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import kotlinx.android.synthetic.main.activity_main.*
 import com.example.sapper.view.activity.ChatRoomActivity.ViewModel
+import java.time.LocalTime
 
 
 class MainActivity : AppCompatActivity() {

@@ -1,6 +1,5 @@
 package com.example.sapper.view.activity
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,17 +7,16 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sapper.databinding.ActivityAuthBinding
-import com.example.sapper.model.ThemeApplication
 import com.example.sapper.model.constant.Constant
 import com.example.sapper.model.dto.AuthenticationRequestDto
 import com.example.sapper.model.dto.LoginResponseDto
 import com.example.sapper.model.entity.web.WebPlayer
-import com.example.sapper.network.NetworkService
-import com.example.sapper.network.WebSocketHandler
+import com.example.sapper.controller.network.NetworkService
 import com.example.sapper.view.Utils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.LocalTime
 
 class AuthActivity : AppCompatActivity() {
 
@@ -45,6 +43,7 @@ class AuthActivity : AppCompatActivity() {
             val body = AuthenticationRequestDto()
             body.username = "qqqq"
             body.password = "qqqq"
+
             NetworkService.getAuthApi()
                 .login(body)
                 .enqueue(object : Callback<LoginResponseDto> {

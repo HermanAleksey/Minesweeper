@@ -1,7 +1,6 @@
-package com.example.sapper.network
+package com.example.sapper.controller.network
 
 import android.util.Log
-import android.widget.Toast
 import com.bsuir.herman.authscreenapp.IJoinRoomCallback
 import com.bsuir.herman.authscreenapp.IMessageCallback
 import com.bsuir.herman.authscreenapp.IRoomUpdateCallback

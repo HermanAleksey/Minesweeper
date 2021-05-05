@@ -2,7 +2,7 @@ package com.example.sapper.controller.logic
 
 import android.content.Context
 import androidx.room.Room
-import com.example.sapper.db.AppDatabase
+import com.example.sapper.controller.db.AppDatabase
 
 class AsynсWorker {
 
