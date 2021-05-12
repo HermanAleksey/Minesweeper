@@ -2,78 +2,108 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    style="?attr/background_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.activity.MainActivity"
-    android:orientation="vertical"
     android:gravity="center"
-    style="?attr/background_layout">
+    android:orientation="vertical"
+    tools:context=".view.activity.MainActivity">
 
     <LinearLayout
+        style="?attr/background_image_main"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
-        style="?attr/background_image_main"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            style="?attr/game_label"
-            android:text="@string/app_name" />
+                <TextView
+                    style="?attr/game_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/app_name" />
 
-        <ImageButton
-            android:id="@+id/button_main_profile"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/ic_baseline_person_24"
-            android:layout_gravity="center"
-            android:contentDescription="PROFILE" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
 
-        <Button
-            android:id="@+id/button_main_company"
-            android:layout_width="210dp"
-            android:layout_height="wrap_content"
-            android:text="@string/company"
-            style="?attr/main_button" />
+                    <ImageButton
+                        android:id="@+id/button_main_profile"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="PROFILE"
+                        style="?attr/main_button"
+                        android:src="@drawable/ic_baseline_person_24" />
 
-        <Button
-            android:id="@+id/button_main_custom_game"
-            android:layout_width="210dp"
-            android:layout_height="wrap_content"
-            android:text="@string/singleplayer"
-            style="?attr/main_button" />
+                    <ImageButton
+                        android:id="@+id/button_main_themes"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="THEMES"
+                        style="?attr/main_button"
+                        android:src="@drawable/ic_baseline_format_paint_24" />
 
-        <Button
-            android:id="@+id/button_main_bluetooth_game_client"
-            android:layout_width="210dp"
-            android:layout_height="wrap_content"
-            android:text="BT_CLIENT"
-            style="?attr/main_button" />
+                </LinearLayout>
 
-        <Button
-            android:id="@+id/button_main_bluetooth_game_server"
-            android:layout_width="210dp"
-            android:layout_height="wrap_content"
-            android:text="BT_SERVER"
-            style="?attr/main_button" />
+                <Button
+                    android:id="@+id/button_main_company"
+                    style="?attr/main_button"
+                    android:layout_width="210dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/company" />
 
-        <Button
-            android:id="@+id/button_main_web_game"
-            android:layout_width="210dp"
-            android:layout_height="wrap_content"
-            android:text="WEB_GAME"
-            style="?attr/main_button" />
+                <Button
+                    android:id="@+id/button_main_custom_game"
+                    style="?attr/main_button"
+                    android:layout_width="210dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/singleplayer" />
 
-        <Spinner
-            android:id="@+id/spThemes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:entries="@array/theme_array"
-            android:spinnerMode="dropdown" />
+                <Button
+                    android:id="@+id/button_main_bluetooth_game_client"
+                    style="?attr/main_button"
+                    android:layout_width="210dp"
+                    android:layout_height="wrap_content"
+                    android:text="BT_CLIENT" />
+
+                <Button
+                    android:id="@+id/button_main_bluetooth_game_server"
+                    style="?attr/main_button"
+                    android:layout_width="210dp"
+                    android:layout_height="wrap_content"
+                    android:text="BT_SERVER" />
+
+                <Button
+                    android:id="@+id/button_main_web_game"
+                    style="?attr/main_button"
+                    android:layout_width="210dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/web_game" />
+
+                <Spinner
+                    android:id="@+id/spThemes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/theme_array"
+                    android:spinnerMode="dropdown" />
+
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
+
 
     <com.google.android.gms.ads.AdView
         xmlns:ads="http://schemas.android.com/apk/res-auto"
@@ -81,7 +111,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
-    </com.google.android.gms.ads.AdView>
-
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
 </LinearLayout>

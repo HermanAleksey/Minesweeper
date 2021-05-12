@@ -18,7 +18,7 @@
     <attr name="casual_description" format="reference"/>         // обычные надписи/пояснения
     //minefield activity
     <attr name="minefield_time_label" format="reference"/>//          подпись времени игры
-    <attr name="minefield_filed_background" format="reference" />     зданий план поля, заполненного ячейками
+    <attr name="minefield_filed_background" format="reference" />     задний план поля, заполненного ячейками
     <attr name="seekBar_cell_size" format="reference" />                  Сик бар размера ячейки
     <attr name="minefield_toggle_button" format="reference"/>//         тугл кнопка выбора инструмента
     //helper dialog
@@ -26,6 +26,29 @@
     <attr name="background_image_main" format="reference" />
     <attr name="company_bg" format="reference" />
     <attr name="company_level_buttons" format="reference"/>
+
+    /*
+    Задний фон
+    задний фон минного поля
+
+    Сильная черта
+    Вторичная черта
+    Вертикальная черта
+    Рамка окончания игры
+
+    Чекбокс
+    Сик бар размера ячейки
+    тугл кнопка выбора инструмента
+
+    название игры
+    заголовки окон
+    текст результата игры
+    обычный текст
+
+    кнопки меню
+    кнопки обычные, в диалогах
+    кнопки уровней кампании
+    */
 
 
 </resources>

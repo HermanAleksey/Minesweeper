@@ -21,6 +21,7 @@ import com.example.sapper.model.constant.BluetoothConstant
 import com.example.sapper.model.constant.Constant
 import com.example.sapper.model.entity.web.WebPlayer
 import com.example.sapper.controller.network.WebSocketHandler
+import com.example.sapper.dialog.DialogThemes
 import com.example.sapper.view.Utils
 import com.example.sapper.view.activity.MinefieldActivity.activity.MinefieldBTActivity
 import com.google.android.gms.ads.AdRequest
@@ -31,7 +32,7 @@ import com.example.sapper.view.activity.ChatRoomActivity.ViewModel
 import java.time.LocalTime
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), DialogThemes.DialogThemesListener {
 
     companion object Companion {
         lateinit var context: Context
@@ -41,14 +42,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         /*theme processing*/
         val sharedPreferences = getSharedPreferences(Constant().APP_PREFERENCES_THEME, MODE_PRIVATE)
         ThemeApplication.currentPosition = sharedPreferences.getInt(Constant().CURRENT_THEME, 0)
         Utils.onActivityCreateSetTheme(this)
         setContentView(R.layout.activity_main)
+
         ViewModel.init()
-        setupSpinnerItemSelection()
+//        setupSpinnerItemSelection()
 
 
         /** filling DB with values**/
@@ -57,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         if (newDB) Thread {
             try {
                 db.callOnCreateDatabase(this)
-                getPreferences(MODE_PRIVATE).edit().putBoolean("NEW_DB", false)
+                getPreferences(MODE_PRIVATE).edit().putBoolean("NEW_DB", false).apply()
             } catch (e: Exception) {
                 Log.e("TAG", "onCreate: Error on initial filling DB")
             }
@@ -110,6 +111,9 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
+        button_main_themes.setOnClickListener {
+            showThemesDialog()
+        }
         button_main_web_game.setOnClickListener {
             //check if player authorized
             val username = getSharedPreferences(
@@ -160,27 +164,17 @@ class MainActivity : AppCompatActivity() {
         dialog.show(supportFragmentManager, Constant().HELPER_DIALOG)
     }
 
-
-    private lateinit var spThemes: Spinner
-    private fun setupSpinnerItemSelection() {
-        spThemes = findViewById<View>(R.id.spThemes) as Spinner
-        spThemes.setSelection(ThemeApplication.currentPosition)
-        ThemeApplication.currentPosition = spThemes.selectedItemPosition
-        spThemes.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onItemSelected(
-                adapterView: AdapterView<*>?, view: View,
-                i: Int, l: Long
-            ) {
-                if (ThemeApplication.currentPosition != i) {
-                    saveCurrentTheme(i)
-                    Utils.applySelectedTheme(this@MainActivity)
-                }
-                ThemeApplication.currentPosition = i
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }
+    private fun showThemesDialog() {
+        val dialog = DialogThemes()
+        dialog.show(supportFragmentManager, Constant().THEME_DIALOG)
     }
+
+    override fun setThemeCallback(themeNumber: Int) {
+        if (themeNumber == -1) return
+        saveCurrentTheme(themeNumber)
+        Utils.applySelectedTheme(this@MainActivity)
+    }
+
 
     private fun saveCurrentTheme(pos: Int) {
         val sharedPreferences = getSharedPreferences(

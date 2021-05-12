@@ -1,4 +1,5 @@
 <resources>
+    <string name="null_value">null</string>
     <string name="company">Кампания</string>
     <string name="singleplayer">Своя игра</string>
     <string name="multiplayer">Сетевая игра</string>
@@ -196,4 +197,7 @@
     //WEB PART---------------------------------------------------------------------------------------------------------------------------------------------------------------
     <string name="haveToAuth">Вам нужно авторизоваться!</string>
     <string name="internet">Интернет</string>
+    <string name="waiting_room">Комната ожидания</string>
+    <string name="room_description">Описание комнаты</string>
+    <string name="web_game">Сетевая игра</string>
 </resources>

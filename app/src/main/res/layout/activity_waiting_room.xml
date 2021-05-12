@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    style="?attr/background_layout">
 
     <LinearLayout
         android:id="@+id/ll_host_waiting_room"
@@ -14,13 +15,15 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:gravity="center"
-        android:text="Комната ожидания" />
+        android:text="@string/waiting_room"
+        style="?attr/main_label"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:gravity="center|bottom"
-        android:text="Описание комнаты:" />
+        android:text="@string/room_description"
+        style="?attr/casual_description"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,20 +39,22 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="@string/game_mode" />
+                android:text="@string/game_mode"
+                style="?attr/casual_description"/>
 
             <TextView
                 android:id="@+id/tv_host_room_game_mode"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Класическая" />
+                android:text="Класическая"
+                style="?attr/casual_description"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -57,7 +62,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="@string/minefieldSize" />
+                android:text="@string/minefieldSize"
+                style="?attr/casual_description"/>
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -69,18 +75,21 @@
                     android:id="@+id/tv_host_room_field_height"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10" />
+                    android:text="10"
+                    style="?attr/casual_description"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="x" />
+                    android:text="x"
+                    style="?attr/casual_description"/>
 
                 <TextView
                     android:id="@+id/tv_host_room_field_width"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="10" />
+                    android:text="10"
+                    style="?attr/casual_description"/>
 
             </LinearLayout>
 
@@ -95,14 +104,16 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="@string/minesCount" />
+                android:text="@string/minesCount"
+                style="?attr/casual_description"/>
 
             <TextView
                 android:id="@+id/tv_host_room_mines_amount"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="10" />
+                android:text="10"
+                style="?attr/casual_description"/>
 
         </LinearLayout>
 
@@ -115,14 +126,16 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="@string/timeLimit" />
+                android:text="@string/timeLimit"
+                style="?attr/casual_description"/>
 
             <TextView
                 android:id="@+id/tv_host_room_time_limit"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="10:10" />
+                android:text="10:10"
+                style="?attr/casual_description"/>
 
         </LinearLayout>
 
@@ -135,14 +148,16 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="@string/firstClickCanBeOnAMine" />
+                android:text="@string/firstClickCanBeOnAMine"
+                style="?attr/casual_description"/>
 
             <CheckBox
                 android:id="@+id/chb_host_room_first_click"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:clickable="false"/>
+                android:clickable="false"
+                style="?attr/checkbox_game_settings"/>
 
         </LinearLayout>
 
@@ -155,14 +170,16 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="@string/leaveAfterMatch" />
+                android:text="@string/leaveAfterMatch"
+                style="?attr/casual_description"/>
 
             <CheckBox
                 android:id="@+id/cb_host_room_exit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:clickable="false"/>
+                android:clickable="false"
+                style="?attr/checkbox_game_settings"/>
 
         </LinearLayout>
 
@@ -175,14 +192,16 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="@string/useTheSameField" />
+                android:text="@string/useTheSameField"
+                style="?attr/casual_description"/>
 
             <CheckBox
                 android:id="@+id/cb_host_room_use_same_field"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:clickable="false"/>
+                android:clickable="false"
+                style="?attr/checkbox_game_settings"/>
 
         </LinearLayout>
 
@@ -190,7 +209,8 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:gravity="center|bottom"
-            android:text="@string/player_1" />
+            android:text="@string/player_1"
+            style="?attr/casual_description"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -206,14 +226,16 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@string/nickname" />
+                    android:text="@string/nickname"
+                    style="?attr/casual_description"/>
 
                 <TextView
                     android:id="@+id/tv_host_room_player_1_name"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="null" />
+                    android:text="@string/null_value"
+                    style="?attr/casual_description"/>
 
             </LinearLayout>
         </LinearLayout>
@@ -222,7 +244,8 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:gravity="center|bottom"
-            android:text="@string/player_2" />
+            android:text="@string/player_2"
+            style="?attr/casual_description"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -238,14 +261,16 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@string/nickname" />
+                    android:text="@string/nickname"
+                    style="?attr/casual_description"/>
 
                 <TextView
                     android:id="@+id/tv_host_room_player_2_name"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="null" />
+                    android:text="@string/null_value"
+                    style="?attr/casual_description"/>
 
             </LinearLayout>
 
@@ -257,7 +282,8 @@
             android:layout_height="match_parent"
             android:layout_marginTop="20dp"
             android:clickable="false"
-            android:text="Начать игру" />
+            android:text="@string/startGame"
+            style="?attr/main_button"/>
 
     </LinearLayout>
 </LinearLayout>

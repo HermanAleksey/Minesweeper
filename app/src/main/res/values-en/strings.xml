@@ -1,4 +1,5 @@
 <resources>
+    <string name="null_value">null</string>
     <string name="app_name" translatable="false">Minesweeper</string>
     <string name="company">Company</string>
     <string name="singleplayer">Custom game</string>
@@ -197,4 +198,7 @@ Several things are required to play via bluetooth: \n
     //WEB PART---------------------------------------------------------------------------------------------------------------------------------------------------------------
     <string name="haveToAuth">You have to authorize first!</string>
     <string name="internet">Internet</string>
+    <string name="waiting_room">Waiting room</string>
+    <string name="room_description">Room description</string>
+    <string name="web_game">Web game</string>
 </resources>

@@ -35,8 +35,6 @@ class CompanyLevelActivity : AppCompatActivity() {
 
         /**----------------------------GENERATING NUM OF LEVELS--------------------------**/
 
-        //TODO("" 1 жизнь за рекламу)
-
         object : Thread() {
             override fun run() {
                 super.run()

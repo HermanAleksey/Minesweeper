@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bsuir.herman.authscreenapp.IJoinRoomCallback
+import com.example.sapper.R
 import com.example.sapper.controller.network.NetworkService
 import com.example.sapper.controller.network.WebSocketHandler
 import com.example.sapper.view.adapter.RoomListAdapter
@@ -17,6 +18,7 @@ import com.example.sapper.model.constant.GameConstant
 import com.example.sapper.model.dto.RoomDTO
 import com.example.sapper.model.dto.WebGameDto
 import com.example.sapper.model.entity.local.MultiplayerGame
+import com.example.sapper.view.Utils
 import com.example.sapper.view.activity.ChatRoomActivity.ChatRoomActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -27,10 +29,11 @@ class RoomListActivity : AppCompatActivity(), IJoinRoomCallback {
 
     lateinit var binding: ActivityRoomListBinding
     lateinit var rooms: ArrayList<RoomDTO>
-    val TAG = "RAG"
+    val TAG = "TAG"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Utils.onActivityCreateSetTheme(this)
         binding = ActivityRoomListBinding.inflate(layoutInflater)
         val view: View = binding.root
         setContentView(view)
@@ -41,9 +44,6 @@ class RoomListActivity : AppCompatActivity(), IJoinRoomCallback {
         binding.buttonRoomsListRefresh.setOnClickListener {
             fetchData()
         }
-        binding.buttonRoomsListLogout.setOnClickListener {
-            finish()
-        }
         binding.buttonRoomsListAdd.setOnClickListener {
             val intent = Intent(this, GameSettingsActivity::class.java)
             intent.putExtra(Constant().EXTRA_GAME_MODE, Constant().EXTRA_GAME_MODE_INTERNET)
@@ -52,7 +52,7 @@ class RoomListActivity : AppCompatActivity(), IJoinRoomCallback {
     }
 
     private fun sendRequestCreateRoom(room: WebGameDto) {
-        Log.e(TAG, "sendRequestCreateRoom: room:${room.toString()}")
+        Log.e(TAG, "sendRequestCreateRoom: room:$room")
         NetworkService.getSaperApi().createRoom(room).enqueue(object : Callback<RoomDTO> {
             override fun onResponse(call: Call<RoomDTO>?, response: Response<RoomDTO>?) {
                 Toast.makeText(this@RoomListActivity, "onResponse", Toast.LENGTH_SHORT).show()

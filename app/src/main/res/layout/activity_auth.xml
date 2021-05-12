@@ -3,7 +3,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    style="?attr/background_layout">
 
     <LinearLayout
         android:orientation="vertical"
@@ -58,15 +59,15 @@
             android:id="@+id/btn_login_screen_login"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            style="?attr/main_button"
             android:layout_marginTop="84dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
-            android:text="Login"
-            android:background="@color/colorAccent"
-            android:textColor="#ffffff" />
+            android:text="Login" />
 
         <TextView
             android:id="@+id/tv_login_screen_not_register"
+            style="?attr/text_result_game_result"
             android:layout_width="wrap_content"
             android:layout_gravity="center"
             android:layout_height="wrap_content"

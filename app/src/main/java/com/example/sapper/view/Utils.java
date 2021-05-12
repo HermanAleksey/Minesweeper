@@ -7,7 +7,6 @@ import com.example.sapper.R;
 import com.example.sapper.model.ThemeApplication;
 
 public class Utils {
-//    private static int sTheme;
 
     public final static int THEME_NONE = 0;
     public final static int THEME_OLD = 1;

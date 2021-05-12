@@ -17,7 +17,7 @@ class DialogSettingMinesCount : DialogFragment() {
     lateinit var listener: DialogSettingMinesCountListener
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val inflater = activity!!.layoutInflater
+        val inflater = requireActivity().layoutInflater
         val view: View = inflater.inflate(R.layout.layout_dialog_settings_mines_count, null)
 
         val editTextFieldMinesCount =
@@ -37,7 +37,7 @@ class DialogSettingMinesCount : DialogFragment() {
                 dismiss()
             } else {
                 Toast.makeText(
-                    activity, activity!!.resources.getString(
+                    activity, requireActivity().resources.getString(
                         R.string.parametersDoNotMeetRequirements
                     ), Toast.LENGTH_SHORT
                 ).show()

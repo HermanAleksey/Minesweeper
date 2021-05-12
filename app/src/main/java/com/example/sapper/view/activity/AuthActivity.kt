@@ -25,6 +25,7 @@ class AuthActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Utils.onActivityCreateSetTheme(this)
         binding = ActivityAuthBinding.inflate(layoutInflater)
         val view: View = binding.root
         Utils.onActivityCreateSetTheme(this)

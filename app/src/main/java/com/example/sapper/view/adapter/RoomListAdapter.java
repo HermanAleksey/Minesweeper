@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.sapper.R;
 import com.example.sapper.model.dto.RoomDTO;
+import com.example.sapper.view.Utils;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -62,10 +63,10 @@ public class RoomListAdapter extends ArrayAdapter<RoomDTO> implements View.OnCli
         final View result;
 
         if (convertView == null) {
-
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.rooms_list_item, parent, false);
+
             viewHolder.tv_id = convertView.findViewById(R.id.tv_rooms_list_item_id);
             viewHolder.tv_player_1 = convertView.findViewById(R.id.tv_rooms_list_item_player_1);
             viewHolder.tv_player_2 = convertView.findViewById(R.id.tv_rooms_list_item_player_2);

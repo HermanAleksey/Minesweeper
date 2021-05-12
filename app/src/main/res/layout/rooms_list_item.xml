@@ -25,21 +25,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Players:" />
+                android:text="Players:"
+                android:textSize="24sp"/>
 
             <TextView
                 android:id="@+id/tv_rooms_list_item_player_1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="player_1" />
+                android:text="player_1"
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/tv_rooms_list_item_player_2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="player_2" />
+                android:text="player_2"
+                android:textSize="18sp"/>
 
         </LinearLayout>
 
@@ -65,14 +68,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Room" />
+                    android:text="Room"
+                    android:textSize="24sp"/>
 
                 <TextView
                     android:id="@+id/tv_rooms_list_item_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="id" />
+                    android:text="id"
+                    android:textSize="24sp"/>
             </LinearLayout>
 
 
@@ -99,24 +104,28 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Time " />
+                    android:text="Time "
+                    android:textSize="24sp"/>
 
                 <TextView
                     android:id="@+id/tv_rooms_list_item_time_min"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="05" />
+                    android:text="05"
+                    android:textSize="18sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=":" />
+                    android:text=":"
+                    android:textSize="18sp"/>
 
                 <TextView
                     android:id="@+id/tv_rooms_list_item_time_sec"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="00" />
+                    android:text="00"
+                    android:textSize="18sp"/>
 
             </LinearLayout>
 
@@ -129,24 +138,28 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Field " />
+                    android:text="Field "
+                    android:textSize="24sp"/>
 
                 <TextView
                     android:id="@+id/tv_rooms_list_item_height"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10" />
+                    android:text="10"
+                    android:textSize="18sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" x " />
+                    android:text="x"
+                    android:textSize="18sp"/>
 
                 <TextView
                     android:id="@+id/tv_rooms_list_item_width"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10" />
+                    android:text="10"
+                    android:textSize="18sp"/>
 
             </LinearLayout>
 
@@ -159,13 +172,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mines " />
+                    android:text="Mines "
+                    android:textSize="24sp"/>
 
                 <TextView
                     android:id="@+id/tv_rooms_list_item_mines"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10" />
+                    android:text="10"
+                    android:textSize="18sp"/>
 
             </LinearLayout>
 

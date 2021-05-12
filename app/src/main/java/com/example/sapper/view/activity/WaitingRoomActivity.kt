@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter
 import com.example.sapper.model.constant.Constant
 import com.example.sapper.model.constant.GameConstant
 import com.example.sapper.R
+import com.example.sapper.view.Utils
 import com.example.sapper.view.activity.MinefieldActivity.activity.MinefieldActivity
 import kotlinx.android.synthetic.main.activity_waiting_room.*
 import java.io.IOException
@@ -46,6 +47,7 @@ class WaitingRoomActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Utils.onActivityCreateSetTheme(this)
         setContentView(R.layout.activity_waiting_room)
 
         implementListeners()

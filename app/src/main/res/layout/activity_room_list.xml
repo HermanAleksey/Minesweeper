@@ -5,25 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".view.activity.RoomListActivity">
+    tools:context=".view.activity.RoomListActivity"
+    style="?attr/background_layout">
 
     <Button
         android:id="@+id/button_rooms_list_refresh"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:text="refresh" />
-
-    <Button
-        android:id="@+id/button_rooms_list_logout"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:text="log out" />
+        android:text="refresh"
+        style="?attr/main_button"/>
 
     <Button
         android:id="@+id/button_rooms_list_add"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:text="create" />
+        android:text="create"
+        style="?attr/main_button"/>
 
     <ListView
         android:id="@+id/list_view_rooms_list"

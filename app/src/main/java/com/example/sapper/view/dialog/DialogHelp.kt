@@ -22,7 +22,7 @@ class DialogHelp : DialogFragment() {
     private val duration: Long = 600
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val inflater = activity!!.layoutInflater
+        val inflater = requireActivity().layoutInflater
         val view: View = inflater.inflate(R.layout.layout_dialog_help, null)
 
         llButtons = view.findViewById(R.id.ll_dialog_help_buttons)

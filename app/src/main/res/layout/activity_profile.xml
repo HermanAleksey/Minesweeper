@@ -5,32 +5,37 @@
     android:layout_height="match_parent"
     tools:context=".view.activity.ProfileActivity"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    style="?background_layout">
 
     <TextView
         android:id="@+id/tv_profile_screen_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="text"/>
+        android:text="text"
+        style="?attr/main_label"/>
 
     <Button
         android:id="@+id/btn_profile_screen_log_in"
-        android:layout_width="wrap_content"
+        android:layout_width="210dp"
         android:layout_height="wrap_content"
-        android:text="log_in"/>
+        android:text="log_in"
+        style="?attr/main_button"/>
 
     <Button
         android:id="@+id/btn_profile_screen_log_out"
-        android:layout_width="wrap_content"
+        android:layout_width="210dp"
         android:layout_height="wrap_content"
-        android:text="log_out"/>
+        android:text="log_out"
+        style="?attr/main_button"/>
 
     <Button
         android:id="@+id/btn_profile_screen_registration"
-        android:layout_width="wrap_content"
+        android:layout_width="210dp"
         android:layout_height="wrap_content"
-        android:text="registration"/>
+        android:text="registration"
+        style="?attr/main_button"/>
 
 
 </LinearLayout>

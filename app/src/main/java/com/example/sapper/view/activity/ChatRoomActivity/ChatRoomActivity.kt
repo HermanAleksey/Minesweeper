@@ -99,9 +99,9 @@ class ChatRoomActivity : AppCompatActivity(), IMessageCallback, IMinefieldActivi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Utils.onActivityCreateSetTheme(this)
         binding = ActivityChatRoomBinding.inflate(layoutInflater)
         val view: View = binding.root
-        Utils.onActivityCreateSetTheme(this)
         setContentView(view)
 
         ViewModel.uname1().observe(this, observer1)
@@ -144,6 +144,7 @@ class ChatRoomActivity : AppCompatActivity(), IMessageCallback, IMinefieldActivi
                 }
             }
         }
+        /*
         //chat room
         binding.btnChatRoomSend.setOnClickListener {
             Log.e("TAG", "sending message (button clicked)")
@@ -161,7 +162,7 @@ class ChatRoomActivity : AppCompatActivity(), IMessageCallback, IMinefieldActivi
         binding.btnDebug.setOnClickListener(debugClickList)
 
         //minefield room
-        binding.tvDebug.setOnClickListener(debugClickList)
+        binding.tvDebug.setOnClickListener(debugClickList)*/
     }
 
     private fun configureWaitingRoomViews() {
@@ -353,11 +354,11 @@ class ChatRoomActivity : AppCompatActivity(), IMessageCallback, IMinefieldActivi
     /**------------------------------------------------------------------------WEB------------------------------------------------------------------------*/
 
     private val observer1 = Observer<String> {
-        binding.tvChatRoomPlayer1.text = it
+//        binding.tvChatRoomPlayer1.text = it
         binding.tvChatWaitingRoomPlayer1Name.text = it
     }
     private val observer2 = Observer<String> {
-        binding.tvChatRoomPlayer2.text = it
+//        binding.tvChatRoomPlayer2.text = it
         binding.tvChatWaitingRoomPlayer2Name.text = it
     }
 
@@ -419,7 +420,7 @@ class ChatRoomActivity : AppCompatActivity(), IMessageCallback, IMinefieldActivi
                 }
             }
             else -> {
-                concatMessage("From:$from\n$context\n")
+//                concatMessage("From:$from\n$context\n")
                 return
             }
         }
@@ -431,12 +432,12 @@ class ChatRoomActivity : AppCompatActivity(), IMessageCallback, IMinefieldActivi
         }
     }
 
-    private fun concatMessage(string: String) {
-        Log.e("TAG", "concatMessage:")
-        runOnUiThread {
-            binding.tvChatRoomChat.text = binding.tvChatRoomChat.text.toString() + string + "\n"
-        }
-    }
+//    private fun concatMessage(string: String) {
+//        Log.e("TAG", "concatMessage:")
+//        runOnUiThread {
+//            binding.tvChatRoomChat.text = binding.tvChatRoomChat.text.toString() + string + "\n"
+//        }
+//    }
 
 
     override fun onDestroy() {
