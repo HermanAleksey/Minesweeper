@@ -202,4 +202,8 @@ Several things are required to play via bluetooth: \n
     <string name="waiting_room">Waiting room</string>
     <string name="room_description">Room description</string>
     <string name="web_game">Web game</string>
+    <string name="bluetooth_game">Bluetooth game</string>
+    <string name="back">Back</string>
+    <string name="server">Server</string>
+    <string name="client">Client</string>
 </resources>

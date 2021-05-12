@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="?background_layout"
+    android:orientation="vertical">
+
+
+    <TextView
+        style="?main_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Выберите тему для приложения:" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:translationX="0dp"
+                android:scaleX="1">
+
+                <Button
+                    android:id="@+id/btn_dialog_theme_none"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="?attr/main_button"
+                    android:text="without" />
+
+                <Button
+                    android:id="@+id/btn_dialog_theme_old"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="?attr/main_button"
+                    android:text="old" />
+
+                <Button
+                    android:id="@+id/btn_dialog_theme_material"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="?attr/main_button"
+                    android:text="material" />
+
+                <Button
+                    android:id="@+id/btn_dialog_help_colorized"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="?attr/main_button"
+                    android:text="colorized" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btn_dialog_theme_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        style="?attr/main_button"
+        android:paddingVertical="14dp"
+        android:text="@string/cancel" />
+
+</LinearLayout>

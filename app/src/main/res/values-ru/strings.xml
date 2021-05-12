@@ -200,4 +200,8 @@
     <string name="waiting_room">Комната ожидания</string>
     <string name="room_description">Описание комнаты</string>
     <string name="web_game">Сетевая игра</string>
+    <string name="bluetooth_game">Bluetooth игра</string>
+    <string name="back">Назад</string>
+    <string name="server">Сервер</string>
+    <string name="client">Клиент</string>
 </resources>

@@ -73,18 +73,35 @@
                     android:text="@string/singleplayer" />
 
                 <Button
-                    android:id="@+id/button_main_bluetooth_game_client"
+                    android:id="@+id/button_main_bluetooth_game"
                     style="?attr/main_button"
                     android:layout_width="210dp"
                     android:layout_height="wrap_content"
-                    android:text="BT_CLIENT" />
+                    android:text="@string/bluetooth_game" />
+
+                <Button
+                    android:id="@+id/button_main_bluetooth_game_back"
+                    style="?attr/main_button"
+                    android:visibility="gone"
+                    android:layout_width="210dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/back" />
+
+                <Button
+                    android:id="@+id/button_main_bluetooth_game_client"
+                    style="?attr/main_button"
+                    android:layout_width="210dp"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content"
+                    android:text="@string/client" />
 
                 <Button
                     android:id="@+id/button_main_bluetooth_game_server"
                     style="?attr/main_button"
                     android:layout_width="210dp"
+                    android:visibility="gone"
                     android:layout_height="wrap_content"
-                    android:text="BT_SERVER" />
+                    android:text="@string/server" />
 
                 <Button
                     android:id="@+id/button_main_web_game"
@@ -92,14 +109,6 @@
                     android:layout_width="210dp"
                     android:layout_height="wrap_content"
                     android:text="@string/web_game" />
-
-                <Spinner
-                    android:id="@+id/spThemes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/theme_array"
-                    android:spinnerMode="dropdown" />
-
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

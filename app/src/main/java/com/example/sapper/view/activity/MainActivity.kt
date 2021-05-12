@@ -77,6 +77,13 @@ class MainActivity : AppCompatActivity(), DialogThemes.DialogThemesListener {
 
         Log.e("TAG", "onCreate: ${resources.displayMetrics.densityDpi}")
 
+        button_main_profile.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+        }
+        button_main_themes.setOnClickListener {
+            showThemesDialog()
+        }
         button_main_company.setOnClickListener {
             startActivity(Intent(this, CompanyLevelActivity::class.java))
         }
@@ -87,6 +94,24 @@ class MainActivity : AppCompatActivity(), DialogThemes.DialogThemesListener {
             startActivity(intent)
         }
 
+        button_main_bluetooth_game.setOnClickListener {
+            button_main_bluetooth_game.visibility = View.GONE
+            button_main_bluetooth_game_back.visibility = View.VISIBLE
+            button_main_bluetooth_game_client.visibility = View.VISIBLE
+            button_main_bluetooth_game_server.visibility = View.VISIBLE
+            button_main_company.visibility = View.GONE
+            button_main_custom_game.visibility = View.GONE
+            button_main_web_game.visibility = View.GONE
+        }
+        button_main_bluetooth_game_back.setOnClickListener {
+            button_main_bluetooth_game.visibility = View.VISIBLE
+            button_main_bluetooth_game_back.visibility = View.GONE
+            button_main_bluetooth_game_client.visibility = View.GONE
+            button_main_bluetooth_game_server.visibility = View.GONE
+            button_main_company.visibility = View.VISIBLE
+            button_main_custom_game.visibility = View.VISIBLE
+            button_main_web_game.visibility = View.VISIBLE
+        }
         button_main_bluetooth_game_server.setOnClickListener {
             if (!mBluetoothAdapter!!.isEnabled) {
                 requestEnableBluetooth()
@@ -97,7 +122,6 @@ class MainActivity : AppCompatActivity(), DialogThemes.DialogThemesListener {
                 startActivity(intent)
             }
         }
-
         button_main_bluetooth_game_client.setOnClickListener {
             if (!mBluetoothAdapter!!.isEnabled) {
                 requestEnableBluetooth()
@@ -106,13 +130,6 @@ class MainActivity : AppCompatActivity(), DialogThemes.DialogThemesListener {
                 intent.putExtra(Constant().EXTRA_BLUETOOTH_ROLE, Constant().ROLE_CLIENT)
                 startActivity(intent)
             }
-        }
-        button_main_profile.setOnClickListener {
-            val intent = Intent(this, ProfileActivity::class.java)
-            startActivity(intent)
-        }
-        button_main_themes.setOnClickListener {
-            showThemesDialog()
         }
         button_main_web_game.setOnClickListener {
             //check if player authorized
