@@ -13,8 +13,9 @@ class RegistrationActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityRegistrationBinding.inflate(layoutInflater)
         Utils.onActivityCreateSetTheme(this)
+        binding = ActivityRegistrationBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
 
         binding.tvRegistrationScreenHasAccount.setOnClickListener { view1 ->

@@ -206,4 +206,19 @@ Several things are required to play via bluetooth: \n
     <string name="back">Back</string>
     <string name="server">Server</string>
     <string name="client">Client</string>
+    <string name="log_in">log in</string>
+    <string name="log_out">log out</string>
+    <string name="registration">registration</string>
+    <string name="without">without</string>
+    <string name="old">old</string>
+    <string name="material">material</string>
+    <string name="colorized">colorized</string>
+    <string name="no_account_yet_create_one">No account yet? Create one</string>
+    <string name="players">Players:</string>
+    <string name="room">Room</string>
+    <string name="time">Time:</string>
+    <string name="field">Field:</string>
+    <string name="refresh">refresh</string>
+    <string name="register">Register</string>
+    <string name="already_have_account_log_in">Already have account? Log in</string>
 </resources>

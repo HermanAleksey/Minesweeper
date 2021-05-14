@@ -37,28 +37,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="?attr/main_button"
-                    android:text="without" />
+                    android:text="@string/without" />
 
                 <Button
                     android:id="@+id/btn_dialog_theme_old"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="?attr/main_button"
-                    android:text="old" />
+                    android:text="@string/old" />
 
                 <Button
                     android:id="@+id/btn_dialog_theme_material"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="?attr/main_button"
-                    android:text="material" />
+                    android:text="@string/material" />
 
                 <Button
                     android:id="@+id/btn_dialog_help_colorized"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="?attr/main_button"
-                    android:text="colorized" />
+                    android:text="@string/colorized" />
             </LinearLayout>
 
         </LinearLayout>

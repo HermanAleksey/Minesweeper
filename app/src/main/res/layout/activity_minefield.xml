@@ -137,7 +137,6 @@
             <ScrollView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/colorMainBackground_old"
                 android:scrollbars="horizontal|vertical">
 
                 <HorizontalScrollView
@@ -147,7 +146,7 @@
 
                     <LinearLayout
                         android:id="@+id/linear_layout_minefield"
-                        style="?minefield_filed_background"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical" />

@@ -204,4 +204,19 @@
     <string name="back">Назад</string>
     <string name="server">Сервер</string>
     <string name="client">Клиент</string>
+    <string name="log_in">Авторизация</string>
+    <string name="log_out">Выход</string>
+    <string name="registration">Регистрация</string>
+    <string name="without">Без темы</string>
+    <string name="old">Стандарт</string>
+    <string name="material">Матириал</string>
+    <string name="colorized">Цветная</string>
+    <string name="no_account_yet_create_one">Нет аккаунта? Зарегистрируйтесь</string>
+    <string name="players">Игроки:</string>
+    <string name="room">Комната</string>
+    <string name="time">Время:</string>
+    <string name="field">Поле:</string>
+    <string name="refresh">Обновить</string>
+    <string name="register">Зарегистрироваться</string>
+    <string name="already_have_account_log_in">Уже есть аккаунт? Войти</string>
 </resources>

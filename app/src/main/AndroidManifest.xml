@@ -14,19 +14,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".view.activity.ChatRoomActivity.ChatRoomActivity"
-            android:parentActivityName=".view.activity.RoomListActivity"/>
+            android:parentActivityName=".view.activity.RoomListActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".view.activity.RegistrationActivity"
-            android:parentActivityName=".view.activity.MainActivity" />
+            android:parentActivityName=".view.activity.MainActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".view.activity.ProfileActivity"
-            android:parentActivityName=".view.activity.MainActivity" />
+            android:parentActivityName=".view.activity.MainActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".view.activity.AuthActivity"
-            android:parentActivityName=".view.activity.MainActivity" />
+            android:parentActivityName=".view.activity.MainActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".view.activity.RoomListActivity"
-            android:parentActivityName=".view.activity.MainActivity" />
+            android:parentActivityName=".view.activity.MainActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".view.activity.SplashActivity"
             android:screenOrientation="portrait"

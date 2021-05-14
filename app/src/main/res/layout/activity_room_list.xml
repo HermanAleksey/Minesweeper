@@ -12,14 +12,14 @@
         android:id="@+id/button_rooms_list_refresh"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:text="refresh"
+        android:text="@string/refresh"
         style="?attr/main_button"/>
 
     <Button
         android:id="@+id/button_rooms_list_add"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:text="create"
+        android:text="@string/createGame"
         style="?attr/main_button"/>
 
     <ListView

@@ -20,21 +20,21 @@
         android:id="@+id/btn_profile_screen_log_in"
         android:layout_width="210dp"
         android:layout_height="wrap_content"
-        android:text="log_in"
+        android:text="@string/log_in"
         style="?attr/main_button"/>
 
     <Button
         android:id="@+id/btn_profile_screen_log_out"
         android:layout_width="210dp"
         android:layout_height="wrap_content"
-        android:text="log_out"
+        android:text="@string/log_out"
         style="?attr/main_button"/>
 
     <Button
         android:id="@+id/btn_profile_screen_registration"
         android:layout_width="210dp"
         android:layout_height="wrap_content"
-        android:text="registration"
+        android:text="@string/registration"
         style="?attr/main_button"/>
 
 

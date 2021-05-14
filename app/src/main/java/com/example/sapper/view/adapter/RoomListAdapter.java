@@ -89,8 +89,17 @@ public class RoomListAdapter extends ArrayAdapter<RoomDTO> implements View.OnCli
         lastPosition = position;
 
         viewHolder.tv_id.setText("" + dataModel.getId());
-        viewHolder.tv_player_1.setText(""+dataModel.getPlayer_1().getUsername());
-        viewHolder.tv_player_2.setText(""+dataModel.getPlayer_2().getUsername());
+        String pl1 = "-";
+        String pl2 = "-";
+        if (dataModel.getPlayer_1().getUsername()!=null){
+            pl1 = dataModel.getPlayer_1().getUsername();
+        }
+        if (dataModel.getPlayer_2().getUsername()!=null){
+            pl2 = dataModel.getPlayer_2().getUsername();
+        }
+
+        viewHolder.tv_player_1.setText(pl1);
+        viewHolder.tv_player_2.setText(pl2);
 //        viewHolder.tv_id.setOnClickListener(this);
 
         viewHolder.tv_height.setText(""+dataModel.getHeight());
