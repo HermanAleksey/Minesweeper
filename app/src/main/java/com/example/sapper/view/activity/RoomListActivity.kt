@@ -41,6 +41,8 @@ class RoomListActivity : AppCompatActivity(), IJoinRoomCallback {
 
         rooms = ArrayList()
 
+        fetchData()
+
         binding.buttonRoomsListRefresh.setOnClickListener {
             fetchData()
         }
@@ -55,11 +57,11 @@ class RoomListActivity : AppCompatActivity(), IJoinRoomCallback {
         Log.e(TAG, "sendRequestCreateRoom: room:$room")
         NetworkService.getSaperApi().createRoom(room).enqueue(object : Callback<RoomDTO> {
             override fun onResponse(call: Call<RoomDTO>?, response: Response<RoomDTO>?) {
-                Toast.makeText(this@RoomListActivity, "onResponse", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this@RoomListActivity, "onResponse", Toast.LENGTH_SHORT).show()
             }
 
             override fun onFailure(call: Call<RoomDTO>?, t: Throwable?) {
-                Toast.makeText(this@RoomListActivity, "onFailure", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this@RoomListActivity, "onFailure", Toast.LENGTH_SHORT).show()
             }
 
         })
@@ -72,8 +74,8 @@ class RoomListActivity : AppCompatActivity(), IJoinRoomCallback {
                 call: Call<ArrayList<RoomDTO>>?,
                 response: Response<ArrayList<RoomDTO>>?
             ) {
-                Toast.makeText(this@RoomListActivity, "Rooms list updated", Toast.LENGTH_SHORT)
-                    .show()
+//                Toast.makeText(this@RoomListActivity, "Rooms list updated", Toast.LENGTH_SHORT)
+//                    .show()
                 rooms = response!!.body()
                 Log.e(TAG, "onResponse: $rooms")
                 runOnUiThread {

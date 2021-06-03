@@ -5,9 +5,10 @@
         android:drawable="@drawable/background_card_view"/>
 
     <item
+        android:gravity="center"
         android:drawable="@drawable/mine"
-        android:width="50dp"
-        android:height="50dp">
+        android:width="150dp"
+        android:height="150dp">
     </item>
 
 

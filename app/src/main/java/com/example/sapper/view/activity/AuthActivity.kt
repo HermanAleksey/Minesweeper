@@ -58,7 +58,7 @@ class AuthActivity : AppCompatActivity() {
                             "Success." -> {
                                 Toast.makeText(
                                     this@AuthActivity,
-                                    "logged in",
+                                    "Вы авторизовались!",
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 val webPlayer = WebPlayer(body!!)
@@ -113,7 +113,7 @@ class AuthActivity : AppCompatActivity() {
                             "Success." -> {
                                 Toast.makeText(
                                     this@AuthActivity,
-                                    "logged in",
+                                    "Вы авторизовались!",
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 val webPlayer = WebPlayer(body!!)
@@ -177,7 +177,7 @@ class AuthActivity : AppCompatActivity() {
                     Log.e(TAG, "onResponse: " + body.toString())
                     when (response.body()?.status) {
                         "Success." -> {
-                            Toast.makeText(this@AuthActivity, "logged in", Toast.LENGTH_SHORT)
+                            Toast.makeText(this@AuthActivity, "Вы авторизовались!", Toast.LENGTH_SHORT)
                                 .show()
                             val webPlayer = WebPlayer(body!!)
 

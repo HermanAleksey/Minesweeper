@@ -26,7 +26,7 @@ class ProfileActivity : AppCompatActivity() {
 
         val statusText: String
         if (currentUsername == "") {
-            statusText = "Вы не авторизиваны!"
+            statusText = "Вы не авторизованы!"
             binding.btnProfileScreenLogOut.isEnabled = false
         } else {
             statusText = "Вы авторизованы как $currentUsername."

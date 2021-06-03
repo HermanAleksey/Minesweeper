@@ -130,8 +130,8 @@ class ChatRoomActivity : AppCompatActivity(), IMessageCallback, IMinefieldActivi
         //click listeners
         //waiting room
         binding.btnChatWaitingRoomStartGame.setOnClickListener {
-            if (binding.tvChatWaitingRoomPlayer1Name.text != "null"
-                && binding.tvChatWaitingRoomPlayer2Name.text != "null"
+            if (binding.tvChatWaitingRoomPlayer1Name.text != "-"
+                && binding.tvChatWaitingRoomPlayer2Name.text != "-"
             ) {
                 if (binding.chbWaitingRoomPlayer1Ready.isChecked && binding.chbWaitingRoomPlayer2Ready.isChecked) {
                     sendStartGameRequest()
@@ -355,11 +355,11 @@ class ChatRoomActivity : AppCompatActivity(), IMessageCallback, IMinefieldActivi
 
     private val observer1 = Observer<String> {
 //        binding.tvChatRoomPlayer1.text = it
-        binding.tvChatWaitingRoomPlayer1Name.text = it
+        binding.tvChatWaitingRoomPlayer1Name.text = if (it!="null")it else "-"
     }
     private val observer2 = Observer<String> {
 //        binding.tvChatRoomPlayer2.text = it
-        binding.tvChatWaitingRoomPlayer2Name.text = it
+        binding.tvChatWaitingRoomPlayer2Name.text = if (it!="null")it else "-"
     }
 
     private fun sendMessage(str: String) {

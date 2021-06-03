@@ -215,7 +215,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="@string/null_value"
+                        android:text="-"
                         style="?attr/casual_description"/>
 
                     <CheckBox
@@ -255,7 +255,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="@string/null_value"
+                        android:text="-"
                         style="?attr/casual_description"/>
 
 
@@ -419,7 +419,6 @@
                 <ScrollView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorMainBackground_old"
                     android:scrollbars="horizontal|vertical">
 
                     <HorizontalScrollView
@@ -429,7 +428,6 @@
 
                         <LinearLayout
                             android:id="@+id/ll_chat_room_minefield"
-                            style="?minefield_filed_background"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical" />

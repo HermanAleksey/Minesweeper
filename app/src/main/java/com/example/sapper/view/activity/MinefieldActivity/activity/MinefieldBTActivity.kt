@@ -559,11 +559,11 @@ class MinefieldBTActivity : AppCompatActivity(), IMinefieldActivity {
                     }
                 }
                 BluetoothConstant.MESSAGE_TOAST -> {
-                    Toast.makeText(
-                        applicationContext,
-                        msg.data.getString(BluetoothConstant.TOAST),
-                        Toast.LENGTH_SHORT
-                    ).show()
+//                    Toast.makeText(
+//                        applicationContext,
+//                        msg.data.getString(BluetoothConstant.TOAST),
+//                        Toast.LENGTH_SHORT
+//                    ).show()
                 }
             }
         }

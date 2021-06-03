@@ -39,7 +39,7 @@ class GameResultsActivity : AppCompatActivity() {
                 resources.getString(R.string.gameModeCompany)
             }
             Constant().EXTRA_GAME_MODE_BLUETOOTH -> resources.getString(R.string.gameModeBluetooth)
-            else -> "None"
+            else -> "Сетевая игра"
         }
         val game = intent.getSerializableExtra(GameConstant().EXTRA_GAME_OBJECT) as Game
 
